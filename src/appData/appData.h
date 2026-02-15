@@ -1,7 +1,8 @@
-#include <cstdint>
-#include <unordered_map>
 #include <vector>
 #include <string>
+#include <unordered_map>
+#include <cstdint>
+
 
 enum class Gender{
 Male,
@@ -13,6 +14,9 @@ struct College{
 uint16_t collegeID;
 std::string collegeName;
 std::string collegeAbreviation; 
+
+
+
 
 };
 
@@ -31,14 +35,33 @@ std::string lastName;
 uint16_t courseID;
 int year;
 Gender gender;
-};
-
-struct AppData{
-    std::vector<College> collegeRegistry;
-    std::unordered_map<uint16_t, Course> courseRegistry;
-
-    std::vector<Student> studentRecord;
 
 };
 
 
+
+const Student INVALIDSTUDENT = {"Not Found", "Not Found", "Not Found", 65535, 65535, Gender::Other};
+const College INVALIDCOLLEGE = {65535, "Not Found", "Not Found"};
+const Course INVALIDCOURSE = {65535, 65535, "Not Found", "Not Found"};
+
+
+class AppData{
+    public:
+    void setCollegeRegistry(std::vector<College>);
+    void setStudentRecord(std::vector<Student>);
+    void setCourseRegistry(std::unordered_map<uint16_t, Course>);
+   
+    const std::vector<Student>& getStudentRecord();
+    const std::vector<College>& getCollegeRegistry();
+    std::unordered_map<uint16_t, Course>& getCourseRegistry();          
+
+    Student getStudent(int index);
+
+    private:
+    std::vector<College> m_collegeRegistry;
+    std::unordered_map<uint16_t, Course> m_courseRegistry;
+    std::vector<Student> m_studentRecord;
+
+
+
+};

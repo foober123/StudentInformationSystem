@@ -18,11 +18,9 @@ int main(int argc, char* argv[]){
     Vault vault(STUDENT_PATH, PROGRAM_PATH, COLLEGE_PATH);
     AppData appData;
 
-
-    appData.collegeRegistry = vault.LoadColleges();
-    appData.courseRegistry = vault.LoadCourses();
-    appData.studentRecord = vault.LoadStudents();
-    
+    appData.setCollegeRegistry(vault.LoadColleges());
+    appData.setCourseRegistry(vault.LoadCourses());
+    appData.setStudentRecord(vault.LoadStudents());
 
     SDL_Window* window_ptr = SDL_CreateWindow(
             "Shrimple Student Information System", 
@@ -64,7 +62,7 @@ int main(int argc, char* argv[]){
     ImGui_ImplSDLRenderer2_Init(renderer_ptr);
     GuiState guistate;
     guistate.init();
-    guistate.defaultSortDisplayOrder(appData.studentRecord.size());
+    guistate.defaultSortDisplayOrder(appData.getStudentRecord().size());
 
 
     bool running = true;
