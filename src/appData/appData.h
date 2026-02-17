@@ -48,6 +48,7 @@ class AppData{
     void setStudentRecord(std::unordered_map<uint32_t, Student>);
     void setCourseRegistry(std::unordered_map<uint16_t, Course>);
     void addStudent(Student);
+    void deleteStudent(uint32_t);
 
     void initCourseIDCounter(); 
     void initCollegeIDCounter();
@@ -59,14 +60,12 @@ class AppData{
 
     ERRORSTATE validateStudentEntry(StudentDraft);
     ERRORSTATE validateCourseEntry(CourseDraft);
+    ERRORSTATE validateStudentEntry(StudentDraft, int index); 
 
     //Used for Editing where the index is the address of the student
-    ERRORSTATE validateStudentEntry(StudentDraft, int index); 
     const std::unordered_map<uint16_t, College>& getCollegeRegistry();
-    
     std::unordered_map<uint16_t, Course>& getCourseRegistry();          
     const std::unordered_map<std::string, uint16_t>& getcourseCodeToID();
-
     const std::unordered_map<uint32_t, Student>& getStudentRecord();
     
     Course getCourse(uint16_t key);

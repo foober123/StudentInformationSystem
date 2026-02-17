@@ -108,7 +108,7 @@ void drawAddStudentBox(GuiState &guiState, AppData &appData){
             guiState.currentError = appData.validateStudentEntry(guiState.studentDraft);
             guiState.updateErrorMessage();
             if(guiState.currentError == ERRORSTATE::NO_ERROR) guiState.resetDraft();
-            guiState.defaultSortDisplayOrder(appData.getStudentRecord().size());
+            guiState.defaultSortDisplayOrder(appData);
         }
 
 

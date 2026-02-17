@@ -27,7 +27,7 @@ void drawErrorBox(GuiState& guiState);
 
 void drawAddStudentBox(GuiState& guiState, AppData& appData);
 void drawEditStudentBox(GuiState&, AppData&);
-
+void drawDeleteStudentBox(GuiState&, AppData&);
 
 //DEBUGGING FUNCTIONS
 void drawCourseToID(AppData& appData);

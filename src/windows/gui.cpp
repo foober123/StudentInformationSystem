@@ -24,7 +24,7 @@ void drawMenuBar(GuiState& guiState){
         {
             if(ImGui::MenuItem("Add Entry")){guiState.inputBoxStrategy = drawAddStudentBox;}
             if(ImGui::MenuItem("Edit Entry")){guiState.inputBoxStrategy = drawEditStudentBox;}
-            if(ImGui::MenuItem("Delete Entry")){}
+            if(ImGui::MenuItem("Delete Entry")){guiState.inputBoxStrategy = drawDeleteStudentBox;}
 
             ImGui::EndMenu();
         }

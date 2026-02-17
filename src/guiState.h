@@ -73,15 +73,7 @@ studentDraft.gender = 2;
 
 }
 
-void defaultSortDisplayOrder(int students){
-    assert(students > 0); 
-    displayOrder.clear();
-
-    for(int i = 0; i < students; i++){
-    displayOrder.push_back(i + 1);
-    }
-
-}
+void defaultSortDisplayOrder(AppData&);
 
 void updateErrorMessage(){
     switch (currentError) {

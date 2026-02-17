@@ -67,7 +67,7 @@ int main(int argc, char* argv[]){
     ImGui_ImplSDLRenderer2_Init(renderer_ptr);
     GuiState guistate;
     guistate.init();
-    guistate.defaultSortDisplayOrder(appData.getStudentRecord().size());
+    guistate.defaultSortDisplayOrder(appData);
 
 
     bool running = true;
@@ -96,7 +96,6 @@ int main(int argc, char* argv[]){
         if(guistate.showCollegeRegistry) drawCollegeRegistry(appData);
         if(guistate.showCourseRegistry) drawCourseRegistry(appData);
         if(guistate.currentError != ERRORSTATE::NO_ERROR) drawErrorBox(guistate);
-        drawCourseToID(appData);
 
 
         if(guistate.inputBoxStrategy != NULL) guistate.inputBoxStrategy(guistate, appData);          
