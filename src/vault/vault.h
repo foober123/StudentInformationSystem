@@ -11,11 +11,13 @@ enum class Gender;
 class Vault{
     public:
         explicit Vault(std::string studentFilePath, std::string courseFilePath, std::string collegeFilePath);
-        std::vector<Student> LoadStudents();
+        std::unordered_map<uint32_t,Student> LoadStudents();
         //std::vector<Course> LoadCourses(std::string filePath);
-        std::vector<College> LoadColleges();
+        std::unordered_map<uint16_t, College> LoadColleges();
+    
         std::unordered_map<uint16_t, Course> LoadCourses();
-        
+
+
         bool saveStudents(std::vector<Student>& studentList);
     private:
         Gender ParseGender(std::string field);

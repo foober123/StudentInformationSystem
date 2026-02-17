@@ -1,10 +1,12 @@
 #include "vault.h"
+#include <string>
 #include <vector>
 #include <sstream>
 #include <fstream>
 #include <iostream>
 #include <cstdint>
 #include "../appData/appData.h"
+#include "../trim.h"
 
 Vault::Vault(std::string studentFilePath, std::string courseFilePath, std::string collegeFilePath){
     m_studentFilePath = studentFilePath; 
@@ -31,8 +33,8 @@ char Vault::SerializeGender(Gender gender){
     return 'O';
 }
 
-std::vector<College> Vault::LoadColleges(){
-    std::vector<College> colleges;
+ std::unordered_map<uint16_t, College> Vault::LoadColleges(){
+    std::unordered_map<uint16_t, College>  colleges;
 
     std::ifstream file(m_collegeFilePath);
     if (!file.is_open()) {
@@ -66,7 +68,7 @@ std::vector<College> Vault::LoadColleges(){
         std::getline(ss, field, ',');
         c.collegeAbreviation = field;
 
-        colleges.push_back(c);
+        colleges.insert({c.collegeID, c});
     }
     
 
@@ -74,8 +76,8 @@ std::vector<College> Vault::LoadColleges(){
     return colleges;
 }
 
-std::vector<Student> Vault::LoadStudents(){
-    std::vector<Student> students;
+ std::unordered_map<uint32_t,Student> Vault::LoadStudents(){
+    std::unordered_map<uint32_t,Student>  students;
 
     std::ifstream file(m_studentFilePath);
     if (!file.is_open()) {
@@ -98,6 +100,9 @@ std::vector<Student> Vault::LoadStudents(){
         Student c{};
 
         std::getline(ss, field, ',');
+        c.internalID = static_cast<uint32_t>(std::stoi(field));
+
+        std::getline(ss, field, ',');
         c.ID = field;    
 
         std::getline(ss, field, ',');
@@ -116,7 +121,7 @@ std::vector<Student> Vault::LoadStudents(){
         c.gender = ParseGender(field);
 
 
-        students.push_back(c);
+        students.insert({c.internalID, c});
     }
 
 
@@ -154,10 +159,10 @@ std::unordered_map<uint16_t, Course> Vault::LoadCourses(){
         c.collegeID = static_cast<uint16_t>(std::stoi(field));
 
         std::getline(ss, field, ',');
-        c.courseName = field;
+        c.courseName = trim(field);
 
         std::getline(ss, field, ',');
-        c.courseAbbreviation = field;
+        c.courseAbbreviation = trim(field);
         
         courses.insert({c.courseID, c});
     }
@@ -172,11 +177,12 @@ bool Vault::saveStudents(std::vector<Student>& studentList){
         return false;
 
     // Write header
-    file << "ID,FirstName,LastName,CourseID,Year,Gender\n";
+    file << "Internal_ID, ID,FirstName,LastName,CourseID,Year,Gender\n";
 
     for (const Student& s : studentList)
     {
         file
+            << s.internalID << ","
             << s.ID << ","
             << s.firstName << ","
             << s.lastName << ","

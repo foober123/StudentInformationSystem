@@ -1,8 +1,10 @@
-#include <vector>
 #include <string>
 #include <unordered_map>
 #include <cstdint>
 
+struct StudentDraft;
+struct CourseDraft;
+enum class ERRORSTATE;
 
 enum class Gender{
 Male,
@@ -14,10 +16,6 @@ struct College{
 uint16_t collegeID;
 std::string collegeName;
 std::string collegeAbreviation; 
-
-
-
-
 };
 
 struct Course{
@@ -25,43 +23,63 @@ uint16_t courseID;
 uint16_t collegeID;
 std::string courseName;
 std::string courseAbbreviation;
-
 };
 
 struct Student{
+uint32_t internalID;
 std::string ID;
 std::string firstName;
 std::string lastName;
 uint16_t courseID;
 int year;
 Gender gender;
-
 };
 
 
 
-const Student INVALIDSTUDENT = {"Not Found", "Not Found", "Not Found", 65535, 65535, Gender::Other};
+const Student INVALIDSTUDENT = {65535,"Not Found", "Not Found", "Not Found", 65535, 65535, Gender::Other};
 const College INVALIDCOLLEGE = {65535, "Not Found", "Not Found"};
 const Course INVALIDCOURSE = {65535, 65535, "Not Found", "Not Found"};
 
 
 class AppData{
     public:
-    void setCollegeRegistry(std::vector<College>);
-    void setStudentRecord(std::vector<Student>);
+    void setCollegeRegistry(std::unordered_map<uint16_t, College>);
+    void setStudentRecord(std::unordered_map<uint32_t, Student>);
     void setCourseRegistry(std::unordered_map<uint16_t, Course>);
+    void addStudent(Student);
+
+    void initCourseIDCounter(); 
+    void initCollegeIDCounter();
+    void initStudentIDCounter();
    
-    const std::vector<Student>& getStudentRecord();
-    const std::vector<College>& getCollegeRegistry();
+    void incrementNextStudentInternalID(); 
+    void incrementNextCollegeID(); 
+    void incrementNextCourseID();
+
+    ERRORSTATE validateStudentEntry(StudentDraft);
+    ERRORSTATE validateCourseEntry(CourseDraft);
+
+    //Used for Editing where the index is the address of the student
+    ERRORSTATE validateStudentEntry(StudentDraft, int index); 
+    const std::unordered_map<uint16_t, College>& getCollegeRegistry();
+    
     std::unordered_map<uint16_t, Course>& getCourseRegistry();          
+    const std::unordered_map<std::string, uint16_t>& getcourseCodeToID();
 
-    Student getStudent(int index);
-
+    const std::unordered_map<uint32_t, Student>& getStudentRecord();
+    
+    Course getCourse(uint16_t key);
+    College getCollege(uint16_t key);
+    Student getStudent(uint32_t key);
     private:
-    std::vector<College> m_collegeRegistry;
+    std::unordered_map<uint16_t, College> m_collegeRegistry;
+
+    std::unordered_map<std::string, uint16_t> m_courseCodeToID;
     std::unordered_map<uint16_t, Course> m_courseRegistry;
-    std::vector<Student> m_studentRecord;
-
-
+    uint16_t m_nextCourseID = 1;
+    uint16_t m_nextCollegeID = 1;
+    uint32_t m_nextStudentInternalID = 1;
+    std::unordered_map<uint32_t, Student> m_studentRecord; 
 
 };

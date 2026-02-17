@@ -22,6 +22,11 @@ int main(int argc, char* argv[]){
     appData.setCourseRegistry(vault.LoadCourses());
     appData.setStudentRecord(vault.LoadStudents());
 
+    appData.initCollegeIDCounter();
+    appData.initCourseIDCounter();
+    appData.initStudentIDCounter();
+
+
     SDL_Window* window_ptr = SDL_CreateWindow(
             "Shrimple Student Information System", 
             SDL_WINDOWPOS_CENTERED, 
@@ -90,11 +95,18 @@ int main(int argc, char* argv[]){
         drawStudentDataTable(guistate, appData);
         if(guistate.showCollegeRegistry) drawCollegeRegistry(appData);
         if(guistate.showCourseRegistry) drawCourseRegistry(appData);
-        
+        if(guistate.currentError != ERRORSTATE::NO_ERROR) drawErrorBox(guistate);
+        drawCourseToID(appData);
+
+
+        if(guistate.inputBoxStrategy != NULL) guistate.inputBoxStrategy(guistate, appData);          
+
 
         ImGui::Begin("test");
         ImGui::Text("Selected Student: %d", guistate.selectedStudent);
         ImGui::Checkbox("FAFD", &myBool);
+
+        
         ImGui::End();
 
 

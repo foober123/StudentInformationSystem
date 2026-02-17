@@ -6,29 +6,31 @@
 
 #include "../appData/appData.h"
 
+
+
 void drawMenuBar(GuiState& guiState){
-        if (ImGui::BeginMainMenuBar())
+    if (ImGui::BeginMainMenuBar())
+    {
+        if (ImGui::BeginMenu("Database"))
         {
-            if (ImGui::BeginMenu("Database"))
-            {
-                ImGui::Checkbox("Show College Registry", &guiState.showCollegeRegistry);
-                ImGui::Checkbox("Show Program Registry", &guiState.showCourseRegistry);
-                if (ImGui::MenuItem("Exit")) {}
+            ImGui::Checkbox("Show College Registry", &guiState.showCollegeRegistry);
+            ImGui::Checkbox("Show Program Registry", &guiState.showCourseRegistry);
+            if (ImGui::MenuItem("Exit")) {}
 
-                ImGui::EndMenu();
-            }
-
-            if (ImGui::BeginMenu("Entries"))
-            {
-                if(ImGui::MenuItem("Add Entry")){}
-                if(ImGui::MenuItem("Edit Entry")){}
-                if(ImGui::MenuItem("Delete Entry")){}
-
-                ImGui::EndMenu();
-            }
-
-            ImGui::EndMainMenuBar();
+            ImGui::EndMenu();
         }
+
+        if (ImGui::BeginMenu("Entries"))
+        {
+            if(ImGui::MenuItem("Add Entry")){guiState.inputBoxStrategy = drawAddStudentBox;}
+            if(ImGui::MenuItem("Edit Entry")){guiState.inputBoxStrategy = drawEditStudentBox;}
+            if(ImGui::MenuItem("Delete Entry")){}
+
+            ImGui::EndMenu();
+        }
+
+        ImGui::EndMainMenuBar();
+    }
 
 
 }
@@ -60,103 +62,105 @@ void drawStudentDataTable(GuiState& guiState, AppData& appdata){
         ImGui::TableSetupColumn("Gender");
         ImGui::TableHeadersRow();
 
-            
-        for(int i = 0; i < guiState.displayOrder.size(); i++){
-            int studentIndex = guiState.displayOrder[i];
-            const Student& student = appdata.getStudent(i); 
+
+        for (size_t i = 0; i < guiState.displayOrder.size(); i++)
+        {
+            uint32_t studentID = guiState.displayOrder[i];
+            const Student& student = appdata.getStudent(studentID);
 
             ImGui::TableNextRow();
-            bool isSelected = (guiState.selectedStudent == studentIndex);
+
+            bool isSelected = (guiState.selectedStudent == studentID);
 
             ImGui::TableNextColumn();
             if (ImGui::Selectable(student.ID.c_str(),
-                           isSelected,
-                           ImGuiSelectableFlags_SpanAllColumns))
+                        isSelected,
+                        ImGuiSelectableFlags_SpanAllColumns))
             {
-                guiState.selectedStudent = studentIndex;
+                guiState.selectedStudent = studentID;
             }
-            
-            //ImGui::TableNextColumn();
-            //ImGui::Text("%s", appdata.studentRecord[guiState.displayOrder[i]].ID.c_str());
-
-            
-            ImGui::TableNextColumn();
-            ImGui::Text("%s", appdata.getStudent(guiState.displayOrder[i]).firstName.c_str());
-
-                
-            ImGui::TableNextColumn();
-            ImGui::Text("%s", appdata.getStudent(guiState.displayOrder[i]).lastName.c_str());
-
-                
-            ImGui::TableNextColumn();
-            ImGui::Text("%s", appdata.getCourseRegistry().at(appdata.getStudent(guiState.displayOrder[i]).courseID).courseAbbreviation.c_str());
-
-                
-            ImGui::TableNextColumn();
-            ImGui::Text("%s", appdata.getCollegeRegistry()[appdata.getCourseRegistry().at(appdata.getStudent(guiState.displayOrder[i]).courseID).collegeID].collegeAbreviation.c_str());
 
             ImGui::TableNextColumn();
-            ImGui::Text("%d", appdata.getStudent(guiState.displayOrder[i]).year);
-
+            ImGui::Text("%s", student.firstName.c_str());
 
             ImGui::TableNextColumn();
-            ImGui::Text("%s", serializeGender(appdata.getStudent(guiState.displayOrder[i]).gender).c_str());
+            ImGui::Text("%s", student.lastName.c_str());
+
+            const Course& course = appdata.getCourse(student.courseID);
+
+            ImGui::TableNextColumn();
+            ImGui::Text("%s", course.courseAbbreviation.c_str());
+
+            const College& college = appdata.getCollege(course.collegeID);
+
+            ImGui::TableNextColumn();
+            ImGui::Text("%s", college.collegeAbreviation.c_str());
+
+            ImGui::TableNextColumn();
+            ImGui::Text("%d", student.year);
+
+            ImGui::TableNextColumn();
+            ImGui::Text("%s", serializeGender(student.gender).c_str());
         }
 
 
         ImGui::EndTable();
     }
     ImGui::End();
-
 }
 
 void drawTaskBar(GuiState& guiState){
-        ImGui::Begin("taskbar", NULL, ImGuiWindowFlags_NoTitleBar);
-        ImGui::InputText("Search", &guiState.searchBuffer);
-        ImGui::End();
+    ImGui::Begin("taskbar", NULL, ImGuiWindowFlags_NoTitleBar);
+    ImGui::InputText("Search", &guiState.searchBuffer);
+    ImGui::End();
 }
 
 void drawEntryDisplay(const GuiState& guiState, AppData& appData){
-        ImGui::Begin("Entry Display");
-        if(guiState.selectedStudent > -1){
+    const Student& student = appData.getStudent(guiState.selectedStudent);
+
+    ImGui::Begin("Entry Display");
+    if(guiState.selectedStudent > 0){
         ImGui::SetWindowFontScale(1.5f);
-        ImGui::Text("ID: %s", appData.getStudent(guiState.selectedStudent).ID.c_str());
-        ImGui::Text("Name: %s %s", appData.getStudent(guiState.displayOrder[guiState.selectedStudent]).firstName.c_str(), appData.getStudent(guiState.displayOrder[guiState.selectedStudent]).lastName.c_str());
-        ImGui::Text("Program: %s", appData.getCourseRegistry().at(appData.getStudent(guiState.selectedStudent).courseID).courseName.c_str());
-        ImGui::Text("College: %s", appData.getCollegeRegistry()[appData.getCourseRegistry().at(appData.getStudent(guiState.selectedStudent).courseID).collegeID].collegeName.c_str());
+        ImGui::Text("ID: %s", student.ID.c_str());
+        ImGui::Text("Name: %s %s", student.firstName.c_str(), student.lastName.c_str());
+        ImGui::Text("Program: %s", appData.getCourse(appData.getStudent(guiState.selectedStudent).courseID).courseName.c_str());
+        ImGui::Text("College: %s", appData.getCollege(appData.getCourse(appData.getStudent(guiState.selectedStudent).courseID).collegeID).collegeName.c_str());
         ImGui::SetWindowFontScale(1.0f);
-        }
-        ImGui::End();
-}
-
-void drawCollegeRegistry(AppData& appData){
-{
-    ImGui::Begin("College Registry");
-    if (ImGui::BeginTable("CollegeTable", 3, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg))
-    {
-        ImGui::TableSetupColumn("ID");
-        ImGui::TableSetupColumn("College Name");
-        ImGui::TableSetupColumn("Abbreviation");
-        ImGui::TableHeadersRow();
-
-        for (const College& college : appData.getCollegeRegistry())
-        {
-            ImGui::TableNextRow();
-
-            ImGui::TableSetColumnIndex(0);
-            ImGui::Text("%u", college.collegeID);
-
-            ImGui::TableSetColumnIndex(1);
-            ImGui::Text("%s", college.collegeName.c_str());
-
-            ImGui::TableSetColumnIndex(2);
-            ImGui::Text("%s", college.collegeAbreviation.c_str());
-        }
-
-        ImGui::EndTable();
     }
     ImGui::End();
 }
+
+void drawCollegeRegistry(AppData& appData){
+    {
+        ImGui::Begin("College Registry");
+        if (ImGui::BeginTable("CollegeTable", 3, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg))
+        {
+            ImGui::TableSetupColumn("ID");
+            ImGui::TableSetupColumn("College Name");
+            ImGui::TableSetupColumn("Abbreviation");
+            ImGui::TableHeadersRow();
+
+            for (const auto& pair : appData.getCollegeRegistry())
+            {
+                const auto& id = pair.first;
+                const auto& college = pair.second;
+
+                ImGui::TableNextRow();
+
+                ImGui::TableSetColumnIndex(0);
+                ImGui::Text("%u", college.collegeID);
+
+                ImGui::TableSetColumnIndex(1);
+                ImGui::Text("%s", college.collegeName.c_str());
+
+                ImGui::TableSetColumnIndex(2);
+                ImGui::Text("%s", college.collegeAbreviation.c_str());
+            }
+
+            ImGui::EndTable();
+        }
+        ImGui::End();
+    }
 
 }
 
@@ -170,25 +174,88 @@ void drawCourseRegistry(AppData &appData){
         ImGui::TableSetupColumn("Abbreviation");
         ImGui::TableHeadersRow();
 
-        for(int i = 0; i < appData.getCourseRegistry().size(); i++)
+        for(const auto& pair : appData.getCourseRegistry())
         {
+            const auto& id = pair.first;
+            const auto& course = pair.second;
+
             ImGui::TableNextRow();
 
             ImGui::TableSetColumnIndex(0);
-            ImGui::Text("%u", appData.getCourseRegistry().at(i).courseID);
+            ImGui::Text("%u", course.courseID);
 
             ImGui::TableSetColumnIndex(1);
-            ImGui::Text("%s", appData.getCollegeRegistry()[appData.getCourseRegistry().at(i).collegeID].collegeName.c_str());
+            ImGui::Text("%s", appData.getCollege(course.collegeID).collegeName.c_str());
 
             ImGui::TableSetColumnIndex(2);
-            ImGui::Text("%s", appData.getCourseRegistry().at(i).courseName.c_str());
+            ImGui::Text("%s", course.courseName.c_str());
 
             ImGui::TableSetColumnIndex(3);
-            ImGui::Text("%s", appData.getCourseRegistry().at(i).courseAbbreviation.c_str());
+            ImGui::Text("%s", course.courseAbbreviation.c_str());
         }
 
         ImGui::EndTable();
     }
     ImGui::End();
+}
+
+void drawErrorBox(GuiState &guiState){
+    ImGui::Begin("Error");
+    ImGui::Text("%s", guiState.errorMessage.c_str());
+
+    ImVec2 buttonSize = ImVec2(90, 0); 
+
+    ImVec2 windowSize = ImGui::GetWindowSize();
+
+    float padding = 10.0f;
+    ImVec2 pos = ImVec2(
+            windowSize.x - buttonSize.x - padding,
+            windowSize.y - ImGui::GetFrameHeight() - padding
+            );
+
+    ImGui::SetCursorPos(pos);
+
+    if (ImGui::Button("Close", buttonSize))
+    {
+        guiState.currentError = ERRORSTATE::NO_ERROR;
+        guiState.updateErrorMessage();
+        ImGui::CloseCurrentPopup();
+    }
+
+    pos = ImVec2(
+            windowSize.x - buttonSize.x * 2 - padding * 2,
+            windowSize.y - ImGui::GetFrameHeight() - padding
+            );
+    ImGui::End();
+}
+
+void drawCourseToID(AppData &appData){
+    ImGui::Begin("CourseCodeToID");
+    if (ImGui::BeginTable("fa", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg))
+    {
+        ImGui::TableSetupColumn("Abbreviation");
+        ImGui::TableSetupColumn("ID");
+        ImGui::TableHeadersRow();
+
+        for(const auto& pair : appData.getcourseCodeToID())
+        {
+            const auto& course = pair.first;
+            const auto& id = pair.second;
+
+            ImGui::TableNextRow();
+
+            ImGui::TableSetColumnIndex(0);
+            ImGui::Text("%s", course.c_str());
+
+            ImGui::TableSetColumnIndex(1);
+            ImGui::Text("%u", id);
+
+        }
+
+        ImGui::EndTable();
+    }
+    ImGui::End();
+
+
 }
 
