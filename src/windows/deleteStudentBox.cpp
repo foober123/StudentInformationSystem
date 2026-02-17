@@ -33,9 +33,10 @@ void drawDeleteStudentBox(GuiState & guiState, AppData & appData){
 
     if (ImGui::Button("Confirm", buttonSize))
     {
-        appData.deleteStudent(guiState.selectedStudent);
+        appData.deleteStudentEntry(guiState.selectedStudent);
         guiState.inputBoxStrategy = NULL;
         guiState.defaultSortDisplayOrder(appData);
+        guiState.selectedStudent = 0;
     }
 
 

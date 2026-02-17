@@ -96,10 +96,7 @@ int main(int argc, char* argv[]){
         if(guistate.showCollegeRegistry) drawCollegeRegistry(appData);
         if(guistate.showCourseRegistry) drawCourseRegistry(appData);
         if(guistate.currentError != ERRORSTATE::NO_ERROR) drawErrorBox(guistate);
-
-
         if(guistate.inputBoxStrategy != NULL) guistate.inputBoxStrategy(guistate, appData);          
-
 
         ImGui::Begin("test");
         ImGui::Text("Selected Student: %d", guistate.selectedStudent);

@@ -259,3 +259,32 @@ void drawCourseToID(AppData &appData){
 
 }
 
+void drawCollegeToID(AppData &appData){
+    ImGui::Begin("CollegeCodeToID");
+    if (ImGui::BeginTable("fa", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg))
+    {
+        ImGui::TableSetupColumn("Abbreviation");
+        ImGui::TableSetupColumn("ID");
+        ImGui::TableHeadersRow();
+
+        for(const auto& pair : appData.getcollegeCodeToID())
+        {
+            const auto& course = pair.first;
+            const auto& id = pair.second;
+
+            ImGui::TableNextRow();
+
+            ImGui::TableSetColumnIndex(0);
+            ImGui::Text("%s", course.c_str());
+
+            ImGui::TableSetColumnIndex(1);
+            ImGui::Text("%u", id);
+
+        }
+
+        ImGui::EndTable();
+    }
+    ImGui::End();
+
+
+}

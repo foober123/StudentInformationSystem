@@ -62,11 +62,11 @@ char Vault::SerializeGender(Gender gender){
 
         // CollegeName
         std::getline(ss, field, ',');
-        c.collegeName = field;
+        c.collegeName = trim(field);
 
         // CollegeAbbreviation
         std::getline(ss, field, ',');
-        c.collegeAbreviation = field;
+        c.collegeAbreviation = trim(field);
 
         colleges.insert({c.collegeID, c});
     }
@@ -103,13 +103,13 @@ char Vault::SerializeGender(Gender gender){
         c.internalID = static_cast<uint32_t>(std::stoi(field));
 
         std::getline(ss, field, ',');
-        c.ID = field;    
+        c.ID = trim(field);    
 
         std::getline(ss, field, ',');
-        c.firstName = field;
+        c.firstName = trim(field);
 
         std::getline(ss, field, ',');
-        c.lastName = field;
+        c.lastName = trim(field);
 
         std::getline(ss, field, ',');
         c.courseID = static_cast<uint16_t>(std::stoi(field));

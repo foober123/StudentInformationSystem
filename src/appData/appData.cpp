@@ -5,6 +5,20 @@
 
 void AppData::setCollegeRegistry(std::unordered_map<uint16_t, College> collegeRegistry){
     m_collegeRegistry = collegeRegistry;
+
+    uint16_t maxID = 0;
+
+    for (const auto& [id, college] : m_collegeRegistry)
+    {
+        // Build secondary index
+        m_collegeCodeToID[college.collegeAbreviation] = id;
+
+        if (id > maxID)
+            maxID = id;
+    }
+
+    m_nextCollegeID = maxID + 1;
+
 };
 
 void AppData::setStudentRecord(std::unordered_map<uint32_t, Student> studentRecord){
@@ -15,7 +29,7 @@ void AppData::setCourseRegistry(std::unordered_map<uint16_t, Course> courseRegis
     m_courseRegistry = courseRegistry;
     m_courseCodeToID.clear();
 
-    uint32_t maxID = 0;
+    uint16_t maxID = 0;
 
     for (const auto& [id, course] : m_courseRegistry)
     {
@@ -34,7 +48,7 @@ void AppData::addStudent(Student student){
     m_studentRecord.insert({m_nextStudentInternalID, student});
 }
 
-ERRORSTATE AppData::validateStudentEntry(StudentDraft studentdraft){
+ERRORSTATE AppData::addStudentEntry(StudentDraft studentdraft){
 
     if(studentdraft.ID.length() != 9) return ERRORSTATE::INVALID_STUDENT_ID;
     if(studentdraft.ID[4] != '-') return ERRORSTATE::INVALID_STUDENT_ID;
@@ -71,8 +85,8 @@ ERRORSTATE AppData::validateStudentEntry(StudentDraft studentdraft){
 
 }
 
-ERRORSTATE AppData::validateStudentEntry(StudentDraft studentdraft, int index){
-    if(index == -1) return ERRORSTATE::INVALID_INDEX;
+ERRORSTATE AppData::editStudentEntry(StudentDraft studentdraft, uint32_t key){
+    if(key == 0) return ERRORSTATE::INVALID_INDEX;
 
 
     if(studentdraft.ID.length() != 9) return ERRORSTATE::INVALID_STUDENT_ID;
@@ -102,28 +116,10 @@ ERRORSTATE AppData::validateStudentEntry(StudentDraft studentdraft, int index){
     student.gender = static_cast<Gender>(studentdraft.gender);
     student.year = studentdraft.year;
 
-    m_studentRecord.at(index) = student;
+    m_studentRecord.at(key) = student;
     return ERRORSTATE::NO_ERROR; 
 
 }
-
-const std::unordered_map<std::string, uint16_t>& AppData::getcourseCodeToID(){
-    return m_courseCodeToID; 
-};
-
-
-
-const std::unordered_map<uint32_t, Student>& AppData::getStudentRecord(){
-    return m_studentRecord;
-};
-
-const std::unordered_map<uint16_t, College>& AppData::getCollegeRegistry(){
-    return m_collegeRegistry;
-}
-
-std::unordered_map<uint16_t, Course>& AppData::getCourseRegistry(){
-    return m_courseRegistry;    
-};  
 
 Student AppData::getStudent(uint32_t key){
     if(m_studentRecord.find(key) == m_studentRecord.end()) return INVALIDSTUDENT; 
@@ -196,15 +192,47 @@ void AppData::incrementNextCourseID(){
     m_nextCourseID++;
 }
 
-ERRORSTATE AppData::validateCourseEntry(CourseDraft draft){
+ERRORSTATE AppData::addCourseEntry(CourseDraft draft){
+    Course course;
+    course.courseAbbreviation = draft.courseAbbreviation;
+    course.courseName = draft.courseName;
+    course.collegeID = draft.collegeID;
+
+    m_courseRegistry.insert({m_nextCourseID, course});
+    m_nextCourseID++;
     return ERRORSTATE::NO_ERROR;
 };
 
-void AppData::deleteStudent(uint32_t key){
+ERRORSTATE AppData::editCourseEntry(CourseDraft draft, uint16_t key){
+
+    auto& course = m_courseRegistry.at(key);
+
+    m_courseCodeToID.erase(course.courseAbbreviation);
+
+    course.courseName = draft.courseName;
+    course.courseAbbreviation = draft.courseAbbreviation;
+    course.collegeID = draft.collegeID;
+
+    m_courseCodeToID[draft.courseAbbreviation] = key;
+
+    return ERRORSTATE::NO_ERROR;
+};
+
+void AppData::deleteCourseEntry(uint16_t key){
+    auto it = m_courseRegistry.find(key);
+    if (it == m_courseRegistry.end())
+        return;
+
+    m_courseCodeToID.erase(it->second.courseAbbreviation);
+    m_courseRegistry.erase(it);
+
+}
+
+
+void AppData::deleteStudentEntry(uint32_t key){
     auto it = m_studentRecord.find(key);
     if (it == m_studentRecord.end())
         return;
-
     m_studentRecord.erase(key);
 }
 

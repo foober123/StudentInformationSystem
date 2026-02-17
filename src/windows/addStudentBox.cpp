@@ -105,7 +105,7 @@ void drawAddStudentBox(GuiState &guiState, AppData &appData){
 
         if (ImGui::Button("Confirm", buttonSize))
         {
-            guiState.currentError = appData.validateStudentEntry(guiState.studentDraft);
+            guiState.currentError = appData.addStudentEntry(guiState.studentDraft);
             guiState.updateErrorMessage();
             if(guiState.currentError == ERRORSTATE::NO_ERROR) guiState.resetDraft();
             guiState.defaultSortDisplayOrder(appData);
