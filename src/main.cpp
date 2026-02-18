@@ -43,7 +43,10 @@ int main(int argc, char* argv[]){
     
     }
 
-    SDL_Renderer* renderer_ptr = SDL_CreateRenderer(window_ptr, -1, 0);
+    SDL_Renderer* renderer_ptr = SDL_CreateRenderer(window_ptr, 
+            -1, 
+            SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    
 
     if(!renderer_ptr){
         SDL_DestroyWindow(window_ptr);

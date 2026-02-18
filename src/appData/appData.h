@@ -47,7 +47,6 @@ class AppData{
     void setCollegeRegistry(std::unordered_map<uint16_t, College>);
     void setStudentRecord(std::unordered_map<uint32_t, Student>);
     void setCourseRegistry(std::unordered_map<uint16_t, Course>);
-    void addStudent(Student);
 
     void initCourseIDCounter(); 
     void initCollegeIDCounter();
@@ -78,8 +77,8 @@ class AppData{
     College getCollege(uint16_t key);
     Student getStudent(uint32_t key);
     private:
-    std::unordered_map<uint16_t, College> m_collegeRegistry;
     std::unordered_map<std::string, uint16_t> m_collegeCodeToID;
+    std::unordered_map<uint16_t, College> m_collegeRegistry;
 
     std::unordered_map<std::string, uint16_t> m_courseCodeToID;
     std::unordered_map<uint16_t, Course> m_courseRegistry;

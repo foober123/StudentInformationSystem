@@ -44,82 +44,7 @@ void AppData::setCourseRegistry(std::unordered_map<uint16_t, Course> courseRegis
 
 };
 
-void AppData::addStudent(Student student){
-    m_studentRecord.insert({m_nextStudentInternalID, student});
-}
 
-ERRORSTATE AppData::addStudentEntry(StudentDraft studentdraft){
-
-    if(studentdraft.ID.length() != 9) return ERRORSTATE::INVALID_STUDENT_ID;
-    if(studentdraft.ID[4] != '-') return ERRORSTATE::INVALID_STUDENT_ID;
-
-
-    for (int i = 0; i < studentdraft.ID.length(); i++)
-    {
-        if (i == 4)
-            continue;
-
-        if (!std::isdigit(static_cast<unsigned char>(studentdraft.ID[i])))
-            return ERRORSTATE::INVALID_STUDENT_ID;
-    }
-    
-    if(studentdraft.firstName.empty()) return ERRORSTATE::INVALID_NAME;
-    if(studentdraft.lastName.empty()) return ERRORSTATE::INVALID_NAME;
-    if(m_courseCodeToID.find(studentdraft.courseCode) == m_courseCodeToID.end()) return ERRORSTATE::INVALID_COURSE; 
-    if(studentdraft.year < 1) return ERRORSTATE::INVALID_YEAR;
-
-    Student student;
-
-    student.ID = studentdraft.ID;
-    student.firstName = studentdraft.firstName;
-    student.lastName = studentdraft.lastName;
-    student.courseID = m_courseCodeToID.at(studentdraft.courseCode);
-    student.gender = static_cast<Gender>(studentdraft.gender);
-    student.year = studentdraft.year;
-
-    
-    addStudent(student);
-    m_nextStudentInternalID++;
-
-    return ERRORSTATE::NO_ERROR; 
-
-}
-
-ERRORSTATE AppData::editStudentEntry(StudentDraft studentdraft, uint32_t key){
-    if(key == 0) return ERRORSTATE::INVALID_INDEX;
-
-
-    if(studentdraft.ID.length() != 9) return ERRORSTATE::INVALID_STUDENT_ID;
-    if(studentdraft.ID[4] != '-') return ERRORSTATE::INVALID_STUDENT_ID;
-
-
-    for (int i = 0; i < studentdraft.ID.length(); i++)
-    {
-        if (i == 4)
-            continue;
-
-        if (!std::isdigit(static_cast<unsigned char>(studentdraft.ID[i])))
-            return ERRORSTATE::INVALID_STUDENT_ID;
-    }
-    
-    if(studentdraft.firstName.empty()) return ERRORSTATE::INVALID_NAME;
-    if(studentdraft.lastName.empty()) return ERRORSTATE::INVALID_NAME;
-    if(m_courseCodeToID.find(studentdraft.courseCode) == m_courseCodeToID.end()) return ERRORSTATE::INVALID_COURSE; 
-    if(studentdraft.year < 1) return ERRORSTATE::INVALID_YEAR;
-
-    Student student;
-
-    student.ID = studentdraft.ID;
-    student.firstName = studentdraft.firstName;
-    student.lastName = studentdraft.lastName;
-    student.courseID = m_courseCodeToID.at(studentdraft.courseCode);
-    student.gender = static_cast<Gender>(studentdraft.gender);
-    student.year = studentdraft.year;
-
-    m_studentRecord.at(key) = student;
-    return ERRORSTATE::NO_ERROR; 
-
-}
 
 Student AppData::getStudent(uint32_t key){
     if(m_studentRecord.find(key) == m_studentRecord.end()) return INVALIDSTUDENT; 
@@ -192,47 +117,5 @@ void AppData::incrementNextCourseID(){
     m_nextCourseID++;
 }
 
-ERRORSTATE AppData::addCourseEntry(CourseDraft draft){
-    Course course;
-    course.courseAbbreviation = draft.courseAbbreviation;
-    course.courseName = draft.courseName;
-    course.collegeID = draft.collegeID;
 
-    m_courseRegistry.insert({m_nextCourseID, course});
-    m_nextCourseID++;
-    return ERRORSTATE::NO_ERROR;
-};
-
-ERRORSTATE AppData::editCourseEntry(CourseDraft draft, uint16_t key){
-
-    auto& course = m_courseRegistry.at(key);
-
-    m_courseCodeToID.erase(course.courseAbbreviation);
-
-    course.courseName = draft.courseName;
-    course.courseAbbreviation = draft.courseAbbreviation;
-    course.collegeID = draft.collegeID;
-
-    m_courseCodeToID[draft.courseAbbreviation] = key;
-
-    return ERRORSTATE::NO_ERROR;
-};
-
-void AppData::deleteCourseEntry(uint16_t key){
-    auto it = m_courseRegistry.find(key);
-    if (it == m_courseRegistry.end())
-        return;
-
-    m_courseCodeToID.erase(it->second.courseAbbreviation);
-    m_courseRegistry.erase(it);
-
-}
-
-
-void AppData::deleteStudentEntry(uint32_t key){
-    auto it = m_studentRecord.find(key);
-    if (it == m_studentRecord.end())
-        return;
-    m_studentRecord.erase(key);
-}
 
