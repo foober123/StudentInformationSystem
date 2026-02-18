@@ -10,7 +10,7 @@ struct GuiState;
 enum class Gender;
 
 struct Student;
-struct Course; 
+struct Program; 
 struct College;
 
 enum class ERRORSTATE;
@@ -22,16 +22,16 @@ struct StudentDraft{
 std::string ID; 
 std::string firstName;
 std::string lastName;
-std::string courseCode;
+std::string programCode;
 int year = 0;
 int gender = 2;
 
 };
 
-struct CourseDraft{
+struct ProgramDraft{
 uint16_t collegeID;
-std::string courseName;
-std::string courseAbbreviation;
+std::string programName;
+std::string programAbbreviation;
 };
 
 
@@ -39,12 +39,12 @@ struct GuiState{
 std::vector<size_t> displayOrder; 
 std::string searchBuffer;
 uint32_t selectedStudent;
-uint16_t selectedCourse;
+uint16_t selectedProgram;
 uint16_t selectedCollege;
 
 
 StudentDraft studentDraft;
-CourseDraft courseDraft;
+ProgramDraft programDraft;
 
 InputBoxStrategy inputBoxStrategy;
 DataTableStrategy dataTableStrategy;
@@ -53,14 +53,14 @@ ERRORSTATE currentError;
 std::string errorMessage;
 
 bool showCollegeRegistry;
-bool showCourseRegistry;
+bool showProgramRegistry;
 
 void init();
 void resetStudentDraft();
 void defaultSortDisplayOrder(AppData&);
 void updateErrorMessage();
 void preloadPending(Student,AppData&);
-void preloadPending(Course);
+void preloadPending(Program);
 void preloadPending(College);
 };
 
@@ -70,7 +70,9 @@ INVALID_STUDENT_ID,
 INVALID_NAME,
 INVALID_YEAR,
 INVALID_COURSE,
-INVALID_INDEX
+INVALID_INDEX,
+PROGRAM_IN_USE,
+COLLEGE_IN_USE
 };
 
 

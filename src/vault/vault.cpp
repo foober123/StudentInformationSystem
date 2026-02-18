@@ -8,10 +8,10 @@
 #include "../appData/appData.h"
 #include "../trim.h"
 
-Vault::Vault(std::string studentFilePath, std::string courseFilePath, std::string collegeFilePath){
+Vault::Vault(std::string studentFilePath, std::string programFilePath, std::string collegeFilePath){
     m_studentFilePath = studentFilePath; 
     m_collegeFilePath = collegeFilePath;
-    m_courseFilePath = courseFilePath;
+    m_programFilePath = programFilePath;
 
 }
 
@@ -113,7 +113,7 @@ char Vault::SerializeGender(Gender gender){
         c.lastName = trim(field);
 
         std::getline(ss, field, ',');
-        c.courseID = static_cast<uint16_t>(std::stoi(field));
+        c.programID = static_cast<uint16_t>(std::stoi(field));
      
         std::getline(ss, field, ',');
         c.year = static_cast<uint16_t>(std::stoi(field));
@@ -130,13 +130,13 @@ char Vault::SerializeGender(Gender gender){
     return students;
 };
 
-std::unordered_map<uint16_t, Course> Vault::LoadCourses(){
-    std::unordered_map<uint16_t, Course> courses;
+std::unordered_map<uint16_t, Program> Vault::LoadCourses(){
+    std::unordered_map<uint16_t, Program> programs;
 
-    std::ifstream file(m_courseFilePath);
+    std::ifstream file(m_programFilePath);
     if (!file.is_open()) {
         std::cerr << "Failed to open file\n";
-        return courses;
+        return programs;
     }
 
     std::string line;
@@ -151,25 +151,25 @@ std::unordered_map<uint16_t, Course> Vault::LoadCourses(){
         std::stringstream ss(line);
         std::string field;
 
-        Course c{};
+        Program c{};
 
         std::getline(ss, field, ',');
-        c.courseID = static_cast<uint16_t>(std::stoi(field));
+        c.programID = static_cast<uint16_t>(std::stoi(field));
 
         std::getline(ss, field, ',');
         c.collegeID = static_cast<uint16_t>(std::stoi(field));
 
         std::getline(ss, field, ',');
-        c.courseName = trim(field);
+        c.programName = trim(field);
 
         std::getline(ss, field, ',');
-        c.courseAbbreviation = trim(field);
+        c.programAbbreviation = trim(field);
         
-        courses.insert({c.courseID, c});
+        programs.insert({c.programID, c});
     }
 
 
-    return courses;
+    return programs;
 };
 
 bool Vault::saveStudents(const std::unordered_map<uint32_t,Student>& studentRecord){
@@ -191,7 +191,7 @@ bool Vault::saveStudents(const std::unordered_map<uint32_t,Student>& studentReco
                 << s.ID << ","
                 << s.firstName << ","
                 << s.lastName << ","
-                << s.courseID << ","
+                << s.programID << ","
                 << s.year << ","
                 << SerializeGender(s.gender)
                 << "\n";

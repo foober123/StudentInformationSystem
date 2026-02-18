@@ -19,7 +19,7 @@ ERRORSTATE AppData::addStudentEntry(StudentDraft studentdraft){
     
     if(studentdraft.firstName.empty()) return ERRORSTATE::INVALID_NAME;
     if(studentdraft.lastName.empty()) return ERRORSTATE::INVALID_NAME;
-    if(m_courseCodeToID.find(studentdraft.courseCode) == m_courseCodeToID.end()) return ERRORSTATE::INVALID_COURSE; 
+    if(m_programCodeToID.find(studentdraft.programCode) == m_programCodeToID.end()) return ERRORSTATE::INVALID_COURSE; 
     if(studentdraft.year < 1) return ERRORSTATE::INVALID_YEAR;
 
     Student student;
@@ -27,7 +27,7 @@ ERRORSTATE AppData::addStudentEntry(StudentDraft studentdraft){
     student.ID = studentdraft.ID;
     student.firstName = studentdraft.firstName;
     student.lastName = studentdraft.lastName;
-    student.courseID = m_courseCodeToID.at(studentdraft.courseCode);
+    student.programID = m_programCodeToID.at(studentdraft.programCode);
     student.gender = static_cast<Gender>(studentdraft.gender);
     student.year = studentdraft.year;
 
@@ -58,7 +58,7 @@ ERRORSTATE AppData::editStudentEntry(StudentDraft studentdraft, uint32_t key){
     
     if(studentdraft.firstName.empty()) return ERRORSTATE::INVALID_NAME;
     if(studentdraft.lastName.empty()) return ERRORSTATE::INVALID_NAME;
-    if(m_courseCodeToID.find(studentdraft.courseCode) == m_courseCodeToID.end()) return ERRORSTATE::INVALID_COURSE; 
+    if(m_programCodeToID.find(studentdraft.programCode) == m_programCodeToID.end()) return ERRORSTATE::INVALID_COURSE; 
     if(studentdraft.year < 1) return ERRORSTATE::INVALID_YEAR;
 
     Student student;
@@ -66,7 +66,7 @@ ERRORSTATE AppData::editStudentEntry(StudentDraft studentdraft, uint32_t key){
     student.ID = studentdraft.ID;
     student.firstName = studentdraft.firstName;
     student.lastName = studentdraft.lastName;
-    student.courseID = m_courseCodeToID.at(studentdraft.courseCode);
+    student.programID = m_programCodeToID.at(studentdraft.programCode);
     student.gender = static_cast<Gender>(studentdraft.gender);
     student.year = studentdraft.year;
 

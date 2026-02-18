@@ -59,7 +59,7 @@ void drawEditStudentBox(GuiState &guiState, AppData &appData){
 
         ImGui::TableSetColumnIndex(1);
         ImGui::InputText("##Course",
-                &guiState.studentDraft.courseCode);
+                &guiState.studentDraft.programCode);
 
         ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(0);

@@ -10,10 +10,10 @@ Student AppData::getStudent(uint32_t key){
     return m_studentRecord.at(key);
 }
 
-Course AppData::getCourse(uint16_t key){
-    if(m_courseRegistry.find(key) == m_courseRegistry.end()) return INVALIDCOURSE; 
+Program AppData::getProgram(uint16_t key){
+    if(m_programRegistry.find(key) == m_programRegistry.end()) return INVALIDCOURSE; 
 
-    return m_courseRegistry.at(key);
+    return m_programRegistry.at(key);
 }
 
 College AppData::getCollege(uint16_t key){
@@ -23,8 +23,8 @@ College AppData::getCollege(uint16_t key){
 }
 
 
-const std::unordered_map<std::string, uint16_t>& AppData::getcourseCodeToID(){
-    return m_courseCodeToID; 
+const std::unordered_map<std::string, uint16_t>& AppData::getProgramCodeToID(){
+    return m_programCodeToID; 
 };
 
 const std::unordered_map<uint32_t, Student>& AppData::getStudentRecord(){
@@ -39,8 +39,8 @@ const std::unordered_map<uint16_t, College>& AppData::getCollegeRegistry(){
     return m_collegeRegistry;
 }
 
-std::unordered_map<uint16_t, Course>& AppData::getCourseRegistry(){
-    return m_courseRegistry;    
+std::unordered_map<uint16_t, Program>& AppData::getProgramRegistry(){
+    return m_programRegistry;    
 }; 
 
 

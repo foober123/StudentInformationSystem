@@ -25,37 +25,37 @@ void AppData::setStudentRecord(std::unordered_map<uint32_t, Student> studentReco
     m_studentRecord = studentRecord;
 };
 
-void AppData::setCourseRegistry(std::unordered_map<uint16_t, Course> courseRegistry){
-    m_courseRegistry = courseRegistry;
-    m_courseCodeToID.clear();
+void AppData::setProgramRegistry(std::unordered_map<uint16_t, Program> programRegistry){
+    m_programRegistry = programRegistry;
+    m_programCodeToID.clear();
 
     uint16_t maxID = 0;
 
-    for (const auto& [id, course] : m_courseRegistry)
+    for (const auto& [id, program] : m_programRegistry)
     {
         // Build secondary index
-        m_courseCodeToID[course.courseAbbreviation] = id;
+        m_programCodeToID[program.programAbbreviation] = id;
 
         if (id > maxID)
             maxID = id;
     }
 
-    m_nextCourseID = maxID + 1;
+    m_nextProgramID = maxID + 1;
 
 };
 
 
 
-void AppData::initCourseIDCounter(){
+void AppData::initProgramIDCounter(){
     uint32_t maxID = 0;
 
-    for (const auto& [id, course] : m_courseRegistry)
+    for (const auto& [id, program] : m_programRegistry)
     {
         if (id > maxID)
             maxID = id;
     }
 
-    m_nextCourseID = maxID + 1;
+    m_nextProgramID = maxID + 1;
 
 }
 

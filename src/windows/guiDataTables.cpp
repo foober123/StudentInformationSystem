@@ -44,12 +44,12 @@ void drawStudentDataTable(GuiState& guiState, AppData& appdata){
             ImGui::TableNextColumn();
             ImGui::Text("%s", student.lastName.c_str());
 
-            const Course& course = appdata.getCourse(student.courseID);
+            const Program& program = appdata.getProgram(student.programID);
 
             ImGui::TableNextColumn();
-            ImGui::Text("%s", course.courseAbbreviation.c_str());
+            ImGui::Text("%s", program.programAbbreviation.c_str());
 
-            const College& college = appdata.getCollege(course.collegeID);
+            const College& college = appdata.getCollege(program.collegeID);
 
             ImGui::TableNextColumn();
             ImGui::Text("%s", college.collegeAbreviation.c_str());
@@ -76,21 +76,21 @@ void drawProgramDataTable(GuiState &guiState, AppData &appData){
         ImGui::TableSetupColumn("Name");
         ImGui::TableHeadersRow();
 
-        for(const auto& pair : appData.getCourseRegistry())
+        for(const auto& pair : appData.getProgramRegistry())
         {
             const auto& id = pair.first;
-            const auto& course = pair.second;
+            const auto& program = pair.second;
 
             ImGui::TableNextRow();
 
             ImGui::TableSetColumnIndex(0);
-            ImGui::Text("%s", course.courseAbbreviation.c_str());
+            ImGui::Text("%s", program.programAbbreviation.c_str());
 
             ImGui::TableSetColumnIndex(1);
-            ImGui::Text("%s", appData.getCollege(course.collegeID).collegeName.c_str());
+            ImGui::Text("%s", appData.getCollege(program.collegeID).collegeName.c_str());
 
             ImGui::TableSetColumnIndex(2);
-            ImGui::Text("%s", course.courseName.c_str());
+            ImGui::Text("%s", program.programName.c_str());
 
         }
 

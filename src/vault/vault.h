@@ -4,7 +4,7 @@
 #include <cstdint>
 
 struct Student;
-struct Course;
+struct Program;
 struct College;
 enum class Gender;
 
@@ -14,7 +14,7 @@ class Vault{
 
         std::unordered_map<uint32_t,Student> LoadStudents();
         std::unordered_map<uint16_t, College> LoadColleges();
-        std::unordered_map<uint16_t, Course> LoadCourses();
+        std::unordered_map<uint16_t, Program> LoadCourses();
 
 
         bool saveStudents(const std::unordered_map<uint32_t,Student>& studentList);
@@ -23,7 +23,7 @@ class Vault{
         char SerializeGender(Gender gender);
      
         std::string m_studentFilePath;
-        std::string m_courseFilePath;
+        std::string m_programFilePath;
         std::string m_collegeFilePath;
 
 

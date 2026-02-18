@@ -19,11 +19,11 @@ int main(int argc, char* argv[]){
     AppData appData;
 
     appData.setCollegeRegistry(vault.LoadColleges());
-    appData.setCourseRegistry(vault.LoadCourses());
+    appData.setProgramRegistry(vault.LoadCourses());
     appData.setStudentRecord(vault.LoadStudents());
 
     appData.initCollegeIDCounter();
-    appData.initCourseIDCounter();
+    appData.initProgramIDCounter();
     appData.initStudentIDCounter();
 
 
@@ -100,7 +100,7 @@ int main(int argc, char* argv[]){
         drawEntryDisplay(guistate, appData);
         guistate.dataTableStrategy(guistate, appData);
         if(guistate.showCollegeRegistry) drawCollegeRegistry(appData);
-        if(guistate.showCourseRegistry) drawCourseRegistry(appData);
+        if(guistate.showProgramRegistry) drawProgramRegistry(appData);
         if(guistate.currentError != ERRORSTATE::NO_ERROR) drawErrorBox(guistate);
         if(guistate.inputBoxStrategy != NULL) guistate.inputBoxStrategy(guistate, appData);          
 

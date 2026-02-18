@@ -22,7 +22,7 @@ void drawMenuBar(GuiState& guistate, AppData& appData, Vault& vault);
 void drawEntryDisplay(const GuiState& guiState, AppData& appData);
 void drawTaskBar(GuiState& guistate);
 void drawCollegeRegistry(AppData& appdata);
-void drawCourseRegistry(AppData& appdata);
+void drawProgramRegistry(AppData& appdata);
 void drawErrorBox(GuiState& guiState);
 
 
@@ -36,5 +36,5 @@ void drawEditStudentBox(GuiState&, AppData&);
 void drawDeleteStudentBox(GuiState&, AppData&);
 
 //DEBUGGING FUNCTIONS
-void drawCourseToID(AppData&);
+void drawProgramToID(AppData&);
 void drawCollegeToID(AppData&);

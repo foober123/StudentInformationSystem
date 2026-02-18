@@ -17,7 +17,7 @@ void drawMenuBar(GuiState& guiState, AppData& appData, Vault& vault){
                 vault.saveStudents(appData.getStudentRecord());
             }
             ImGui::Checkbox("Show College Registry", &guiState.showCollegeRegistry);
-            ImGui::Checkbox("Show Program Registry", &guiState.showCourseRegistry);
+            ImGui::Checkbox("Show Program Registry", &guiState.showProgramRegistry);
             if (ImGui::MenuItem("Exit")) {}
 
             ImGui::EndMenu();
@@ -83,8 +83,8 @@ void drawEntryDisplay(const GuiState& guiState, AppData& appData){
         ImGui::SetWindowFontScale(1.5f);
         ImGui::Text("ID: %s", student.ID.c_str());
         ImGui::Text("Name: %s %s", student.firstName.c_str(), student.lastName.c_str());
-        ImGui::Text("Program: %s", appData.getCourse(appData.getStudent(guiState.selectedStudent).courseID).courseName.c_str());
-        ImGui::Text("College: %s", appData.getCollege(appData.getCourse(appData.getStudent(guiState.selectedStudent).courseID).collegeID).collegeName.c_str());
+        ImGui::Text("Program: %s", appData.getProgram(appData.getStudent(guiState.selectedStudent).programID).programName.c_str());
+        ImGui::Text("College: %s", appData.getCollege(appData.getProgram(appData.getStudent(guiState.selectedStudent).programID).collegeID).collegeName.c_str());
         ImGui::SetWindowFontScale(1.0f);
     }
     ImGui::End();
@@ -124,8 +124,8 @@ void drawCollegeRegistry(AppData& appData){
 
 }
 
-void drawCourseRegistry(AppData &appData){
-    ImGui::Begin("Course Registry");
+void drawProgramRegistry(AppData &appData){
+    ImGui::Begin("Program Registry");
     if (ImGui::BeginTable("CollegeTable", 4, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg))
     {
         ImGui::TableSetupColumn("Program ID");
@@ -134,24 +134,24 @@ void drawCourseRegistry(AppData &appData){
         ImGui::TableSetupColumn("Abbreviation");
         ImGui::TableHeadersRow();
 
-        for(const auto& pair : appData.getCourseRegistry())
+        for(const auto& pair : appData.getProgramRegistry())
         {
             const auto& id = pair.first;
-            const auto& course = pair.second;
+            const auto& program = pair.second;
 
             ImGui::TableNextRow();
 
             ImGui::TableSetColumnIndex(0);
-            ImGui::Text("%u", course.courseID);
+            ImGui::Text("%u", program.programID);
 
             ImGui::TableSetColumnIndex(1);
-            ImGui::Text("%s", appData.getCollege(course.collegeID).collegeName.c_str());
+            ImGui::Text("%s", appData.getCollege(program.collegeID).collegeName.c_str());
 
             ImGui::TableSetColumnIndex(2);
-            ImGui::Text("%s", course.courseName.c_str());
+            ImGui::Text("%s", program.programName.c_str());
 
             ImGui::TableSetColumnIndex(3);
-            ImGui::Text("%s", course.courseAbbreviation.c_str());
+            ImGui::Text("%s", program.programAbbreviation.c_str());
         }
 
         ImGui::EndTable();
@@ -189,23 +189,23 @@ void drawErrorBox(GuiState &guiState){
     ImGui::End();
 }
 
-void drawCourseToID(AppData &appData){
-    ImGui::Begin("CourseCodeToID");
+void drawProgramToID(AppData &appData){
+    ImGui::Begin("ProgramCodeToID");
     if (ImGui::BeginTable("fa", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg))
     {
         ImGui::TableSetupColumn("Abbreviation");
         ImGui::TableSetupColumn("ID");
         ImGui::TableHeadersRow();
 
-        for(const auto& pair : appData.getcourseCodeToID())
+        for(const auto& pair : appData.getProgramCodeToID())
         {
-            const auto& course = pair.first;
+            const auto& program = pair.first;
             const auto& id = pair.second;
 
             ImGui::TableNextRow();
 
             ImGui::TableSetColumnIndex(0);
-            ImGui::Text("%s", course.c_str());
+            ImGui::Text("%s", program.c_str());
 
             ImGui::TableSetColumnIndex(1);
             ImGui::Text("%u", id);
@@ -228,13 +228,13 @@ void drawCollegeToID(AppData &appData){
 
         for(const auto& pair : appData.getcollegeCodeToID())
         {
-            const auto& course = pair.first;
+            const auto& program = pair.first;
             const auto& id = pair.second;
 
             ImGui::TableNextRow();
 
             ImGui::TableSetColumnIndex(0);
-            ImGui::Text("%s", course.c_str());
+            ImGui::Text("%s", program.c_str());
 
             ImGui::TableSetColumnIndex(1);
             ImGui::Text("%u", id);
