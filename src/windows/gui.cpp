@@ -5,14 +5,17 @@
 #include "../include/imgui_stdlib.h"
 
 #include "../appData/appData.h"
+#include "../vault/vault.h"
 
 
-
-void drawMenuBar(GuiState& guiState){
+void drawMenuBar(GuiState& guiState, AppData& appData, Vault& vault){
     if (ImGui::BeginMainMenuBar())
     {
         if (ImGui::BeginMenu("Database"))
         {
+            if(ImGui::MenuItem("Save File")){
+                vault.saveStudents(appData.getStudentRecord());
+            }
             ImGui::Checkbox("Show College Registry", &guiState.showCollegeRegistry);
             ImGui::Checkbox("Show Program Registry", &guiState.showCourseRegistry);
             if (ImGui::MenuItem("Exit")) {}
@@ -22,9 +25,31 @@ void drawMenuBar(GuiState& guiState){
 
         if (ImGui::BeginMenu("Entries"))
         {
-            if(ImGui::MenuItem("Add Entry")){guiState.inputBoxStrategy = drawAddStudentBox;}
-            if(ImGui::MenuItem("Edit Entry")){guiState.inputBoxStrategy = drawEditStudentBox;}
+            ImGui::Text("Student");
+            ImGui::Separator();
+            if(ImGui::MenuItem("Add Entry")){
+                guiState.resetStudentDraft();
+                guiState.inputBoxStrategy = drawAddStudentBox;
+            }
+
+            if(ImGui::MenuItem("Edit Entry")){
+                guiState.preloadPending(appData.getStudent(guiState.selectedStudent),appData);
+                guiState.inputBoxStrategy = drawEditStudentBox;
+            }
+
             if(ImGui::MenuItem("Delete Entry")){guiState.inputBoxStrategy = drawDeleteStudentBox;}
+
+            ImGui::Text("Program");
+            ImGui::Separator();
+            if(ImGui::MenuItem("Add Program")){} 
+            if(ImGui::MenuItem("Edit Program")){} 
+            if(ImGui::MenuItem("Delete Program")){}  
+
+            ImGui::Text("College");
+            ImGui::Separator();
+            if(ImGui::MenuItem("Add College")){} 
+            if(ImGui::MenuItem("Edit College")){} 
+            if(ImGui::MenuItem("Delete College")){} 
 
             ImGui::EndMenu();
         }
@@ -42,71 +67,6 @@ std::string serializeGender(Gender gender){
         case Gender::Other: return "Other";
     }
     return "N/A";
-}
-
-
-void drawStudentDataTable(GuiState& guiState, AppData& appdata){
-    ImGui::Begin("data");
-    if (ImGui::BeginTable("StudentsTable", 7,     ImGuiTableFlags_Borders |
-                ImGuiTableFlags_RowBg |
-                ImGuiTableFlags_ScrollY |
-                ImGuiTableFlags_Resizable))
-    {
-        // Setup columns
-        ImGui::TableSetupColumn("ID");
-        ImGui::TableSetupColumn("First Name");
-        ImGui::TableSetupColumn("Last Name");
-        ImGui::TableSetupColumn("Program");
-        ImGui::TableSetupColumn("College");
-        ImGui::TableSetupColumn("Year");
-        ImGui::TableSetupColumn("Gender");
-        ImGui::TableHeadersRow();
-
-
-        for (size_t i = 0; i < guiState.displayOrder.size(); i++)
-        {
-            uint32_t studentID = guiState.displayOrder[i];
-            const Student& student = appdata.getStudent(studentID);
-
-            ImGui::TableNextRow();
-
-            bool isSelected = (guiState.selectedStudent == studentID);
-
-            ImGui::TableNextColumn();
-            if (ImGui::Selectable(student.ID.c_str(),
-                        isSelected,
-                        ImGuiSelectableFlags_SpanAllColumns))
-            {
-                guiState.selectedStudent = studentID;
-            }
-
-            ImGui::TableNextColumn();
-            ImGui::Text("%s", student.firstName.c_str());
-
-            ImGui::TableNextColumn();
-            ImGui::Text("%s", student.lastName.c_str());
-
-            const Course& course = appdata.getCourse(student.courseID);
-
-            ImGui::TableNextColumn();
-            ImGui::Text("%s", course.courseAbbreviation.c_str());
-
-            const College& college = appdata.getCollege(course.collegeID);
-
-            ImGui::TableNextColumn();
-            ImGui::Text("%s", college.collegeAbreviation.c_str());
-
-            ImGui::TableNextColumn();
-            ImGui::Text("%d", student.year);
-
-            ImGui::TableNextColumn();
-            ImGui::Text("%s", serializeGender(student.gender).c_str());
-        }
-
-
-        ImGui::EndTable();
-    }
-    ImGui::End();
 }
 
 void drawTaskBar(GuiState& guiState){
@@ -256,7 +216,6 @@ void drawCourseToID(AppData &appData){
     }
     ImGui::End();
 
-
 }
 
 void drawCollegeToID(AppData &appData){
@@ -285,6 +244,5 @@ void drawCollegeToID(AppData &appData){
         ImGui::EndTable();
     }
     ImGui::End();
-
 
 }

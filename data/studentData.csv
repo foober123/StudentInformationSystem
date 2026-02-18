@@ -1,4 +1,5 @@
-INTERNAL_ID, ID_NUMBER,FIRSTNAME,SURNAME,PROGRAMID,YEAR,GENDER
-1,2024-0796,Charlson,Fabrigar,1,2,M
-2,2021-1488,First,Last,2,4,M
+Internal_ID, ID,FirstName,LastName,CourseID,Year,Gender
+4,2025-2222,Jacobi,DSP,4,1,F
 3,2023-2316,Phil,Matibag,3,2,O
+2,2021-1488,First,Last,2,4,M
+1,2024-0796,Charlson,Fabrigar,1,2,M

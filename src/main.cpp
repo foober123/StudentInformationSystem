@@ -27,6 +27,7 @@ int main(int argc, char* argv[]){
     appData.initStudentIDCounter();
 
 
+
     SDL_Window* window_ptr = SDL_CreateWindow(
             "Shrimple Student Information System", 
             SDL_WINDOWPOS_CENTERED, 
@@ -68,10 +69,12 @@ int main(int argc, char* argv[]){
             );
     
     ImGui_ImplSDLRenderer2_Init(renderer_ptr);
+
+
     GuiState guistate;
     guistate.init();
     guistate.defaultSortDisplayOrder(appData);
-
+    guistate.dataTableStrategy = drawStudentDataTable;
 
     bool running = true;
     bool myBool = false;
@@ -92,10 +95,10 @@ int main(int argc, char* argv[]){
         ImGui::DockSpaceOverViewport();
         //PUT GUI STUFF BELOW HERE
 
-        drawMenuBar(guistate); 
+        drawMenuBar(guistate, appData, vault); 
         drawTaskBar(guistate);
         drawEntryDisplay(guistate, appData);
-        drawStudentDataTable(guistate, appData);
+        guistate.dataTableStrategy(guistate, appData);
         if(guistate.showCollegeRegistry) drawCollegeRegistry(appData);
         if(guistate.showCourseRegistry) drawCourseRegistry(appData);
         if(guistate.currentError != ERRORSTATE::NO_ERROR) drawErrorBox(guistate);

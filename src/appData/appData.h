@@ -26,7 +26,6 @@ std::string courseAbbreviation;
 };
 
 struct Student{
-uint32_t internalID;
 std::string ID;
 std::string firstName;
 std::string lastName;
@@ -35,12 +34,9 @@ int year;
 Gender gender;
 };
 
-
-
-const Student INVALIDSTUDENT = {65535,"Not Found", "Not Found", "Not Found", 65535, 65535, Gender::Other};
+const Student INVALIDSTUDENT = {"Not Found", "Not Found", "Not Found", 65535, 65535, Gender::Other};
 const College INVALIDCOLLEGE = {65535, "Not Found", "Not Found"};
 const Course INVALIDCOURSE = {65535, 65535, "Not Found", "Not Found"};
-
 
 class AppData{
     public:
@@ -52,10 +48,6 @@ class AppData{
     void initCollegeIDCounter();
     void initStudentIDCounter();
    
-    void incrementNextStudentInternalID(); 
-    void incrementNextCollegeID(); 
-    void incrementNextCourseID();
-
     ERRORSTATE addStudentEntry(StudentDraft);
     ERRORSTATE editStudentEntry(StudentDraft, uint32_t); 
     void deleteStudentEntry(uint32_t);

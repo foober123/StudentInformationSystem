@@ -6,20 +6,17 @@
 
 class AppData;
 struct GuiState;
+
 enum class Gender;
 
+struct Student;
+struct Course; 
+struct College;
+
+enum class ERRORSTATE;
+
 typedef void (*InputBoxStrategy)(GuiState& guistate, AppData& appData);
-
-
-enum class ERRORSTATE{
-NO_ERROR,
-INVALID_STUDENT_ID,
-INVALID_NAME,
-INVALID_YEAR,
-INVALID_COURSE,
-INVALID_INDEX
-};
-
+typedef void (*DataTableStrategy)(GuiState& guistate, AppData& appData);
 
 struct StudentDraft{
 std::string ID; 
@@ -37,6 +34,7 @@ std::string courseName;
 std::string courseAbbreviation;
 };
 
+
 struct GuiState{
 std::vector<size_t> displayOrder; 
 std::string searchBuffer;
@@ -49,37 +47,30 @@ StudentDraft studentDraft;
 CourseDraft courseDraft;
 
 InputBoxStrategy inputBoxStrategy;
+DataTableStrategy dataTableStrategy;
+
 ERRORSTATE currentError;
 std::string errorMessage;
 
 bool showCollegeRegistry;
 bool showCourseRegistry;
 
-void init(){
-selectedStudent = 0;
-selectedCollege = 0;
-selectedCourse = 0;
-
-searchBuffer = "";
-displayOrder = {}; 
-inputBoxStrategy = NULL;
-currentError = ERRORSTATE::NO_ERROR;
-
-showCollegeRegistry = false;
-showCourseRegistry = false;
-}
-
-void resetDraft(){
-studentDraft.ID.clear();
-studentDraft.firstName.clear();
-studentDraft.lastName.clear();
-studentDraft.courseCode.clear();
-studentDraft.year = 0;
-studentDraft.gender = 2;
-
-}
-
+void init();
+void resetStudentDraft();
 void defaultSortDisplayOrder(AppData&);
 void updateErrorMessage();
-
+void preloadPending(Student,AppData&);
+void preloadPending(Course);
+void preloadPending(College);
 };
+
+enum class ERRORSTATE{
+NO_ERROR,
+INVALID_STUDENT_ID,
+INVALID_NAME,
+INVALID_YEAR,
+INVALID_COURSE,
+INVALID_INDEX
+};
+
+

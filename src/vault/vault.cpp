@@ -96,11 +96,12 @@ char Vault::SerializeGender(Gender gender){
 
         std::stringstream ss(line);
         std::string field;
+        uint32_t internalID;
 
         Student c{};
 
         std::getline(ss, field, ',');
-        c.internalID = static_cast<uint32_t>(std::stoi(field));
+        internalID = static_cast<uint32_t>(std::stoi(field));
 
         std::getline(ss, field, ',');
         c.ID = trim(field);    
@@ -121,7 +122,7 @@ char Vault::SerializeGender(Gender gender){
         c.gender = ParseGender(field);
 
 
-        students.insert({c.internalID, c});
+        students.insert({internalID, c});
     }
 
 
@@ -171,7 +172,7 @@ std::unordered_map<uint16_t, Course> Vault::LoadCourses(){
     return courses;
 };
 
-bool Vault::saveStudents(std::vector<Student>& studentList){
+bool Vault::saveStudents(const std::unordered_map<uint32_t,Student>& studentRecord){
     std::ofstream file(m_studentFilePath);
     if (!file.is_open())
         return false;
@@ -179,19 +180,22 @@ bool Vault::saveStudents(std::vector<Student>& studentList){
     // Write header
     file << "Internal_ID, ID,FirstName,LastName,CourseID,Year,Gender\n";
 
-    for (const Student& s : studentList)
+    for (const auto& pair : studentRecord)
     {
-        file
-            << s.internalID << ","
-            << s.ID << ","
-            << s.firstName << ","
-            << s.lastName << ","
-            << s.courseID << ","
-            << s.year << ","
-            << SerializeGender(s.gender)
-            << "\n";
+        const auto& internalID = pair.first;
+        const auto& s = pair.second;
+
+        {
+            file
+                << internalID << ","
+                << s.ID << ","
+                << s.firstName << ","
+                << s.lastName << ","
+                << s.courseID << ","
+                << s.year << ","
+                << SerializeGender(s.gender)
+                << "\n";
+        }
     }
-
     return true;
-
 };

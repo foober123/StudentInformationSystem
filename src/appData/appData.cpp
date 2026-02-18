@@ -46,26 +46,6 @@ void AppData::setCourseRegistry(std::unordered_map<uint16_t, Course> courseRegis
 
 
 
-Student AppData::getStudent(uint32_t key){
-    if(m_studentRecord.find(key) == m_studentRecord.end()) return INVALIDSTUDENT; 
-
-
-    return m_studentRecord.at(key);
-}
-
-Course AppData::getCourse(uint16_t key){
-    if(m_courseRegistry.find(key) == m_courseRegistry.end()) return INVALIDCOURSE; 
-
-
-    return m_courseRegistry.at(key);
-}
-
-College AppData::getCollege(uint16_t key){
-    if(m_collegeRegistry.find(key) == m_collegeRegistry.end()) return INVALIDCOLLEGE; 
-
-    return m_collegeRegistry.at(key);
-}
-
 void AppData::initCourseIDCounter(){
     uint32_t maxID = 0;
 
@@ -104,18 +84,5 @@ void AppData::initStudentIDCounter(){
     m_nextStudentInternalID = maxID + 1;
 
 }
-
-void AppData::incrementNextStudentInternalID(){
-    m_nextStudentInternalID++;
-}
-
-void AppData::incrementNextCollegeID(){
-    m_nextCollegeID++;
-}
-
-void AppData::incrementNextCourseID(){
-    m_nextCourseID++;
-}
-
 
 

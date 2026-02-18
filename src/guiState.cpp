@@ -1,4 +1,3 @@
-#include <cstdint>
 #include <string>
 #include <vector>
 #include <assert.h>
@@ -45,4 +44,37 @@ void GuiState::updateErrorMessage(){
 
 }
 
+void GuiState::preloadPending(Student student, AppData& appData){
+studentDraft.ID = student.ID;
+studentDraft.firstName = student.firstName;
+studentDraft.lastName = student.lastName;
+studentDraft.gender = static_cast<int>(student.gender);
+studentDraft.courseCode = appData.getCourse(student.courseID).courseAbbreviation; 
+studentDraft.year = student.year;
+}
 
+void GuiState::init(){
+selectedStudent = 0;
+selectedCollege = 0;
+selectedCourse = 0;
+
+searchBuffer = "";
+displayOrder = {}; 
+currentError = ERRORSTATE::NO_ERROR;
+
+dataTableStrategy = NULL;
+inputBoxStrategy = NULL;
+
+showCollegeRegistry = false;
+showCourseRegistry = false;
+}
+
+void GuiState::resetStudentDraft(){
+studentDraft.ID.clear();
+studentDraft.firstName.clear();
+studentDraft.lastName.clear();
+studentDraft.courseCode.clear();
+studentDraft.year = 0;
+studentDraft.gender = 2;
+
+}

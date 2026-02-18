@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 
+class Vault;
 struct GuiState;
 struct AppData;
 enum class Gender;
@@ -17,13 +18,18 @@ static const char* genderItems[] =
 
 
 std::string serializeGender(Gender gender);
-void drawStudentDataTable(GuiState& guiState, AppData& appdata);
-void drawMenuBar(GuiState& guistate);
+void drawMenuBar(GuiState& guistate, AppData& appData, Vault& vault);
 void drawEntryDisplay(const GuiState& guiState, AppData& appData);
 void drawTaskBar(GuiState& guistate);
 void drawCollegeRegistry(AppData& appdata);
 void drawCourseRegistry(AppData& appdata);
 void drawErrorBox(GuiState& guiState);
+
+
+void drawStudentDataTable(GuiState& guiState, AppData& appdata);
+void drawProgramDataTable(GuiState& guiState, AppData& appdata);
+void drawCollegeDataTable(GuiState& guiState, AppData& appdata);
+
 
 void drawAddStudentBox(GuiState& guiState, AppData& appData);
 void drawEditStudentBox(GuiState&, AppData&);
