@@ -272,6 +272,5 @@ void drawGuiStateInfo(GuiState &guiState){
         ImGui::Separator();
 
 
-
     ImGui::End();
 }

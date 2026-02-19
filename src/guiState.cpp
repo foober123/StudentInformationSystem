@@ -41,6 +41,10 @@ void GuiState::updateErrorMessage(){
                 errorMessage = "Select an entry before you edit";
                 break;
 
+            case ERRORSTATE::STUDENT_ID_IN_USE:
+                errorMessage = "There is another student using this id";
+                break;
+
             case ERRORSTATE::PROGRAM_IN_USE:
                 errorMessage = "There is at least one student in this program. Edit that student or delete it";
                 break;

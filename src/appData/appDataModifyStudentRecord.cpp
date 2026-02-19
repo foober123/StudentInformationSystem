@@ -1,24 +1,14 @@
 #include "appData.h"
 #include "../guiState.h"
+#include <cctype>
 #include <cstdint>
 
 ERRORSTATE AppData::addStudentEntry(StudentDraft studentdraft){
+   if(!validateStudentID(studentdraft.ID)) return ERRORSTATE::INVALID_STUDENT_ID;
+    if(!validateRepeatingStudentID(studentdraft.ID)) return ERRORSTATE::STUDENT_ID_IN_USE;
+    if(!validateStudentName(studentdraft.firstName)) return ERRORSTATE::INVALID_NAME;
+    if(!validateStudentName(studentdraft.lastName)) return ERRORSTATE::INVALID_NAME;
 
-    if(studentdraft.ID.length() != 9) return ERRORSTATE::INVALID_STUDENT_ID;
-    if(studentdraft.ID[4] != '-') return ERRORSTATE::INVALID_STUDENT_ID;
-
-
-    for (int i = 0; i < studentdraft.ID.length(); i++)
-    {
-        if (i == 4)
-            continue;
-
-        if (!std::isdigit(static_cast<unsigned char>(studentdraft.ID[i])))
-            return ERRORSTATE::INVALID_STUDENT_ID;
-    }
-    
-    if(studentdraft.firstName.empty()) return ERRORSTATE::INVALID_NAME;
-    if(studentdraft.lastName.empty()) return ERRORSTATE::INVALID_NAME;
     if(m_programCodeToID.find(studentdraft.programCode) == m_programCodeToID.end()) return ERRORSTATE::INVALID_COURSE; 
     if(studentdraft.year < 1) return ERRORSTATE::INVALID_YEAR;
 
@@ -42,22 +32,11 @@ ERRORSTATE AppData::addStudentEntry(StudentDraft studentdraft){
 ERRORSTATE AppData::editStudentEntry(StudentDraft studentdraft, uint32_t key){
     if(key == 0) return ERRORSTATE::INVALID_INDEX;
 
+    if(!validateStudentID(studentdraft.ID)) return ERRORSTATE::INVALID_STUDENT_ID;
+    if(!validateRepeatingStudentID(studentdraft.ID, key)) return ERRORSTATE::STUDENT_ID_IN_USE;
+    if(!validateStudentName(studentdraft.firstName)) return ERRORSTATE::INVALID_NAME;
+    if(!validateStudentName(studentdraft.lastName)) return ERRORSTATE::INVALID_NAME;
 
-    if(studentdraft.ID.length() != 9) return ERRORSTATE::INVALID_STUDENT_ID;
-    if(studentdraft.ID[4] != '-') return ERRORSTATE::INVALID_STUDENT_ID;
-
-
-    for (int i = 0; i < studentdraft.ID.length(); i++)
-    {
-        if (i == 4)
-            continue;
-
-        if (!std::isdigit(static_cast<unsigned char>(studentdraft.ID[i])))
-            return ERRORSTATE::INVALID_STUDENT_ID;
-    }
-    
-    if(studentdraft.firstName.empty()) return ERRORSTATE::INVALID_NAME;
-    if(studentdraft.lastName.empty()) return ERRORSTATE::INVALID_NAME;
     if(m_programCodeToID.find(studentdraft.programCode) == m_programCodeToID.end()) return ERRORSTATE::INVALID_COURSE; 
     if(studentdraft.year < 1) return ERRORSTATE::INVALID_YEAR;
 
@@ -82,4 +61,55 @@ void AppData::deleteStudentEntry(uint32_t key){
     if (it == m_studentRecord.end())
         return;
     m_studentRecord.erase(key);
+}
+
+bool AppData::validateStudentID(std::string draftID){
+    if(draftID.length() != 9) return false;
+    if(draftID[4] != '-') return false;
+
+
+    for (int i = 0; i < draftID.length(); i++)
+    {
+        if (i == 4)
+            continue;
+
+        if (!std::isdigit(static_cast<unsigned char>(draftID[i])))
+            return false;
+    }
+
+    return true;
+}
+
+bool AppData::validateStudentName(std::string name){
+    if(name.empty()) return false;
+
+    for(auto &ch: name){
+        if(std::isdigit(ch)) return false;
+
+    }
+    
+    return true;
+}
+
+bool AppData::validateRepeatingStudentID(std::string id){
+    for(auto &pair: m_studentRecord){
+        const auto& student = pair.second;
+
+        if(pair.second.ID == id) return false;
+    }
+
+    return true;    
+}
+
+bool AppData::validateRepeatingStudentID(std::string id, uint32_t key){
+    for(auto &pair: m_studentRecord){
+        const auto& internalID = pair.first;
+        const auto& student = pair.second;
+
+        if(key == internalID) continue;
+
+        if(pair.second.ID == id) return false;
+    }
+
+    return true;    
 }

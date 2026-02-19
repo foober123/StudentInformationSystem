@@ -76,4 +76,8 @@ class AppData{
     uint32_t m_nextStudentInternalID = 1;
     std::unordered_map<uint32_t, Student> m_studentRecord; 
 
+    bool validateRepeatingStudentID(std::string);
+    bool validateRepeatingStudentID(std::string, uint32_t);
+    bool validateStudentID(std::string);
+    bool validateStudentName(std::string);
 };

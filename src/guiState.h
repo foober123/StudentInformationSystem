@@ -29,9 +29,9 @@ int gender = 2;
 };
 
 struct ProgramDraft{
-uint16_t collegeID;
 std::string programName;
 std::string programAbbreviation;
+std::string collegeCode;
 };
 
 
@@ -71,6 +71,7 @@ INVALID_NAME,
 INVALID_YEAR,
 INVALID_COURSE,
 INVALID_INDEX,
+STUDENT_ID_IN_USE,
 PROGRAM_IN_USE,
 COLLEGE_IN_USE
 };

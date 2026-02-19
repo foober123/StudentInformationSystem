@@ -7,7 +7,7 @@ ERRORSTATE AppData::addProgramEntry(ProgramDraft draft){
     Program program;
     program.programAbbreviation = draft.programAbbreviation;
     program.programName = draft.programName;
-    program.collegeID = draft.collegeID;
+    program.collegeID = m_collegeCodeToID.at(draft.collegeCode);
 
     m_programRegistry.insert({m_nextProgramID, program});
     m_nextProgramID++;
@@ -22,7 +22,7 @@ ERRORSTATE AppData::editProgramEntry(ProgramDraft draft, uint16_t key){
 
     program.programName = draft.programName;
     program.programAbbreviation = draft.programAbbreviation;
-    program.collegeID = draft.collegeID;
+    program.collegeID = m_collegeCodeToID.at(draft.collegeCode);
 
     m_programCodeToID[draft.programAbbreviation] = key;
 
