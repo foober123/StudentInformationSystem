@@ -31,7 +31,7 @@ void drawMenuBar(GuiState& guiState, AppData& appData, Vault& vault){
             }
 
             if(ImGui::MenuItem("Edit Entry")){
-                guiState.preloadPending(appData.getStudent(guiState.selectedStudent),appData);
+                guiState.preloadPending(appData.makeStudentDraft(guiState.selectedStudent));
                 guiState.inputBoxStrategy = drawEditStudentBox;
             }
 
@@ -39,7 +39,7 @@ void drawMenuBar(GuiState& guiState, AppData& appData, Vault& vault){
 
             ImGui::Text("Program");
             ImGui::Separator();
-            if(ImGui::MenuItem("Add Program")){} 
+            if(ImGui::MenuItem("Add Program")){guiState.inputBoxStrategy = drawAddProgramBox;} 
             if(ImGui::MenuItem("Edit Program")){} 
             if(ImGui::MenuItem("Delete Program")){}  
 
@@ -178,7 +178,7 @@ void drawProgramRegistry(AppData &appData){
 
 void drawErrorBox(GuiState &guiState){
     ImGui::Begin("Error");
-    ImGui::Text("%s", guiState.errorMessage.c_str());
+    ImGui::Text("%s", toString(guiState.currentError).c_str());
 
     ImVec2 buttonSize = ImVec2(90, 0); 
 
@@ -195,7 +195,6 @@ void drawErrorBox(GuiState &guiState){
     if (ImGui::Button("Close", buttonSize))
     {
         guiState.currentError = ERRORSTATE::NO_ERROR;
-        guiState.updateErrorMessage();
         ImGui::CloseCurrentPopup();
     }
 

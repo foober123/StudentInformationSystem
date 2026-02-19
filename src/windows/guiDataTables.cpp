@@ -76,10 +76,8 @@ void drawProgramDataTable(GuiState &guiState, AppData &appData){
         ImGui::TableSetupColumn("Name");
         ImGui::TableHeadersRow();
 
-        for(const auto& pair : appData.getProgramRegistry())
+        for(const auto& [id, program] : appData.getProgramRegistry())
         {
-            const auto& id = pair.first;
-            const auto& program = pair.second;
 
             ImGui::TableNextRow();
 
@@ -107,20 +105,27 @@ void drawCollegeDataTable(GuiState &guiState, AppData &appData){
         ImGui::TableSetupColumn("Name");
         ImGui::TableHeadersRow();
 
-        for(const auto& pair : appData.getCollegeRegistry())
+
+        for (const auto& [id, college] : appData.getCollegeRegistry())
         {
-            const auto& id = pair.first;
-            const auto& college = pair.second;
+            bool isSelected = (guiState.selectedCollege == id);
 
             ImGui::TableNextRow();
 
             ImGui::TableSetColumnIndex(0);
-            ImGui::Text("%s", college.collegeAbreviation.c_str());
+
+            if (ImGui::Selectable(
+                        college.collegeAbreviation.c_str(),
+                        isSelected,
+                        ImGuiSelectableFlags_SpanAllColumns))
+            {
+                guiState.selectedCollege = id;
+            }
 
             ImGui::TableSetColumnIndex(1);
             ImGui::Text("%s", college.collegeName.c_str());
-
         }
+
 
         ImGui::EndTable();
     }

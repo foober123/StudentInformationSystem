@@ -1,6 +1,8 @@
 #pragma once
 #include <cstdint>
 #include <string>
+#include <array>
+#include <string_view>
 #include <vector>
 #include <assert.h>
 
@@ -49,19 +51,22 @@ InputBoxStrategy inputBoxStrategy;
 DataTableStrategy dataTableStrategy;
 
 ERRORSTATE currentError;
-std::string errorMessage;
 
 bool showCollegeRegistry;
 bool showProgramRegistry;
 bool showDebugWindow;
 
 void init();
+
 void resetStudentDraft();
+void resetProgramDraft();
+
 void defaultSortDisplayOrder(AppData&);
-void updateErrorMessage();
-void preloadPending(Student,AppData&);
+
+void preloadPending(StudentDraft);
 void preloadPending(Program);
 void preloadPending(College);
+
 };
 
 enum class ERRORSTATE{
@@ -72,8 +77,33 @@ INVALID_YEAR,
 INVALID_COURSE,
 INVALID_INDEX,
 STUDENT_ID_IN_USE,
+PROGRAM_CODE_IN_USE,
+INVALID_PROGRAM_CODE,
+INVALID_PROGRAM_NAME,
 PROGRAM_IN_USE,
-COLLEGE_IN_USE
+COLLEGE_IN_USE,
+INVALID_COLLEGE,
+
+COUNT
 };
 
+static const std::array<std::string,
+    static_cast<size_t>(ERRORSTATE::COUNT)> errorMessages = {
+    "No Errors but you shouldn't be seeing this message",
+    "Invalid ID format. Follow XXXX-XXXX where X are digits",
+    "Invalid Name. Cannot contain Numbers or Special Characters",
+    "Invalid Year. Cannot be negative or zero",
+    "Invalid Course. Refer to Program Registry for Codes",
+    "Select an entry before you edit",
+    "There is another student using this id",
+    "There is another program using this code",
+    "Program code cannot contain numbers or special characters except '-'",
+    "Program name cannot contain numbers or special characters except '-'",
+    "There is a student in this program",
+    "There is a program in this college",
+    "Invalid College. Refer to College Registry for Codes"
+};
 
+static const std::string toString(ERRORSTATE e) {
+    return errorMessages[static_cast<size_t>(e)];
+}

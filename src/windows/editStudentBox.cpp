@@ -7,11 +7,10 @@
 void drawEditStudentBox(GuiState &guiState, AppData &appData){
     if(guiState.selectedStudent == 0){
     guiState.currentError = ERRORSTATE::INVALID_INDEX;
-    guiState.updateErrorMessage();
     guiState.inputBoxStrategy = NULL;
     }
 
-    ImGui::Begin("Edit Student");
+    ImGui::Begin("Modify Entry");
 
     if (ImGui::BeginTable("StudentForm", 2,
                 ImGuiTableFlags_SizingStretchProp))
@@ -110,7 +109,6 @@ void drawEditStudentBox(GuiState &guiState, AppData &appData){
         if (ImGui::Button("Confirm", buttonSize))
         {
             guiState.currentError = appData.editStudentEntry(guiState.studentDraft, guiState.selectedStudent);
-            guiState.updateErrorMessage();
             if(guiState.currentError == ERRORSTATE::NO_ERROR) guiState.resetStudentDraft();
             guiState.defaultSortDisplayOrder(appData);
         }

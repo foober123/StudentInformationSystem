@@ -38,6 +38,9 @@ const Program INVALIDCOURSE = {65535, "Not Found", "Not Found"};
 
 class AppData{
     public:
+    
+    StudentDraft makeStudentDraft(uint32_t);
+
     void setCollegeRegistry(std::unordered_map<uint16_t, College>);
     void setStudentRecord(std::unordered_map<uint32_t, Student>);
     void setProgramRegistry(std::unordered_map<uint16_t, Program>);
@@ -80,4 +83,10 @@ class AppData{
     bool validateRepeatingStudentID(std::string, uint32_t);
     bool validateStudentID(std::string);
     bool validateStudentName(std::string);
+
+    bool validateProgramCode(std::string);
+    bool validateProgramCode(std::string, uint16_t);
+    bool validateProgramCodeFormat(std::string);
+    bool validateCollegeCode(std::string);
+
 };

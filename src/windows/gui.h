@@ -35,6 +35,8 @@ void drawAddStudentBox(GuiState& guiState, AppData& appData);
 void drawEditStudentBox(GuiState&, AppData&);
 void drawDeleteStudentBox(GuiState&, AppData&);
 
+void drawAddProgramBox(GuiState&, AppData&);
+
 //DEBUGGING FUNCTIONS
 void drawProgramToID(AppData&);
 void drawCollegeToID(AppData&);

@@ -4,7 +4,7 @@
 #include "../appData/appData.h"
 
 void drawDeleteStudentBox(GuiState & guiState, AppData & appData){
-    ImGui::Begin("Delete Student");
+    ImGui::Begin("Delete Entry");
     ImGui::Text("Are you sure?");
     ImVec2 buttonSize = ImVec2(120, 0); 
 
