@@ -71,6 +71,25 @@ std::string serializeGender(Gender gender){
 
 void drawTaskBar(GuiState& guiState){
     ImGui::Begin("taskbar", NULL, ImGuiWindowFlags_NoTitleBar);
+
+    if(ImGui::Button("S")){
+        guiState.dataTableStrategy = drawStudentDataTable;
+    }
+
+    ImGui::SameLine();
+
+    if(ImGui::Button("P")){
+        guiState.dataTableStrategy = drawProgramDataTable;
+    }
+
+    ImGui::SameLine();
+
+    if(ImGui::Button("C")){
+        guiState.dataTableStrategy = drawCollegeDataTable;
+    }
+
+    ImGui::SameLine();
+
     ImGui::InputText("Search", &guiState.searchBuffer);
     ImGui::End();
 }

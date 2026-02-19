@@ -94,7 +94,6 @@ int main(int argc, char* argv[]){
         ImGui::NewFrame();
         ImGui::DockSpaceOverViewport();
         //PUT GUI STUFF BELOW HERE
-
         drawMenuBar(guistate, appData, vault); 
         drawTaskBar(guistate);
         drawEntryDisplay(guistate, appData);

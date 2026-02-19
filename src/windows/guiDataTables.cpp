@@ -97,5 +97,33 @@ void drawProgramDataTable(GuiState &guiState, AppData &appData){
         ImGui::EndTable();
     }
     ImGui::End();
+}
+
+void drawCollegeDataTable(GuiState &guiState, AppData &appData){
+    ImGui::Begin("data");
+    if (ImGui::BeginTable("CollegeTable", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg))
+    {
+        ImGui::TableSetupColumn("College Code");
+        ImGui::TableSetupColumn("Name");
+        ImGui::TableHeadersRow();
+
+        for(const auto& pair : appData.getCollegeRegistry())
+        {
+            const auto& id = pair.first;
+            const auto& college = pair.second;
+
+            ImGui::TableNextRow();
+
+            ImGui::TableSetColumnIndex(0);
+            ImGui::Text("%s", college.collegeAbreviation.c_str());
+
+            ImGui::TableSetColumnIndex(1);
+            ImGui::Text("%s", college.collegeName.c_str());
+
+        }
+
+        ImGui::EndTable();
+    }
+    ImGui::End();
 
 }
