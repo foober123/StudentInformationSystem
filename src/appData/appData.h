@@ -13,13 +13,11 @@ Other
 };
 
 struct College{
-uint16_t collegeID;
 std::string collegeName;
 std::string collegeAbreviation; 
 };
 
 struct Program{
-uint16_t programID;
 uint16_t collegeID;
 std::string programName;
 std::string programAbbreviation;
@@ -35,8 +33,8 @@ Gender gender;
 };
 
 const Student INVALIDSTUDENT = {"Not Found", "Not Found", "Not Found", 65535, 65535, Gender::Other};
-const College INVALIDCOLLEGE = {65535, "Not Found", "Not Found"};
-const Program INVALIDCOURSE = {65535, 65535, "Not Found", "Not Found"};
+const College INVALIDCOLLEGE = {"Not Found", "Not Found"};
+const Program INVALIDCOURSE = {65535, "Not Found", "Not Found"};
 
 class AppData{
     public:
@@ -56,8 +54,6 @@ class AppData{
     ERRORSTATE editProgramEntry(ProgramDraft, uint16_t);
     ERRORSTATE deleteProgramEntry(uint16_t);
 
-
-    //Used for Editing where the index is the address of the student
     const std::unordered_map<std::string, uint16_t> getcollegeCodeToID();
     const std::unordered_map<uint16_t, College>& getCollegeRegistry();
     std::unordered_map<uint16_t, Program>& getProgramRegistry();

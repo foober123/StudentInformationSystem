@@ -38,3 +38,4 @@ void drawDeleteStudentBox(GuiState&, AppData&);
 //DEBUGGING FUNCTIONS
 void drawProgramToID(AppData&);
 void drawCollegeToID(AppData&);
+void drawGuiStateInfo(GuiState&);

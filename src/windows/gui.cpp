@@ -1,9 +1,7 @@
 #include "../guiState.h"
 #include "gui.h"
-
 #include "../include/imgui.h"
 #include "../include/imgui_stdlib.h"
-
 #include "../appData/appData.h"
 #include "../vault/vault.h"
 
@@ -127,7 +125,7 @@ void drawCollegeRegistry(AppData& appData){
                 ImGui::TableNextRow();
 
                 ImGui::TableSetColumnIndex(0);
-                ImGui::Text("%u", college.collegeID);
+                ImGui::Text("%u", id);
 
                 ImGui::TableSetColumnIndex(1);
                 ImGui::Text("%s", college.collegeName.c_str());
@@ -161,7 +159,7 @@ void drawProgramRegistry(AppData &appData){
             ImGui::TableNextRow();
 
             ImGui::TableSetColumnIndex(0);
-            ImGui::Text("%u", program.programID);
+            ImGui::Text("%u", id);
 
             ImGui::TableSetColumnIndex(1);
             ImGui::Text("%s", appData.getCollege(program.collegeID).collegeName.c_str());
@@ -264,4 +262,16 @@ void drawCollegeToID(AppData &appData){
     }
     ImGui::End();
 
+}
+
+void drawGuiStateInfo(GuiState &guiState){
+    ImGui::Begin("Gui State Information");
+        ImGui::Text("Selected Student Internal ID: %d", guiState.selectedStudent);
+        ImGui::Text("Selected Program Internal ID: %d", guiState.selectedProgram);
+        ImGui::Text("Selected College Internal ID: %d", guiState.selectedCollege);
+        ImGui::Separator();
+
+
+
+    ImGui::End();
 }

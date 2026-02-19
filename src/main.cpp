@@ -74,10 +74,8 @@ int main(int argc, char* argv[]){
     GuiState guistate;
     guistate.init();
     guistate.defaultSortDisplayOrder(appData);
-    guistate.dataTableStrategy = drawStudentDataTable;
 
     bool running = true;
-    bool myBool = false;
 
     while(running){
         SDL_Event e;
@@ -98,16 +96,13 @@ int main(int argc, char* argv[]){
         drawTaskBar(guistate);
         drawEntryDisplay(guistate, appData);
         guistate.dataTableStrategy(guistate, appData);
+        if(ImGui::IsKeyPressed(ImGuiKey_F3)) guistate.showDebugWindow = !guistate.showDebugWindow;
         if(guistate.showCollegeRegistry) drawCollegeRegistry(appData);
         if(guistate.showProgramRegistry) drawProgramRegistry(appData);
+        if(guistate.showDebugWindow) drawGuiStateInfo(guistate);
         if(guistate.currentError != ERRORSTATE::NO_ERROR) drawErrorBox(guistate);
         if(guistate.inputBoxStrategy != NULL) guistate.inputBoxStrategy(guistate, appData);          
-
         ImGui::Begin("test");
-        ImGui::Text("Selected Student: %d", guistate.selectedStudent);
-        ImGui::Checkbox("FAFD", &myBool);
-
-        
         ImGui::End();
 
 

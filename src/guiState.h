@@ -53,6 +53,7 @@ std::string errorMessage;
 
 bool showCollegeRegistry;
 bool showProgramRegistry;
+bool showDebugWindow;
 
 void init();
 void resetStudentDraft();

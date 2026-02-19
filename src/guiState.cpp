@@ -2,6 +2,7 @@
 #include <vector>
 #include <assert.h>
 #include "guiState.h"
+#include "windows/gui.h"
 #include "appData/appData.h"
 
 void GuiState::defaultSortDisplayOrder(AppData& appData){
@@ -71,11 +72,12 @@ searchBuffer = "";
 displayOrder = {}; 
 currentError = ERRORSTATE::NO_ERROR;
 
-dataTableStrategy = NULL;
+dataTableStrategy = drawStudentDataTable;
 inputBoxStrategy = NULL;
 
 showCollegeRegistry = false;
 showProgramRegistry = false;
+showDebugWindow = false;
 }
 
 void GuiState::resetStudentDraft(){

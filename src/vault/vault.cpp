@@ -53,12 +53,13 @@ char Vault::SerializeGender(Gender gender){
 
         std::stringstream ss(line);
         std::string field;
+        uint32_t internalID;
 
         College c{};
 
         // CollegeID
         std::getline(ss, field, ',');
-        c.collegeID = static_cast<uint16_t>(std::stoi(field));
+        internalID = static_cast<uint16_t>(std::stoi(field));
 
         // CollegeName
         std::getline(ss, field, ',');
@@ -68,7 +69,7 @@ char Vault::SerializeGender(Gender gender){
         std::getline(ss, field, ',');
         c.collegeAbreviation = trim(field);
 
-        colleges.insert({c.collegeID, c});
+        colleges.insert({internalID, c});
     }
     
 
@@ -150,11 +151,12 @@ std::unordered_map<uint16_t, Program> Vault::LoadCourses(){
 
         std::stringstream ss(line);
         std::string field;
-
+        uint32_t internalID;
+        
         Program c{};
 
         std::getline(ss, field, ',');
-        c.programID = static_cast<uint16_t>(std::stoi(field));
+        internalID = static_cast<uint16_t>(std::stoi(field));
 
         std::getline(ss, field, ',');
         c.collegeID = static_cast<uint16_t>(std::stoi(field));
@@ -165,7 +167,7 @@ std::unordered_map<uint16_t, Program> Vault::LoadCourses(){
         std::getline(ss, field, ',');
         c.programAbbreviation = trim(field);
         
-        programs.insert({c.programID, c});
+        programs.insert({internalID, c});
     }
 
 
