@@ -55,7 +55,13 @@ ProgramDraft programDraft;
 CollegeDraft collegeDraft;
 
 InputBoxStrategy inputBoxStrategy;
+
 DataTableStrategy dataTableStrategy;
+InputBoxStrategy addEntryStrategy;
+InputBoxStrategy editEntryStrategy;
+InputBoxStrategy deleteEntryStrategy;
+
+
 
 ERRORSTATE currentError;
 
@@ -71,6 +77,10 @@ void resetCollegeDraft();
 
 void defaultSortDisplayOrder(AppData&);
 void defaultSortDisplayOrder(const std::unordered_map<uint16_t, Program>&);
+
+void initStudentStrategies();
+void initProgramStrategies();
+void initCollegeStrategies();
 
 void preloadPending(StudentDraft);
 };

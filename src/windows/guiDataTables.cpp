@@ -77,7 +77,7 @@ void drawProgramDataTable(GuiState &guiState, AppData &appData){
         ImGui::TableHeadersRow();
     
         for(size_t id : guiState.programDisplayOrder){
-            bool isSelected = (guiState.selectedCollege == id);
+            bool isSelected = (guiState.selectedProgram == id);
             const auto& program = appData.getProgram(id);
 
             ImGui::TableNextRow();
@@ -89,7 +89,7 @@ void drawProgramDataTable(GuiState &guiState, AppData &appData){
                         isSelected,
                         ImGuiSelectableFlags_SpanAllColumns))
             {
-                guiState.selectedCollege = id;
+                guiState.selectedProgram = id;
             }
 
             ImGui::TableSetColumnIndex(1);

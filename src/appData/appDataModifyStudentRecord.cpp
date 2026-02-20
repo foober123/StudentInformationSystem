@@ -30,8 +30,7 @@ ERRORSTATE AppData::addStudentEntry(StudentDraft studentdraft){
 }
 
 ERRORSTATE AppData::editStudentEntry(StudentDraft studentdraft, uint32_t key){
-    if(key == 0) return ERRORSTATE::INVALID_INDEX;
-
+    if(!checkStudentIDValidity(key)) return ERRORSTATE::INVALID_INDEX;
     if(!validateStudentID(studentdraft.ID)) return ERRORSTATE::INVALID_STUDENT_ID;
     if(!validateRepeatingStudentID(studentdraft.ID, key)) return ERRORSTATE::STUDENT_ID_IN_USE;
     if(!validateStudentName(studentdraft.firstName)) return ERRORSTATE::INVALID_NAME;

@@ -17,10 +17,11 @@ ERRORSTATE AppData::addProgramEntry(ProgramDraft draft){
     m_programRegistry.insert({m_nextProgramID, program});
     m_programCodeToID.insert({draft.programAbbreviation,m_nextProgramID});
     m_nextProgramID++;
-    return ERRORSTATE::NO_ERROR;
+   return ERRORSTATE::NO_ERROR;
 };
 
 ERRORSTATE AppData::editProgramEntry(ProgramDraft draft, uint16_t key){
+    if(!checkProgramIDValidity(key)) return ERRORSTATE::INVALID_INDEX;
     if(!validateProgramCode(draft.programAbbreviation, key)) return ERRORSTATE::PROGRAM_CODE_IN_USE;      
     if(!validateProgramCodeFormat(draft.programAbbreviation)) return ERRORSTATE::INVALID_PROGRAM_NAME;
     if(!validateCollegeCode(draft.collegeCode)) return ERRORSTATE::INVALID_COLLEGE;

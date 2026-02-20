@@ -40,8 +40,8 @@ void drawMenuBar(GuiState& guiState, AppData& appData, Vault& vault){
             ImGui::Text("Program");
             ImGui::Separator();
             if(ImGui::MenuItem("Add Program")){guiState.inputBoxStrategy = drawAddProgramBox;} 
-            if(ImGui::MenuItem("Edit Program")){} 
-            if(ImGui::MenuItem("Delete Program")){}  
+            if(ImGui::MenuItem("Edit Program")){guiState.inputBoxStrategy = drawEditProgramBox;} 
+            if(ImGui::MenuItem("Delete Program")){guiState.inputBoxStrategy = drawDeleteProgramBox;}  
 
             ImGui::Text("College");
             ImGui::Separator();
@@ -71,19 +71,37 @@ void drawTaskBar(GuiState& guiState){
     ImGui::Begin("taskbar", NULL, ImGuiWindowFlags_NoTitleBar);
 
     if(ImGui::Button("S")){
-        guiState.dataTableStrategy = drawStudentDataTable;
+        guiState.initStudentStrategies();
     }
 
     ImGui::SameLine();
 
     if(ImGui::Button("P")){
-        guiState.dataTableStrategy = drawProgramDataTable;
+        guiState.initProgramStrategies();
     }
 
     ImGui::SameLine();
 
     if(ImGui::Button("C")){
-        guiState.dataTableStrategy = drawCollegeDataTable;
+        guiState.initCollegeStrategies();
+    }
+
+    ImGui::SameLine();
+
+    if(ImGui::Button("Add")){
+        guiState.inputBoxStrategy = guiState.addEntryStrategy;
+    }
+
+    ImGui::SameLine();
+
+    if(ImGui::Button("Edit")){
+        guiState.inputBoxStrategy = guiState.editEntryStrategy;
+    }
+
+    ImGui::SameLine();
+
+    if(ImGui::Button("Delete")){
+        guiState.inputBoxStrategy = guiState.deleteEntryStrategy;
     }
 
     ImGui::SameLine();

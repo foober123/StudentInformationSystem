@@ -21,6 +21,7 @@ ERRORSTATE AppData::addCollegeEntry(CollegeDraft draft){
 }
 
 ERRORSTATE AppData::editCollegeEntry(CollegeDraft draft, uint16_t key){
+    if(!checkCollegeIDValidity(key)) return ERRORSTATE::INVALID_INDEX;
     if(!validateRepeatingCollegeCode(draft.collegeCode, key)) return ERRORSTATE::COLLEGE_CODE_IN_USE;
     if(!validateCollegeNameFormat(draft.collegeName)) return ERRORSTATE::INVALID_PROGRAM_NAME;
 
@@ -37,13 +38,13 @@ ERRORSTATE AppData::editCollegeEntry(CollegeDraft draft, uint16_t key){
 }
 
 ERRORSTATE AppData::deleteCollege(uint16_t key){
+    auto it = m_collegeRegistry.find(key);
+    if (it == m_collegeRegistry.end()) return ERRORSTATE::INVALID_INDEX;
 
     for(const auto& [id,program] : m_programRegistry){
         if(program.collegeID == key) return ERRORSTATE::COLLEGE_IN_USE;
     }
 
-    auto it = m_collegeRegistry.find(key);
-    if (it == m_collegeRegistry.end()) return ERRORSTATE::INVALID_INDEX;
 
     m_collegeCodeToID.erase(it->second.collegeAbreviation);
     m_collegeRegistry.erase(key);

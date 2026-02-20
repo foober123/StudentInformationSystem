@@ -64,7 +64,8 @@ class AppData{
     ERRORSTATE deleteCollege(uint16_t);
 
     bool checkStudentIDValidity(uint32_t);
-
+    bool checkProgramIDValidity(uint16_t);
+    bool checkCollegeIDValidity(uint16_t);
 
     const std::unordered_map<std::string, uint16_t> getcollegeCodeToID();
     const std::unordered_map<uint16_t, College>& getCollegeRegistry();
