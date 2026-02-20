@@ -2,7 +2,7 @@
 #include <cstdint>
 #include <string>
 #include <array>
-#include <string_view>
+#include <unordered_map>
 #include <vector>
 #include <assert.h>
 
@@ -44,6 +44,7 @@ std::string collegeCode;
 
 struct GuiState{
 std::vector<size_t> displayOrder; 
+std::vector<uint16_t> programDisplayOrder;
 std::string searchBuffer;
 uint32_t selectedStudent;
 uint16_t selectedProgram;
@@ -69,6 +70,7 @@ void resetProgramDraft();
 void resetCollegeDraft();
 
 void defaultSortDisplayOrder(AppData&);
+void defaultSortDisplayOrder(const std::unordered_map<uint16_t, Program>&);
 
 void preloadPending(StudentDraft);
 };

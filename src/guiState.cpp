@@ -12,7 +12,14 @@ void GuiState::defaultSortDisplayOrder(AppData& appData){
     for (const auto& [id, student] : appData.getStudentRecord()){
         displayOrder.push_back(id);
     }
+}
 
+void GuiState::defaultSortDisplayOrder(const std::unordered_map<uint16_t, Program>& programRegistry){
+    programDisplayOrder.clear();
+
+    for (const auto& [id, program] : programRegistry){
+        programDisplayOrder.push_back(id);
+    }
 }
 
 void GuiState::preloadPending(StudentDraft student){

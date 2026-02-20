@@ -7,7 +7,7 @@ struct AppData;
 enum class Gender;
 
 
-typedef void (*InputBoxStrategy)(GuiState& guistate, AppData& appData);
+typedef void (*InputBoxStrategy)(GuiState& , AppData& );
 
 static const char* genderItems[] =
 {
@@ -17,25 +17,27 @@ static const char* genderItems[] =
 };
 
 
-std::string serializeGender(Gender gender);
-void drawMenuBar(GuiState& guistate, AppData& appData, Vault& vault);
-void drawEntryDisplay(const GuiState& guiState, AppData& appData);
-void drawTaskBar(GuiState& guistate);
-void drawCollegeRegistry(AppData& appdata);
-void drawProgramRegistry(AppData& appdata);
-void drawErrorBox(GuiState& guiState);
+std::string serializeGender(Gender );
+void drawMenuBar(GuiState& , AppData& , Vault& );
+void drawEntryDisplay(const GuiState& , AppData& );
+void drawTaskBar(GuiState& );
+void drawCollegeRegistry(AppData& );
+void drawProgramRegistry(AppData& );
+void drawErrorBox(GuiState& );
 
 
-void drawStudentDataTable(GuiState& guiState, AppData& appdata);
-void drawProgramDataTable(GuiState& guiState, AppData& appdata);
-void drawCollegeDataTable(GuiState& guiState, AppData& appdata);
+void drawStudentDataTable(GuiState& , AppData&);
+void drawProgramDataTable(GuiState& , AppData&);
+void drawCollegeDataTable(GuiState& , AppData&);
 
 
-void drawAddStudentBox(GuiState& guiState, AppData& appData);
+void drawAddStudentBox(GuiState&, AppData&);
 void drawEditStudentBox(GuiState&, AppData&);
 void drawDeleteStudentBox(GuiState&, AppData&);
 
 void drawAddProgramBox(GuiState&, AppData&);
+void drawEditProgramBox(GuiState&, AppData&);
+void drawDeleteProgramBox(GuiState&, AppData&);
 
 void drawAddCollegeBox(GuiState&, AppData&);
 void drawEditCollegeBox(GuiState&, AppData&);

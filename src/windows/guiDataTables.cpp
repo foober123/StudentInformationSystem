@@ -69,27 +69,35 @@ void drawStudentDataTable(GuiState& guiState, AppData& appdata){
 
 void drawProgramDataTable(GuiState &guiState, AppData &appData){
     ImGui::Begin("data");
-    if (ImGui::BeginTable("CollegeTable", 3, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg))
+    if (ImGui::BeginTable("ProgramTable", 3, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg))
     {
         ImGui::TableSetupColumn("Code");
         ImGui::TableSetupColumn("College");
         ImGui::TableSetupColumn("Name");
         ImGui::TableHeadersRow();
-
-        for(const auto& [id, program] : appData.getProgramRegistry())
-        {
+    
+        for(size_t id : guiState.programDisplayOrder){
+            bool isSelected = (guiState.selectedCollege == id);
+            const auto& program = appData.getProgram(id);
 
             ImGui::TableNextRow();
 
             ImGui::TableSetColumnIndex(0);
-            ImGui::Text("%s", program.programAbbreviation.c_str());
+
+            if (ImGui::Selectable(
+                        program.programAbbreviation.c_str(),
+                        isSelected,
+                        ImGuiSelectableFlags_SpanAllColumns))
+            {
+                guiState.selectedCollege = id;
+            }
 
             ImGui::TableSetColumnIndex(1);
-            ImGui::Text("%s", appData.getCollege(program.collegeID).collegeName.c_str());
+            ImGui::Text("%s", appData.getCollege(program.collegeID).collegeAbreviation.c_str());
 
             ImGui::TableSetColumnIndex(2);
             ImGui::Text("%s", program.programName.c_str());
-
+            
         }
 
         ImGui::EndTable();

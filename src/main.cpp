@@ -74,6 +74,7 @@ int main(int argc, char* argv[]){
     GuiState guistate;
     guistate.init();
     guistate.defaultSortDisplayOrder(appData);
+    guistate.defaultSortDisplayOrder(appData.getProgramRegistry());
 
     bool running = true;
 

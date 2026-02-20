@@ -4,14 +4,9 @@
 #include "../include/imgui_stdlib.h"
 #include "../appData/appData.h"
 
-void drawEditStudentBox(GuiState &guiState, AppData &appData){
-    if(!appData.checkStudentIDValidity(guiState.selectedStudent)){
-    guiState.currentError = ERRORSTATE::INVALID_INDEX;
-    guiState.inputBoxStrategy = NULL;
-    }
-
+void drawEditProgramBox(GuiState &guiState, AppData &appData){
     ImGui::Begin("Modify Entry");
-    ImGui::Text("Edit Student");
+    ImGui::Text("Edit Program");
     ImGui::Separator();
     if (ImGui::BeginTable("StudentForm", 2,
                 ImGuiTableFlags_SizingStretchProp))
@@ -23,61 +18,30 @@ void drawEditStudentBox(GuiState &guiState, AppData &appData){
         ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(0);
         ImGui::AlignTextToFramePadding();
-        ImGui::Text("ID:");
+        ImGui::Text("Program Code:");
 
         ImGui::TableSetColumnIndex(1);
-        ImGui::InputText("##ID",
-                &guiState.studentDraft.ID);
-
-        // First Name
-        ImGui::TableNextRow();
-        ImGui::TableSetColumnIndex(0);
-        ImGui::AlignTextToFramePadding();
-        ImGui::Text("First Name:");
-
-        ImGui::TableSetColumnIndex(1);
-        ImGui::InputText("##FirstName",
-                &guiState.studentDraft.firstName);
-
-        // Last Name
-        ImGui::TableNextRow();
-        ImGui::TableSetColumnIndex(0);
-        ImGui::AlignTextToFramePadding();
-        ImGui::Text("Last Name:");
-
-        ImGui::TableSetColumnIndex(1);
-        ImGui::InputText("##LastName",
-                &guiState.studentDraft.lastName);
-
-        // Course
-        ImGui::TableNextRow();
-        ImGui::TableSetColumnIndex(0);
-        ImGui::AlignTextToFramePadding();
-        ImGui::Text("Course:");
-
-        ImGui::TableSetColumnIndex(1);
-        ImGui::InputText("##Course",
-                &guiState.studentDraft.programCode);
+        ImGui::InputText("##ProgramCode",
+                &guiState.programDraft.programAbbreviation);
 
         ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(0);
         ImGui::AlignTextToFramePadding();
-        ImGui::Text("Year:");
+        ImGui::Text("Program Name");
 
         ImGui::TableSetColumnIndex(1);
-        ImGui::InputInt("##Year", &guiState.studentDraft.year, 1, 6);
+        ImGui::InputText("##ProgramName",
+                &guiState.programDraft.programName);
 
-        // Gender
         ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(0);
         ImGui::AlignTextToFramePadding();
-        ImGui::Text("Gender:");
+        ImGui::Text("College Code:");
 
         ImGui::TableSetColumnIndex(1);
-        ImGui::Combo("##Gender",
-                (int*)&guiState.studentDraft.gender,
-                genderItems,
-                IM_ARRAYSIZE(genderItems));
+        ImGui::InputText("##CollegeCode",
+                &guiState.programDraft.collegeCode);
+
 
         ImGui::EndTable();
 
@@ -109,10 +73,10 @@ void drawEditStudentBox(GuiState &guiState, AppData &appData){
 
         if (ImGui::Button("Confirm", buttonSize))
         {
-            guiState.currentError = appData.editStudentEntry(guiState.studentDraft, guiState.selectedStudent);
+            guiState.currentError = appData.editProgramEntry(guiState.programDraft, guiState.selectedProgram);
             if(guiState.currentError == ERRORSTATE::NO_ERROR){
-            guiState.resetStudentDraft();
-            guiState.defaultSortDisplayOrder(appData);
+            guiState.resetProgramDraft();
+            guiState.defaultSortDisplayOrder(appData.getProgramRegistry());            
             }
         }
 
@@ -123,3 +87,4 @@ void drawEditStudentBox(GuiState &guiState, AppData &appData){
     }
 
 }
+
