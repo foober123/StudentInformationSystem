@@ -6,7 +6,8 @@
 
 void drawAddStudentBox(GuiState &guiState, AppData &appData){
     ImGui::Begin("Modify Entry");
-
+    ImGui::Text("Add Student");
+    ImGui::Separator();
     if (ImGui::BeginTable("StudentForm", 2,
                 ImGuiTableFlags_SizingStretchProp))
     {

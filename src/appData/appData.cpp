@@ -85,4 +85,9 @@ void AppData::initStudentIDCounter(){
 
 }
 
+bool AppData::checkStudentIDValidity(uint32_t id){
+    const auto& it = m_collegeRegistry.find(id);
+    if (it == m_collegeRegistry.end()) return false;
 
+return true;
+}

@@ -4,9 +4,9 @@
 #include "../include/imgui_stdlib.h"
 #include "../appData/appData.h"
 
-void drawAddProgramBox(GuiState &guiState, AppData &appData){
+void drawAddCollegeBox(GuiState &guiState, AppData &appData){
     ImGui::Begin("Modify Entry");
-    ImGui::Text("Add Program");
+    ImGui::Text("Add College");
     ImGui::Separator();
     if (ImGui::BeginTable("StudentForm", 2,
                 ImGuiTableFlags_SizingStretchProp))
@@ -18,29 +18,21 @@ void drawAddProgramBox(GuiState &guiState, AppData &appData){
         ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(0);
         ImGui::AlignTextToFramePadding();
-        ImGui::Text("Program Code:");
-
-        ImGui::TableSetColumnIndex(1);
-        ImGui::InputText("##ProgramCode",
-                &guiState.programDraft.programAbbreviation);
-
-        ImGui::TableNextRow();
-        ImGui::TableSetColumnIndex(0);
-        ImGui::AlignTextToFramePadding();
-        ImGui::Text("Program Name");
-
-        ImGui::TableSetColumnIndex(1);
-        ImGui::InputText("##ProgramName",
-                &guiState.programDraft.programName);
-
-        ImGui::TableNextRow();
-        ImGui::TableSetColumnIndex(0);
-        ImGui::AlignTextToFramePadding();
         ImGui::Text("College Code:");
 
         ImGui::TableSetColumnIndex(1);
         ImGui::InputText("##CollegeCode",
-                &guiState.programDraft.collegeCode);
+                &guiState.collegeDraft.collegeCode);
+
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(0);
+        ImGui::AlignTextToFramePadding();
+        ImGui::Text("College Name");
+
+        ImGui::TableSetColumnIndex(1);
+        ImGui::InputText("##ProgramName",
+                &guiState.collegeDraft.collegeName);
+
 
 
         ImGui::EndTable();
@@ -73,8 +65,8 @@ void drawAddProgramBox(GuiState &guiState, AppData &appData){
 
         if (ImGui::Button("Confirm", buttonSize))
         {
-            guiState.currentError = appData.addProgramEntry(guiState.programDraft);
-            if(guiState.currentError == ERRORSTATE::NO_ERROR) guiState.resetProgramDraft();
+            guiState.currentError = appData.addCollegeEntry(guiState.collegeDraft);
+            if(guiState.currentError == ERRORSTATE::NO_ERROR) guiState.resetCollegeDraft();
             guiState.defaultSortDisplayOrder(appData);
         }
 
@@ -85,4 +77,3 @@ void drawAddProgramBox(GuiState &guiState, AppData &appData){
     }
 
 }
-

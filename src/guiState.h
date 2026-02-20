@@ -36,6 +36,11 @@ std::string programAbbreviation;
 std::string collegeCode;
 };
 
+struct CollegeDraft{
+std::string collegeName;
+std::string collegeCode;
+
+};
 
 struct GuiState{
 std::vector<size_t> displayOrder; 
@@ -46,6 +51,7 @@ uint16_t selectedCollege;
 
 StudentDraft studentDraft;
 ProgramDraft programDraft;
+CollegeDraft collegeDraft;
 
 InputBoxStrategy inputBoxStrategy;
 DataTableStrategy dataTableStrategy;
@@ -60,13 +66,11 @@ void init();
 
 void resetStudentDraft();
 void resetProgramDraft();
+void resetCollegeDraft();
 
 void defaultSortDisplayOrder(AppData&);
 
 void preloadPending(StudentDraft);
-void preloadPending(Program);
-void preloadPending(College);
-
 };
 
 enum class ERRORSTATE{
@@ -83,6 +87,7 @@ INVALID_PROGRAM_NAME,
 PROGRAM_IN_USE,
 COLLEGE_IN_USE,
 INVALID_COLLEGE,
+COLLEGE_CODE_IN_USE,
 
 COUNT
 };
@@ -101,7 +106,8 @@ static const std::array<std::string,
     "Program name cannot contain numbers or special characters except '-'",
     "There is a student in this program",
     "There is a program in this college",
-    "Invalid College. Refer to College Registry for Codes"
+    "Invalid College. Refer to College Registry for Codes",
+    "Another College is using this code"
 };
 
 static const std::string toString(ERRORSTATE e) {

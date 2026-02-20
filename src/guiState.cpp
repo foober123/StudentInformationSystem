@@ -1,3 +1,4 @@
+#include <cstdint>
 #include <string>
 #include <vector>
 #include <assert.h>
@@ -15,12 +16,14 @@ void GuiState::defaultSortDisplayOrder(AppData& appData){
 }
 
 void GuiState::preloadPending(StudentDraft student){
+
 studentDraft.ID = student.ID;
 studentDraft.firstName = student.firstName;
 studentDraft.lastName = student.lastName;
 studentDraft.gender = static_cast<int>(student.gender);
 studentDraft.programCode = student.programCode;
 studentDraft.year = student.year;
+
 }
 
 void GuiState::init(){
@@ -54,5 +57,11 @@ void GuiState::resetProgramDraft(){
 programDraft.programAbbreviation.clear();
 programDraft.programName.clear();
 programDraft.collegeCode.clear();
+
+}
+
+void GuiState::resetCollegeDraft(){
+collegeDraft.collegeCode.clear();
+collegeDraft.collegeName.clear();
 
 }

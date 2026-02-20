@@ -5,13 +5,14 @@
 #include "../appData/appData.h"
 
 void drawEditStudentBox(GuiState &guiState, AppData &appData){
-    if(guiState.selectedStudent == 0){
+    if(!appData.checkStudentIDValidity(guiState.selectedStudent)){
     guiState.currentError = ERRORSTATE::INVALID_INDEX;
     guiState.inputBoxStrategy = NULL;
     }
 
     ImGui::Begin("Modify Entry");
-
+    ImGui::Text("Edit Student");
+    ImGui::Separator();
     if (ImGui::BeginTable("StudentForm", 2,
                 ImGuiTableFlags_SizingStretchProp))
     {

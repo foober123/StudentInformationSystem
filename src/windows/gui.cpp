@@ -45,9 +45,9 @@ void drawMenuBar(GuiState& guiState, AppData& appData, Vault& vault){
 
             ImGui::Text("College");
             ImGui::Separator();
-            if(ImGui::MenuItem("Add College")){} 
-            if(ImGui::MenuItem("Edit College")){} 
-            if(ImGui::MenuItem("Delete College")){} 
+            if(ImGui::MenuItem("Add College")){guiState.inputBoxStrategy = drawAddCollegeBox;} 
+            if(ImGui::MenuItem("Edit College")){guiState.inputBoxStrategy = drawEditCollegeBox;} 
+            if(ImGui::MenuItem("Delete College")){guiState.inputBoxStrategy = drawDeleteCollegeBox;} 
 
             ImGui::EndMenu();
         }

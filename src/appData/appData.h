@@ -4,6 +4,7 @@
 
 struct StudentDraft;
 struct ProgramDraft;
+struct CollegeDraft;
 enum class ERRORSTATE;
 
 enum class Gender{
@@ -40,6 +41,7 @@ class AppData{
     public:
     
     StudentDraft makeStudentDraft(uint32_t);
+    CollegeDraft makeCollegeDraft(uint16_t);
 
     void setCollegeRegistry(std::unordered_map<uint16_t, College>);
     void setStudentRecord(std::unordered_map<uint32_t, Student>);
@@ -56,6 +58,13 @@ class AppData{
     ERRORSTATE addProgramEntry(ProgramDraft);
     ERRORSTATE editProgramEntry(ProgramDraft, uint16_t);
     ERRORSTATE deleteProgramEntry(uint16_t);
+
+    ERRORSTATE addCollegeEntry(CollegeDraft);
+    ERRORSTATE editCollegeEntry(CollegeDraft, uint16_t);
+    ERRORSTATE deleteCollege(uint16_t);
+
+    bool checkStudentIDValidity(uint32_t);
+
 
     const std::unordered_map<std::string, uint16_t> getcollegeCodeToID();
     const std::unordered_map<uint16_t, College>& getCollegeRegistry();
@@ -79,6 +88,8 @@ class AppData{
     uint32_t m_nextStudentInternalID = 1;
     std::unordered_map<uint32_t, Student> m_studentRecord; 
 
+
+
     bool validateRepeatingStudentID(std::string);
     bool validateRepeatingStudentID(std::string, uint32_t);
     bool validateStudentID(std::string);
@@ -89,4 +100,7 @@ class AppData{
     bool validateProgramCodeFormat(std::string);
     bool validateCollegeCode(std::string);
 
+    bool validateRepeatingCollegeCode(std::string);
+    bool validateRepeatingCollegeCode(std::string, uint16_t);
+    bool validateCollegeNameFormat(std::string);
 };
