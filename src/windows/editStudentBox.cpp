@@ -112,7 +112,6 @@ void drawEditStudentBox(GuiState &guiState, AppData &appData){
             guiState.currentError = appData.editStudentEntry(guiState.studentDraft, guiState.selectedStudent);
             if(guiState.currentError == ERRORSTATE::NO_ERROR){
             guiState.resetStudentDraft();
-            guiState.defaultSortDisplayOrder(appData);
             }
         }
 

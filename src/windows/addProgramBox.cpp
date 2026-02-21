@@ -76,7 +76,7 @@ void drawAddProgramBox(GuiState &guiState, AppData &appData){
             guiState.currentError = appData.addProgramEntry(guiState.programDraft);
             if(guiState.currentError == ERRORSTATE::NO_ERROR){
             guiState.resetProgramDraft();
-            guiState.defaultSortDisplayOrder(appData.getProgramRegistry());
+            guiState.refreshDisplayOrder(appData.getProgramRegistry());
             }
         }
 

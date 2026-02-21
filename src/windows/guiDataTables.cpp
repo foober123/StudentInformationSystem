@@ -3,12 +3,16 @@
 #include "../include/imgui.h"
 #include "../appData/appData.h"
 
+
 void drawStudentDataTable(GuiState& guiState, AppData& appdata){
     ImGui::Begin("data");
-    if (ImGui::BeginTable("StudentsTable", 7,     ImGuiTableFlags_Borders |
+    ImVec2 tableSize = ImVec2(0.0f, ImGui::GetContentRegionAvail().y);
+    if (ImGui::BeginTable("StudentsTable", 7, 
+                ImGuiTableFlags_Borders |
                 ImGuiTableFlags_RowBg |
                 ImGuiTableFlags_ScrollY |
-                ImGuiTableFlags_Resizable))
+                ImGuiTableFlags_Sortable |
+                ImGuiTableFlags_Resizable, tableSize))
     {
         // Setup columns
         ImGui::TableSetupColumn("ID");
@@ -20,6 +24,15 @@ void drawStudentDataTable(GuiState& guiState, AppData& appdata){
         ImGui::TableSetupColumn("Gender");
         ImGui::TableHeadersRow();
 
+        if (ImGuiTableSortSpecs* sortSpecs = ImGui::TableGetSortSpecs())
+        {
+            if (sortSpecs->SpecsDirty)
+            {
+                guiState.sortStudents(appdata, sortSpecs);
+
+                sortSpecs->SpecsDirty = false;
+            }
+        }
 
         for (size_t i = 0; i < guiState.displayOrder.size(); i++)
         {
@@ -69,13 +82,29 @@ void drawStudentDataTable(GuiState& guiState, AppData& appdata){
 
 void drawProgramDataTable(GuiState &guiState, AppData &appData){
     ImGui::Begin("data");
-    if (ImGui::BeginTable("ProgramTable", 3, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg))
+    ImVec2 tableSize = ImVec2(0.0f, ImGui::GetContentRegionAvail().y);
+    if (ImGui::BeginTable("ProgramTable", 3,
+                ImGuiTableFlags_Borders |
+                ImGuiTableFlags_RowBg |
+                ImGuiTableFlags_ScrollY |
+                ImGuiTableFlags_Sortable |
+                ImGuiTableFlags_Resizable, tableSize))
     {
         ImGui::TableSetupColumn("Code");
         ImGui::TableSetupColumn("College");
         ImGui::TableSetupColumn("Name");
         ImGui::TableHeadersRow();
-    
+   
+        if (ImGuiTableSortSpecs* sortSpecs = ImGui::TableGetSortSpecs())
+        {
+            if (sortSpecs->SpecsDirty)
+            {
+                guiState.sortPrograms(appData, sortSpecs);
+
+                sortSpecs->SpecsDirty = false;
+            }
+        }
+
         for(size_t id : guiState.programDisplayOrder){
             bool isSelected = (guiState.selectedProgram == id);
             const auto& program = appData.getProgram(id);

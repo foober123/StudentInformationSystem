@@ -73,8 +73,8 @@ int main(int argc, char* argv[]){
 
     GuiState guistate;
     guistate.init();
-    guistate.defaultSortDisplayOrder(appData);
-    guistate.defaultSortDisplayOrder(appData.getProgramRegistry());
+    guistate.refreshDisplayOrder(appData.getStudentRecord());
+    guistate.refreshDisplayOrder(appData.getProgramRegistry());
 
     bool running = true;
 

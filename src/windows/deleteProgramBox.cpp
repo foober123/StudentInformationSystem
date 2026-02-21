@@ -35,7 +35,7 @@ void drawDeleteProgramBox(GuiState & guiState, AppData & appData){
         guiState.currentError = appData.deleteProgramEntry(guiState.selectedProgram);
         guiState.inputBoxStrategy = NULL;
         guiState.selectedProgram = 0;
-        guiState.defaultSortDisplayOrder(appData.getProgramRegistry());
+        guiState.refreshDisplayOrder(appData.getProgramRegistry());
     }
 
 

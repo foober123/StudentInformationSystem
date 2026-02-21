@@ -34,7 +34,7 @@ void drawDeleteStudentBox(GuiState & guiState, AppData & appData){
     {
         appData.deleteStudentEntry(guiState.selectedStudent);
         guiState.inputBoxStrategy = NULL;
-        guiState.defaultSortDisplayOrder(appData);
+        guiState.refreshDisplayOrder(appData.getStudentRecord());
         guiState.selectedStudent = 0;
     }
 

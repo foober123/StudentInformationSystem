@@ -8,6 +8,7 @@
 
 class AppData;
 struct GuiState;
+struct ImGuiTableSortSpecs;
 
 enum class Gender;
 
@@ -75,8 +76,11 @@ void resetStudentDraft();
 void resetProgramDraft();
 void resetCollegeDraft();
 
-void defaultSortDisplayOrder(AppData&);
-void defaultSortDisplayOrder(const std::unordered_map<uint16_t, Program>&);
+void refreshDisplayOrder(const std::unordered_map<uint32_t, Student>&);
+void refreshDisplayOrder(const std::unordered_map<uint16_t, Program>&);
+void sortStudents(AppData&, ImGuiTableSortSpecs* sortSpecs);
+void sortPrograms(AppData&, ImGuiTableSortSpecs* sortSpecs);
+
 
 void initStudentStrategies();
 void initProgramStrategies();

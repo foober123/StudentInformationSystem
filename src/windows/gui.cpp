@@ -287,6 +287,7 @@ void drawGuiStateInfo(GuiState &guiState){
         ImGui::Text("Selected Program Internal ID: %d", guiState.selectedProgram);
         ImGui::Text("Selected College Internal ID: %d", guiState.selectedCollege);
         ImGui::Separator();
+        ImGui::Text("Student Display Order Size: %d", static_cast<int>(guiState.displayOrder.size()));
 
 
     ImGui::End();
