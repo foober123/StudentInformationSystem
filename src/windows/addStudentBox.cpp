@@ -92,7 +92,7 @@ void drawAddStudentBox(GuiState &guiState, AppData &appData){
 
         if (ImGui::Button("Cancel", buttonSize))
         {
-            guiState.inputBoxStrategy = NULL;
+            guiState.currentInputBox = NULL;
         }
 
         pos = ImVec2(

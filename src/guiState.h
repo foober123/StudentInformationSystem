@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include <assert.h>
+#include "windows/gui.h"
 
 class AppData;
 struct GuiState;
@@ -20,7 +21,20 @@ enum class ERRORSTATE;
 
 typedef void (*InputBoxStrategy)(GuiState&, AppData&);
 typedef void (*DataTableStrategy)(GuiState&, AppData&);
-typedef bool (*ValidationStrategy)(uint32_t);
+typedef void (*EntryDisplayStrategy)(const GuiState&, AppData&);
+
+struct GuiStrategy{
+InputBoxStrategy addEntryStrategy;
+InputBoxStrategy editEntryStrategy;
+InputBoxStrategy deleteEntryStrategy;
+DataTableStrategy dataTableStrategy;
+EntryDisplayStrategy entryDisplayStrategy;
+
+};
+
+const GuiStrategy studentStrategy = {drawAddStudentBox, drawEditStudentBox, drawDeleteStudentBox, drawStudentDataTable, drawStudentEntryDisplay};
+const GuiStrategy programStrategy = {drawAddProgramBox, drawEditProgramBox, drawDeleteProgramBox, drawProgramDataTable, drawProgramEntryDisplay};
+const GuiStrategy collegeStrategy = {drawAddCollegeBox, drawEditCollegeBox, drawDeleteCollegeBox, drawCollegeDataTable, drawCollegeEntryDisplay};
 
 struct StudentDraft{
 std::string ID; 
@@ -56,15 +70,9 @@ StudentDraft studentDraft;
 ProgramDraft programDraft;
 CollegeDraft collegeDraft;
 
-InputBoxStrategy inputBoxStrategy;
-
-ValidationStrategy validationStrategy;
-DataTableStrategy dataTableStrategy;
-InputBoxStrategy addEntryStrategy;
-InputBoxStrategy editEntryStrategy;
-InputBoxStrategy deleteEntryStrategy;
-
-
+//Current Input Box
+InputBoxStrategy currentInputBox;
+GuiStrategy currentStrategy;
 
 ERRORSTATE currentError;
 
@@ -83,10 +91,6 @@ void refreshDisplayOrder(const std::unordered_map<uint32_t, Program>&);
 void sortStudents(AppData&, ImGuiTableSortSpecs* sortSpecs);
 void sortPrograms(AppData&, ImGuiTableSortSpecs* sortSpecs);
 
-
-void initStudentStrategies();
-void initProgramStrategies();
-void initCollegeStrategies();
 
 void preloadPending(StudentDraft);
 };
@@ -113,7 +117,7 @@ COUNT
 static const std::array<std::string,
     static_cast<size_t>(ERRORSTATE::COUNT)> errorMessages = {
     "No Errors but you shouldn't be seeing this message",
-    "Invalid ID format. Follow XXXX-XXXX where X are digits",
+    "Invalid ID format. Follow 20XX-XXXX where X are digits",
     "Invalid Name. Cannot contain Numbers or Special Characters",
     "Invalid Year. Cannot be negative or zero",
     "Invalid Course. Refer to Program Registry for Codes",

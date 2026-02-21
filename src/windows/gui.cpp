@@ -27,32 +27,32 @@ void drawMenuBar(GuiState& guiState, AppData& appData, Vault& vault){
             ImGui::Separator();
             if(ImGui::MenuItem("Add Entry")){
                 guiState.resetStudentDraft();
-                guiState.inputBoxStrategy = drawAddStudentBox;
+                guiState.currentInputBox = drawAddStudentBox;
             }
 
             if(ImGui::MenuItem("Edit Entry")){
                 if(appData.checkStudentIDValidity(guiState.selectedStudent)){
                 guiState.preloadPending(appData.makeStudentDraft(guiState.selectedStudent));
-                guiState.inputBoxStrategy = drawEditStudentBox;
+                guiState.currentInputBox = drawEditStudentBox;
                 }
                 else{
                 guiState.currentError = ERRORSTATE::INVALID_INDEX;
                 }
             }
 
-            if(ImGui::MenuItem("Delete Entry")){guiState.inputBoxStrategy = drawDeleteStudentBox;}
+            if(ImGui::MenuItem("Delete Entry")){guiState.currentInputBox = drawDeleteStudentBox;}
 
             ImGui::Text("Program");
             ImGui::Separator();
-            if(ImGui::MenuItem("Add Program")){guiState.inputBoxStrategy = drawAddProgramBox;} 
-            if(ImGui::MenuItem("Edit Program")){guiState.inputBoxStrategy = drawEditProgramBox;} 
-            if(ImGui::MenuItem("Delete Program")){guiState.inputBoxStrategy = drawDeleteProgramBox;}  
+            if(ImGui::MenuItem("Add Program")){guiState.currentInputBox = drawAddProgramBox;} 
+            if(ImGui::MenuItem("Edit Program")){guiState.currentInputBox = drawEditProgramBox;} 
+            if(ImGui::MenuItem("Delete Program")){guiState.currentInputBox = drawDeleteProgramBox;}  
 
             ImGui::Text("College");
             ImGui::Separator();
-            if(ImGui::MenuItem("Add College")){guiState.inputBoxStrategy = drawAddCollegeBox;} 
-            if(ImGui::MenuItem("Edit College")){guiState.inputBoxStrategy = drawEditCollegeBox;} 
-            if(ImGui::MenuItem("Delete College")){guiState.inputBoxStrategy = drawDeleteCollegeBox;} 
+            if(ImGui::MenuItem("Add College")){guiState.currentInputBox = drawAddCollegeBox;} 
+            if(ImGui::MenuItem("Edit College")){guiState.currentInputBox = drawEditCollegeBox;} 
+            if(ImGui::MenuItem("Delete College")){guiState.currentInputBox = drawDeleteCollegeBox;} 
 
             ImGui::EndMenu();
         }
@@ -76,37 +76,37 @@ void drawTaskBar(GuiState& guiState){
     ImGui::Begin("taskbar", NULL, ImGuiWindowFlags_NoTitleBar);
 
     if(ImGui::Button("S")){
-        guiState.initStudentStrategies();
+        guiState.currentStrategy = studentStrategy;
     }
 
     ImGui::SameLine();
 
     if(ImGui::Button("P")){
-        guiState.initProgramStrategies();
+        guiState.currentStrategy = programStrategy;
     }
 
     ImGui::SameLine();
 
     if(ImGui::Button("C")){
-        guiState.initCollegeStrategies();
+        guiState.currentStrategy = collegeStrategy;
     }
 
     ImGui::SameLine();
 
     if(ImGui::Button("Add")){
-        guiState.inputBoxStrategy = guiState.addEntryStrategy;
+        guiState.currentInputBox = guiState.currentStrategy.addEntryStrategy;
     }
 
     ImGui::SameLine();
 
     if(ImGui::Button("Edit")){
-        guiState.inputBoxStrategy = guiState.editEntryStrategy;
+        guiState.currentInputBox = guiState.currentStrategy.editEntryStrategy;
     }
 
     ImGui::SameLine();
 
     if(ImGui::Button("Delete")){
-        guiState.inputBoxStrategy = guiState.deleteEntryStrategy;
+        guiState.currentInputBox = guiState.currentStrategy.deleteEntryStrategy;
     }
 
     ImGui::SameLine();
@@ -119,7 +119,7 @@ void drawEntryDisplay(const GuiState& guiState, AppData& appData){
     const Student& student = appData.getStudent(guiState.selectedStudent);
 
     ImGui::Begin("Entry Display");
-    if(guiState.selectedStudent > 0){
+    if(appData.checkStudentIDValidity(guiState.selectedStudent)){
         ImGui::SetWindowFontScale(1.5f);
         ImGui::Text("ID: %s", student.ID.c_str());
         ImGui::Text("Name: %s %s", student.firstName.c_str(), student.lastName.c_str());

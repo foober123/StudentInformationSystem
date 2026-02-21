@@ -45,9 +45,8 @@ searchBuffer = "";
 displayOrder = {}; 
 currentError = ERRORSTATE::NO_ERROR;
 
-inputBoxStrategy = NULL;
-initStudentStrategies();
-
+currentInputBox = NULL;
+currentStrategy = studentStrategy;
 
 showCollegeRegistry = false;
 showProgramRegistry = false;
@@ -75,27 +74,6 @@ void GuiState::resetCollegeDraft(){
 collegeDraft.collegeCode.clear();
 collegeDraft.collegeName.clear();
 
-}
-
-void GuiState::initStudentStrategies(){
-dataTableStrategy = drawStudentDataTable;
-addEntryStrategy = drawAddStudentBox;
-editEntryStrategy = drawEditStudentBox;
-deleteEntryStrategy = drawDeleteStudentBox;
-}
-
-void GuiState::initProgramStrategies(){
-dataTableStrategy = drawProgramDataTable;
-addEntryStrategy = drawAddProgramBox;
-editEntryStrategy = drawEditProgramBox;
-deleteEntryStrategy = drawDeleteProgramBox;
-}
-
-void GuiState::initCollegeStrategies(){
-dataTableStrategy = drawCollegeDataTable;
-addEntryStrategy = drawAddCollegeBox;
-editEntryStrategy = drawEditCollegeBox;
-deleteEntryStrategy = drawDeleteCollegeBox;
 }
 
 void GuiState::sortStudents(AppData& appData, ImGuiTableSortSpecs* sortSpecs){

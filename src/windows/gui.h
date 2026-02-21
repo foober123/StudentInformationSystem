@@ -6,6 +6,10 @@ struct GuiState;
 struct AppData;
 enum class Gender;
 
+struct Student;
+struct Program;
+struct College;
+
 
 typedef void (*InputBoxStrategy)(GuiState& , AppData& );
 
@@ -26,10 +30,13 @@ void drawProgramRegistry(AppData& );
 void drawErrorBox(GuiState& );
 
 
+void drawStudentEntryDisplay(const GuiState& , AppData& );
+void drawProgramEntryDisplay(const GuiState& , AppData& );
+void drawCollegeEntryDisplay(const GuiState& , AppData& );
+
 void drawStudentDataTable(GuiState& , AppData&);
 void drawProgramDataTable(GuiState& , AppData&);
 void drawCollegeDataTable(GuiState& , AppData&);
-
 
 void drawAddStudentBox(GuiState&, AppData&);
 void drawEditStudentBox(GuiState&, AppData&);

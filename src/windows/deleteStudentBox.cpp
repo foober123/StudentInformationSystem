@@ -20,7 +20,7 @@ void drawDeleteStudentBox(GuiState & guiState, AppData & appData){
 
     if (ImGui::Button("Cancel", buttonSize))
     {
-        guiState.inputBoxStrategy = NULL;
+        guiState.currentInputBox = NULL;
     }
 
     pos = ImVec2(
@@ -33,7 +33,7 @@ void drawDeleteStudentBox(GuiState & guiState, AppData & appData){
     if (ImGui::Button("Confirm", buttonSize))
     {
         appData.deleteStudentEntry(guiState.selectedStudent);
-        guiState.inputBoxStrategy = NULL;
+        guiState.currentInputBox = NULL;
         guiState.refreshDisplayOrder(appData.getStudentRecord());
         guiState.selectedStudent = 0;
     }

@@ -20,7 +20,7 @@ void drawDeleteProgramBox(GuiState & guiState, AppData & appData){
 
     if (ImGui::Button("Cancel", buttonSize))
     {
-        guiState.inputBoxStrategy = NULL;
+        guiState.currentInputBox = NULL;
     }
 
     pos = ImVec2(
@@ -33,7 +33,7 @@ void drawDeleteProgramBox(GuiState & guiState, AppData & appData){
     if (ImGui::Button("Confirm", buttonSize))
     {
         guiState.currentError = appData.deleteProgramEntry(guiState.selectedProgram);
-        guiState.inputBoxStrategy = NULL;
+        guiState.currentInputBox = NULL;
         guiState.selectedProgram = 0;
         guiState.refreshDisplayOrder(appData.getProgramRegistry());
     }

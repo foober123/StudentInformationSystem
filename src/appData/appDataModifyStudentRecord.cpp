@@ -63,12 +63,15 @@ void AppData::deleteStudentEntry(uint32_t key){
 }
 
 bool AppData::validateStudentID(std::string draftID){
+    if(draftID[0] != '2') return false;
+    if(draftID[1] != '0') return false;
     if(draftID.length() != 9) return false;
     if(draftID[4] != '-') return false;
 
 
     for (int i = 0; i < draftID.length(); i++)
     {
+
         if (i == 4)
             continue;
 

@@ -20,7 +20,7 @@ void drawDeleteCollegeBox(GuiState & guiState, AppData & appData){
 
     if (ImGui::Button("Cancel", buttonSize))
     {
-        guiState.inputBoxStrategy = NULL;
+        guiState.currentInputBox = NULL;
     }
 
     pos = ImVec2(
@@ -33,7 +33,7 @@ void drawDeleteCollegeBox(GuiState & guiState, AppData & appData){
     if (ImGui::Button("Confirm", buttonSize))
     {
         guiState.currentError = appData.deleteCollege(guiState.selectedCollege);
-        guiState.inputBoxStrategy = NULL;
+        guiState.currentInputBox = NULL;
         guiState.selectedCollege = 0;
     }
 

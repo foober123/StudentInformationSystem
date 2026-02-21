@@ -96,14 +96,14 @@ int main(int argc, char* argv[]){
         //PUT GUI STUFF BELOW HERE
         drawMenuBar(guistate, appData, vault); 
         drawTaskBar(guistate);
-        drawEntryDisplay(guistate, appData);
-        guistate.dataTableStrategy(guistate, appData);
+        guistate.currentStrategy.entryDisplayStrategy(guistate, appData);
+        guistate.currentStrategy.dataTableStrategy(guistate, appData);
         if(ImGui::IsKeyPressed(ImGuiKey_F3)) guistate.showDebugWindow = !guistate.showDebugWindow;
         if(guistate.showCollegeRegistry) drawCollegeRegistry(appData);
         if(guistate.showProgramRegistry) drawProgramRegistry(appData);
         if(guistate.showDebugWindow) drawGuiStateInfo(guistate);
         if(guistate.currentError != ERRORSTATE::NO_ERROR) drawErrorBox(guistate);
-        if(guistate.inputBoxStrategy != NULL) guistate.inputBoxStrategy(guistate, appData);          
+        if(guistate.currentInputBox != NULL) guistate.currentInputBox(guistate, appData);          
         ImGui::Begin("test");
         ImGui::End();
 
