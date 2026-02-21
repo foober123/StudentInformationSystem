@@ -19,7 +19,7 @@ std::string collegeAbreviation;
 };
 
 struct Program{
-uint16_t collegeID;
+uint32_t collegeID;
 std::string programName;
 std::string programAbbreviation;
 };
@@ -28,7 +28,7 @@ struct Student{
 std::string ID;
 std::string firstName;
 std::string lastName;
-uint16_t programID;
+uint32_t programID;
 int year;
 Gender gender;
 };
@@ -41,11 +41,11 @@ class AppData{
     public:
     
     StudentDraft makeStudentDraft(uint32_t);
-    CollegeDraft makeCollegeDraft(uint16_t);
+    CollegeDraft makeCollegeDraft(uint32_t);
 
-    void setCollegeRegistry(std::unordered_map<uint16_t, College>);
+    void setCollegeRegistry(std::unordered_map<uint32_t, College>);
     void setStudentRecord(std::unordered_map<uint32_t, Student>);
-    void setProgramRegistry(std::unordered_map<uint16_t, Program>);
+    void setProgramRegistry(std::unordered_map<uint32_t, Program>);
 
     void initProgramIDCounter(); 
     void initCollegeIDCounter();
@@ -56,36 +56,36 @@ class AppData{
     void deleteStudentEntry(uint32_t);
 
     ERRORSTATE addProgramEntry(ProgramDraft);
-    ERRORSTATE editProgramEntry(ProgramDraft, uint16_t);
-    ERRORSTATE deleteProgramEntry(uint16_t);
+    ERRORSTATE editProgramEntry(ProgramDraft, uint32_t);
+    ERRORSTATE deleteProgramEntry(uint32_t);
 
     ERRORSTATE addCollegeEntry(CollegeDraft);
-    ERRORSTATE editCollegeEntry(CollegeDraft, uint16_t);
-    ERRORSTATE deleteCollege(uint16_t);
+    ERRORSTATE editCollegeEntry(CollegeDraft, uint32_t);
+    ERRORSTATE deleteCollege(uint32_t);
 
     bool checkStudentIDValidity(uint32_t);
-    bool checkProgramIDValidity(uint16_t);
-    bool checkCollegeIDValidity(uint16_t);
+    bool checkProgramIDValidity(uint32_t);
+    bool checkCollegeIDValidity(uint32_t);
 
-    const std::unordered_map<std::string, uint16_t> getcollegeCodeToID();
-    const std::unordered_map<uint16_t, College>& getCollegeRegistry();
-    std::unordered_map<uint16_t, Program>& getProgramRegistry();
+    const std::unordered_map<std::string, uint32_t> getcollegeCodeToID();
+    const std::unordered_map<uint32_t, College>& getCollegeRegistry();
+    std::unordered_map<uint32_t, Program>& getProgramRegistry();
 
-    const std::unordered_map<std::string, uint16_t>& getProgramCodeToID();
+    const std::unordered_map<std::string, uint32_t>& getProgramCodeToID();
     const std::unordered_map<uint32_t, Student>& getStudentRecord();
     
-    Program getProgram(uint16_t key);
-    College getCollege(uint16_t key);
+    Program getProgram(uint32_t key);
+    College getCollege(uint32_t key);
     Student getStudent(uint32_t key);
     private:
-    std::unordered_map<std::string, uint16_t> m_collegeCodeToID;
-    std::unordered_map<uint16_t, College> m_collegeRegistry;
+    std::unordered_map<std::string, uint32_t> m_collegeCodeToID;
+    std::unordered_map<uint32_t, College> m_collegeRegistry;
 
-    std::unordered_map<std::string, uint16_t> m_programCodeToID;
-    std::unordered_map<uint16_t, Program> m_programRegistry;
+    std::unordered_map<std::string, uint32_t> m_programCodeToID;
+    std::unordered_map<uint32_t, Program> m_programRegistry;
 
-    uint16_t m_nextProgramID = 1;
-    uint16_t m_nextCollegeID = 1;
+    uint32_t m_nextProgramID = 1;
+    uint32_t m_nextCollegeID = 1;
     uint32_t m_nextStudentInternalID = 1;
     std::unordered_map<uint32_t, Student> m_studentRecord; 
 
@@ -97,11 +97,11 @@ class AppData{
     bool validateStudentName(std::string);
 
     bool validateProgramCode(std::string);
-    bool validateProgramCode(std::string, uint16_t);
+    bool validateProgramCode(std::string, uint32_t);
     bool validateProgramCodeFormat(std::string);
     bool validateCollegeCode(std::string);
 
     bool validateRepeatingCollegeCode(std::string);
-    bool validateRepeatingCollegeCode(std::string, uint16_t);
+    bool validateRepeatingCollegeCode(std::string, uint32_t);
     bool validateCollegeNameFormat(std::string);
 };

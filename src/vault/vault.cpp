@@ -33,8 +33,8 @@ char Vault::SerializeGender(Gender gender){
     return 'O';
 }
 
- std::unordered_map<uint16_t, College> Vault::LoadColleges(){
-    std::unordered_map<uint16_t, College>  colleges;
+ std::unordered_map<uint32_t, College> Vault::LoadColleges(){
+    std::unordered_map<uint32_t, College>  colleges;
 
     std::ifstream file(m_collegeFilePath);
     if (!file.is_open()) {
@@ -60,7 +60,7 @@ char Vault::SerializeGender(Gender gender){
         if (fields.size() < 3)
             continue;
 
-        internalID = static_cast<uint16_t>(std::stoi(fields[0]));
+        internalID = static_cast<uint32_t>(std::stoi(fields[0]));
         c.collegeName = trim(fields[1]);
         c.collegeAbreviation = trim(fields[2]);
 
@@ -102,8 +102,8 @@ std::unordered_map<uint32_t,Student> Vault::LoadStudents(){
         s.ID        = trim(fields[1]);
         s.firstName = trim(fields[2]);
         s.lastName  = trim(fields[3]);
-        s.programID = static_cast<uint16_t>(std::stoi(fields[4]));
-        s.year      = static_cast<uint16_t>(std::stoi(fields[5]));
+        s.programID = static_cast<uint32_t>(std::stoi(fields[4]));
+        s.year      = static_cast<uint32_t>(std::stoi(fields[5]));
         s.gender    = ParseGender(trim(fields[6]));
 
         students.insert({ internalID, s });
@@ -112,8 +112,8 @@ std::unordered_map<uint32_t,Student> Vault::LoadStudents(){
     return students;
 };
 
-std::unordered_map<uint16_t, Program> Vault::LoadCourses(){
-    std::unordered_map<uint16_t, Program> programs;
+std::unordered_map<uint32_t, Program> Vault::LoadCourses(){
+    std::unordered_map<uint32_t, Program> programs;
 
     std::ifstream file(m_programFilePath);
     if (!file.is_open()) {
@@ -135,10 +135,10 @@ std::unordered_map<uint16_t, Program> Vault::LoadCourses(){
         if (fields.size() < 4)
             continue; // or handle error properly
 
-        uint32_t internalID = static_cast<uint16_t>(std::stoi(fields[0]));
+        uint32_t internalID = static_cast<uint32_t>(std::stoi(fields[0]));
 
         Program c{};
-        c.collegeID = static_cast<uint16_t>(std::stoi(fields[1]));
+        c.collegeID = static_cast<uint32_t>(std::stoi(fields[1]));
         c.programName = trim(fields[2]);
         c.programAbbreviation = trim(fields[3]);
         
@@ -177,7 +177,7 @@ bool Vault::saveStudents(const std::unordered_map<uint32_t,Student>& studentReco
     return true;
 };
 
-bool Vault::savePrograms(const std::unordered_map<uint16_t,Program>& programRegistry){
+bool Vault::savePrograms(const std::unordered_map<uint32_t,Program>& programRegistry){
     std::ofstream file(m_programFilePath);
     if (!file.is_open())
         return false;
@@ -200,7 +200,7 @@ bool Vault::savePrograms(const std::unordered_map<uint16_t,Program>& programRegi
     return true;
 };
 
-bool Vault::saveColleges(const std::unordered_map<uint16_t,College>& collegeRegistry){
+bool Vault::saveColleges(const std::unordered_map<uint32_t,College>& collegeRegistry){
     std::ofstream file(m_programFilePath);
     if (!file.is_open())
         return false;

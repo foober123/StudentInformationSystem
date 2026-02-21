@@ -3,10 +3,10 @@
 #include <cstdint>
 
 
-void AppData::setCollegeRegistry(std::unordered_map<uint16_t, College> collegeRegistry){
+void AppData::setCollegeRegistry(std::unordered_map<uint32_t, College> collegeRegistry){
     m_collegeRegistry = collegeRegistry;
 
-    uint16_t maxID = 0;
+    uint32_t maxID = 0;
 
     for (const auto& [id, college] : m_collegeRegistry)
     {
@@ -25,11 +25,11 @@ void AppData::setStudentRecord(std::unordered_map<uint32_t, Student> studentReco
     m_studentRecord = studentRecord;
 };
 
-void AppData::setProgramRegistry(std::unordered_map<uint16_t, Program> programRegistry){
+void AppData::setProgramRegistry(std::unordered_map<uint32_t, Program> programRegistry){
     m_programRegistry = programRegistry;
     m_programCodeToID.clear();
 
-    uint16_t maxID = 0;
+    uint32_t maxID = 0;
 
     for (const auto& [id, program] : m_programRegistry)
     {
@@ -92,7 +92,7 @@ bool AppData::checkStudentIDValidity(uint32_t id){
 return true;
 }
 
-bool AppData::checkProgramIDValidity(uint16_t id){
+bool AppData::checkProgramIDValidity(uint32_t id){
     const auto& it = m_programRegistry.find(id);
     if (it == m_programRegistry.end()) return false;
 
@@ -100,7 +100,7 @@ return true;
 }
 
 
-bool AppData::checkCollegeIDValidity(uint16_t id){
+bool AppData::checkCollegeIDValidity(uint32_t id){
     const auto& it = m_collegeRegistry.find(id);
     if (it == m_collegeRegistry.end()) return false;
 

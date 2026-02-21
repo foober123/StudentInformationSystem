@@ -18,8 +18,9 @@ struct College;
 
 enum class ERRORSTATE;
 
-typedef void (*InputBoxStrategy)(GuiState& guistate, AppData& appData);
-typedef void (*DataTableStrategy)(GuiState& guistate, AppData& appData);
+typedef void (*InputBoxStrategy)(GuiState&, AppData&);
+typedef void (*DataTableStrategy)(GuiState&, AppData&);
+typedef bool (*ValidationStrategy)(uint32_t);
 
 struct StudentDraft{
 std::string ID; 
@@ -45,11 +46,11 @@ std::string collegeCode;
 
 struct GuiState{
 std::vector<size_t> displayOrder; 
-std::vector<uint16_t> programDisplayOrder;
+std::vector<uint32_t> programDisplayOrder;
 std::string searchBuffer;
 uint32_t selectedStudent;
-uint16_t selectedProgram;
-uint16_t selectedCollege;
+uint32_t selectedProgram;
+uint32_t selectedCollege;
 
 StudentDraft studentDraft;
 ProgramDraft programDraft;
@@ -57,6 +58,7 @@ CollegeDraft collegeDraft;
 
 InputBoxStrategy inputBoxStrategy;
 
+ValidationStrategy validationStrategy;
 DataTableStrategy dataTableStrategy;
 InputBoxStrategy addEntryStrategy;
 InputBoxStrategy editEntryStrategy;
@@ -77,7 +79,7 @@ void resetProgramDraft();
 void resetCollegeDraft();
 
 void refreshDisplayOrder(const std::unordered_map<uint32_t, Student>&);
-void refreshDisplayOrder(const std::unordered_map<uint16_t, Program>&);
+void refreshDisplayOrder(const std::unordered_map<uint32_t, Program>&);
 void sortStudents(AppData&, ImGuiTableSortSpecs* sortSpecs);
 void sortPrograms(AppData&, ImGuiTableSortSpecs* sortSpecs);
 

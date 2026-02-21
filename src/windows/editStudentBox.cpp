@@ -5,11 +5,6 @@
 #include "../appData/appData.h"
 
 void drawEditStudentBox(GuiState &guiState, AppData &appData){
-    if(!appData.checkStudentIDValidity(guiState.selectedStudent)){
-    guiState.currentError = ERRORSTATE::INVALID_INDEX;
-    guiState.inputBoxStrategy = NULL;
-    }
-
     ImGui::Begin("Modify Entry");
     ImGui::Text("Edit Student");
     ImGui::Separator();

@@ -76,7 +76,6 @@ int main(int argc, char* argv[]){
     guistate.init();
     guistate.refreshDisplayOrder(appData.getStudentRecord());
     guistate.refreshDisplayOrder(appData.getProgramRegistry());
-
     bool running = true;
 
     while(running){

@@ -31,8 +31,13 @@ void drawMenuBar(GuiState& guiState, AppData& appData, Vault& vault){
             }
 
             if(ImGui::MenuItem("Edit Entry")){
+                if(appData.checkStudentIDValidity(guiState.selectedStudent)){
                 guiState.preloadPending(appData.makeStudentDraft(guiState.selectedStudent));
                 guiState.inputBoxStrategy = drawEditStudentBox;
+                }
+                else{
+                guiState.currentError = ERRORSTATE::INVALID_INDEX;
+                }
             }
 
             if(ImGui::MenuItem("Delete Entry")){guiState.inputBoxStrategy = drawDeleteStudentBox;}

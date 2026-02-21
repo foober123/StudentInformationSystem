@@ -17,7 +17,7 @@ StudentDraft AppData::makeStudentDraft(uint32_t id){
     return s;
 }
 
-CollegeDraft AppData::makeCollegeDraft(uint16_t id){
+CollegeDraft AppData::makeCollegeDraft(uint32_t id){
     CollegeDraft c;
     const auto& college = m_collegeRegistry.at(id);
     c.collegeCode = college.collegeAbreviation;

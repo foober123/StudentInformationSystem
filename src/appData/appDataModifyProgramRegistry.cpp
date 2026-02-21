@@ -20,7 +20,7 @@ ERRORSTATE AppData::addProgramEntry(ProgramDraft draft){
    return ERRORSTATE::NO_ERROR;
 };
 
-ERRORSTATE AppData::editProgramEntry(ProgramDraft draft, uint16_t key){
+ERRORSTATE AppData::editProgramEntry(ProgramDraft draft, uint32_t key){
     if(!checkProgramIDValidity(key)) return ERRORSTATE::INVALID_INDEX;
     if(!validateProgramCode(draft.programAbbreviation, key)) return ERRORSTATE::PROGRAM_CODE_IN_USE;      
     if(!validateProgramCodeFormat(draft.programAbbreviation)) return ERRORSTATE::INVALID_PROGRAM_NAME;
@@ -39,7 +39,7 @@ ERRORSTATE AppData::editProgramEntry(ProgramDraft draft, uint16_t key){
     return ERRORSTATE::NO_ERROR;
 };
 
-ERRORSTATE AppData::deleteProgramEntry(uint16_t key){
+ERRORSTATE AppData::deleteProgramEntry(uint32_t key){
     for(const auto& pair : m_studentRecord){
         const auto& student = pair.second;
 
@@ -69,7 +69,7 @@ bool AppData::validateProgramCode(std::string programCode){
 
 }
 
-bool AppData::validateProgramCode(std::string programCode, uint16_t key){
+bool AppData::validateProgramCode(std::string programCode, uint32_t key){
 
     for(auto& pair : m_programRegistry){
         const auto& id = pair.first;

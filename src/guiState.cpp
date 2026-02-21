@@ -17,7 +17,7 @@ void GuiState::refreshDisplayOrder(const std::unordered_map<uint32_t, Student>& 
 }
 
 
-void GuiState::refreshDisplayOrder(const std::unordered_map<uint16_t, Program>& programRegistry){
+void GuiState::refreshDisplayOrder(const std::unordered_map<uint32_t, Program>& programRegistry){
     programDisplayOrder.clear();
 
     for (const auto& [id, program] : programRegistry){
@@ -181,7 +181,7 @@ void GuiState::sortPrograms(AppData& appData, ImGuiTableSortSpecs* sortSpecs){
     auto& programs = appData.getProgramRegistry();
 
     std::sort(programDisplayOrder.begin(), programDisplayOrder.end(),
-            [&](uint16_t a, uint16_t b)
+            [&](uint32_t a, uint32_t b)
             {
             const Program& s1 = programs.at(a);
             const Program& s2 = programs.at(b);
