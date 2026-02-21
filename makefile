@@ -11,7 +11,6 @@ default:
 	g++ $(SRC) -o $(OUTPUT_DIR)/$(PROJECTNAME) $(INCLUDE_DIRS) $(LIB_DIRS) $(LIBS)
 
 windows:
-	mkdir -p $(OUTPUT_DIR)
 	x86_64-w64-mingw32-g++ $(SRC) \
 	-o $(OUTPUT_DIR)/$(PROJECTNAME).exe \
 	-Iinclude/SDL2 -Iinclude/imgui \
