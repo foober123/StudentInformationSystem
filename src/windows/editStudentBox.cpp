@@ -21,8 +21,10 @@ void drawEditStudentBox(GuiState &guiState, AppData &appData){
         ImGui::Text("ID:");
 
         ImGui::TableSetColumnIndex(1);
+        ImGui::BeginDisabled();
         ImGui::InputText("##ID",
-                &guiState.studentDraft.ID);
+                &guiState.studentDraft.ID, ImGuiInputTextFlags_ReadOnly);
+        ImGui::EndDisabled();
 
         // First Name
         ImGui::TableNextRow();
