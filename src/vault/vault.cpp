@@ -6,7 +6,7 @@
 #include <iostream>
 #include <cstdint>
 #include "../appData/appData.h"
-#include "../trim.h"
+#include "../parsingHelpers.h"
 
 Vault::Vault(std::string studentFilePath, std::string programFilePath, std::string collegeFilePath){
     m_studentFilePath = studentFilePath; 
@@ -52,22 +52,17 @@ char Vault::SerializeGender(Gender gender){
         if (line.empty()) continue;
 
         std::stringstream ss(line);
-        std::string field;
+        auto fields = parseCSVLine(line);
         uint32_t internalID;
 
         College c{};
 
-        // CollegeID
-        std::getline(ss, field, ',');
-        internalID = static_cast<uint16_t>(std::stoi(field));
+        if (fields.size() < 3)
+            continue;
 
-        // CollegeName
-        std::getline(ss, field, ',');
-        c.collegeName = trim(field);
-
-        // CollegeAbbreviation
-        std::getline(ss, field, ',');
-        c.collegeAbreviation = trim(field);
+        internalID = static_cast<uint16_t>(std::stoi(fields[0]));
+        c.collegeName = trim(fields[1]);
+        c.collegeAbreviation = trim(fields[2]);
 
         colleges.insert({internalID, c});
     }
@@ -77,7 +72,7 @@ char Vault::SerializeGender(Gender gender){
     return colleges;
 }
 
- std::unordered_map<uint32_t,Student> Vault::LoadStudents(){
+std::unordered_map<uint32_t,Student> Vault::LoadStudents(){
     std::unordered_map<uint32_t,Student>  students;
 
     std::ifstream file(m_studentFilePath);
@@ -95,38 +90,24 @@ char Vault::SerializeGender(Gender gender){
     {
         if (line.empty()) continue;
 
-        std::stringstream ss(line);
-        std::string field;
-        uint32_t internalID;
+        auto fields = parseCSVLine(line);
 
-        Student c{};
+        if (fields.size() < 7)
+            continue; // or handle error properly
 
-        std::getline(ss, field, ',');
-        internalID = static_cast<uint32_t>(std::stoi(field));
+        uint32_t internalID = static_cast<uint32_t>(std::stoi(fields[0]));
 
-        std::getline(ss, field, ',');
-        c.ID = trim(field);    
+        Student s{};
 
-        std::getline(ss, field, ',');
-        c.firstName = trim(field);
+        s.ID        = trim(fields[1]);
+        s.firstName = trim(fields[2]);
+        s.lastName  = trim(fields[3]);
+        s.programID = static_cast<uint16_t>(std::stoi(fields[4]));
+        s.year      = static_cast<uint16_t>(std::stoi(fields[5]));
+        s.gender    = ParseGender(trim(fields[6]));
 
-        std::getline(ss, field, ',');
-        c.lastName = trim(field);
-
-        std::getline(ss, field, ',');
-        c.programID = static_cast<uint16_t>(std::stoi(field));
-     
-        std::getline(ss, field, ',');
-        c.year = static_cast<uint16_t>(std::stoi(field));
-
-        std::getline(ss, field, ',');
-        c.gender = ParseGender(field);
-
-
-        students.insert({internalID, c});
+        students.insert({ internalID, s });
     }
-
-
 
     return students;
 };
@@ -149,23 +130,17 @@ std::unordered_map<uint16_t, Program> Vault::LoadCourses(){
     {
         if (line.empty()) continue;
 
-        std::stringstream ss(line);
-        std::string field;
-        uint32_t internalID;
-        
+        auto fields = parseCSVLine(line);
+
+        if (fields.size() < 4)
+            continue; // or handle error properly
+
+        uint32_t internalID = static_cast<uint16_t>(std::stoi(fields[0]));
+
         Program c{};
-
-        std::getline(ss, field, ',');
-        internalID = static_cast<uint16_t>(std::stoi(field));
-
-        std::getline(ss, field, ',');
-        c.collegeID = static_cast<uint16_t>(std::stoi(field));
-
-        std::getline(ss, field, ',');
-        c.programName = trim(field);
-
-        std::getline(ss, field, ',');
-        c.programAbbreviation = trim(field);
+        c.collegeID = static_cast<uint16_t>(std::stoi(fields[1]));
+        c.programName = trim(fields[2]);
+        c.programAbbreviation = trim(fields[3]);
         
         programs.insert({internalID, c});
     }
@@ -191,11 +166,56 @@ bool Vault::saveStudents(const std::unordered_map<uint32_t,Student>& studentReco
             file
                 << internalID << ","
                 << s.ID << ","
-                << s.firstName << ","
-                << s.lastName << ","
+                << escapeCSV(s.firstName) << ","
+                << escapeCSV(s.lastName) << ","
                 << s.programID << ","
                 << s.year << ","
                 << SerializeGender(s.gender)
+                << "\n";
+        }
+    }
+    return true;
+};
+
+bool Vault::savePrograms(const std::unordered_map<uint16_t,Program>& programRegistry){
+    std::ofstream file(m_programFilePath);
+    if (!file.is_open())
+        return false;
+
+    // Write header
+    file << "Internal_ID, CollegeID,ProgramName,ProgramCode\n";
+
+    for (const auto& [internalID, program] : programRegistry)
+    {
+
+        {
+            file
+                << internalID << ","
+                << program.collegeID << ","
+                << escapeCSV(program.programName) << ","
+                << escapeCSV(program.programAbbreviation)
+                << "\n";
+        }
+    }
+    return true;
+};
+
+bool Vault::saveColleges(const std::unordered_map<uint16_t,College>& collegeRegistry){
+    std::ofstream file(m_programFilePath);
+    if (!file.is_open())
+        return false;
+
+    // Write header
+    file << "Internal_ID, CollegeID,ProgramName,ProgramCode\n";
+
+    for (const auto& [internalID, college] : collegeRegistry)
+    {
+
+        {
+            file
+                << internalID << ","
+                << escapeCSV(college.collegeName) << ","
+                << escapeCSV(college.collegeAbreviation)
                 << "\n";
         }
     }

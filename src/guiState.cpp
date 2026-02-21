@@ -221,4 +221,5 @@ void GuiState::sortPrograms(AppData& appData, ImGuiTableSortSpecs* sortSpecs){
 
             }
             });
+
 }

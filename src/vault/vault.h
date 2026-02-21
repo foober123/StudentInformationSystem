@@ -17,7 +17,9 @@ class Vault{
         std::unordered_map<uint16_t, Program> LoadCourses();
 
 
-        bool saveStudents(const std::unordered_map<uint32_t,Student>& studentList);
+        bool saveStudents(const std::unordered_map<uint32_t,Student>& );
+        bool savePrograms(const std::unordered_map<uint16_t, Program>&);
+        bool saveColleges(const std::unordered_map<uint16_t, College>&);
     private:
         Gender ParseGender(std::string field);
         char SerializeGender(Gender gender);
