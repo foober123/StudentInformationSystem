@@ -5,15 +5,11 @@ SRC = $(wildcard src/*.cpp) $(wildcard src/windows/*.cpp) $(wildcard src/vault/*
 INCLUDE_DIRS = -Iinclude/SDL2 -Iinclude/imgui
 LIB_DIRS = -Llib
 
-LIBS = -lSDL2main -lSDL2
+LIBS = -lSDL2
+LIBS_WINDOWS = -lSDL2main -lSDL2
 
 default:
-	g++ $(SRC) -o $(OUTPUT_DIR)/$(PROJECTNAME) $(INCLUDE_DIRS) $(LIB_DIRS) $(LIBS)
+	g++ $(SRC) -o $(OUTPUT_DIR)/$(PROJECTNAME) $(INCLUDE_DIRS) $(LIBS)
 
 windows:
-	x86_64-w64-mingw32-g++ $(SRC) \
-	-o $(OUTPUT_DIR)/$(PROJECTNAME).exe \
-	-Iinclude/SDL2 -Iinclude/imgui \
-	-Llib \
-	-lSDL2main -lSDL2 -mwindows
-
+	g++ $(SRC) -o $(OUTPUT_DIR)/$(PROJECTNAME) $(INCLUDE_DIRS) $(LIB_DIRS) $(LIBS_WINDOWS)
