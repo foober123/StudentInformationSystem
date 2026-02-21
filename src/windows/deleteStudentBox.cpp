@@ -1,6 +1,6 @@
 #include "../guiState.h"
 #include "gui.h"
-#include "../include/imgui.h"
+#include <imgui.h>
 #include "../appData/appData.h"
 
 void drawDeleteStudentBox(GuiState & guiState, AppData & appData){

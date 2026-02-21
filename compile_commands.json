@@ -1,23 +1,366 @@
 [
- {
-  "directory": "/home/Carson/repos/CCC151_1ST_DATABASE",
-  "arguments": [
-   "g++",
-   "src/main.cpp",
-   "imgui/imgui.cpp",
-   "imgui/imgui_demo.cpp",
-   "imgui/imgui_draw.cpp",
-   "imgui/imgui_impl_sdl2.cpp",
-   "imgui/imgui_impl_sdlrenderer2.cpp",
-   "imgui/imgui_tables.cpp",
-   "imgui/imgui_widgets.cpp",
-   "-o",
-   "build/Simple_Student_Information_System",
-   "-ISDL2",
-   "-Llib",
-   "-lSDL2main",
-   "-lSDL2"
-  ],
-  "file": "imgui/imgui_widgets.cpp"
- }
+  {
+    "file": "src/guiState.cpp",
+    "arguments": [
+      "g++",
+      "src/guiState.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/main.cpp",
+    "arguments": [
+      "g++",
+      "src/main.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/windows/addCollegeBox.cpp",
+    "arguments": [
+      "g++",
+      "src/windows/addCollegeBox.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/windows/addProgramBox.cpp",
+    "arguments": [
+      "g++",
+      "src/windows/addProgramBox.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/windows/addStudentBox.cpp",
+    "arguments": [
+      "g++",
+      "src/windows/addStudentBox.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/windows/deleteCollegeBox.cpp",
+    "arguments": [
+      "g++",
+      "src/windows/deleteCollegeBox.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/windows/deleteProgramBox.cpp",
+    "arguments": [
+      "g++",
+      "src/windows/deleteProgramBox.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/windows/deleteStudentBox.cpp",
+    "arguments": [
+      "g++",
+      "src/windows/deleteStudentBox.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/windows/editCollegeBox.cpp",
+    "arguments": [
+      "g++",
+      "src/windows/editCollegeBox.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/windows/editProgramBox.cpp",
+    "arguments": [
+      "g++",
+      "src/windows/editProgramBox.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/windows/editStudentBox.cpp",
+    "arguments": [
+      "g++",
+      "src/windows/editStudentBox.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/windows/gui.cpp",
+    "arguments": [
+      "g++",
+      "src/windows/gui.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/windows/guiDataTables.cpp",
+    "arguments": [
+      "g++",
+      "src/windows/guiDataTables.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/vault/vault.cpp",
+    "arguments": [
+      "g++",
+      "src/vault/vault.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/appData/appDataAccessors.cpp",
+    "arguments": [
+      "g++",
+      "src/appData/appDataAccessors.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/appData/appData.cpp",
+    "arguments": [
+      "g++",
+      "src/appData/appData.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/appData/appDataDraftMakers.cpp",
+    "arguments": [
+      "g++",
+      "src/appData/appDataDraftMakers.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/appData/appDataModifyCollegeRegistry.cpp",
+    "arguments": [
+      "g++",
+      "src/appData/appDataModifyCollegeRegistry.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/appData/appDataModifyProgramRegistry.cpp",
+    "arguments": [
+      "g++",
+      "src/appData/appDataModifyProgramRegistry.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/appData/appDataModifyStudentRecord.cpp",
+    "arguments": [
+      "g++",
+      "src/appData/appDataModifyStudentRecord.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "imgui/imgui.cpp",
+    "arguments": [
+      "g++",
+      "imgui/imgui.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "imgui/imgui_demo.cpp",
+    "arguments": [
+      "g++",
+      "imgui/imgui_demo.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "imgui/imgui_draw.cpp",
+    "arguments": [
+      "g++",
+      "imgui/imgui_draw.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "imgui/imgui_impl_sdl2.cpp",
+    "arguments": [
+      "g++",
+      "imgui/imgui_impl_sdl2.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "imgui/imgui_impl_sdlrenderer2.cpp",
+    "arguments": [
+      "g++",
+      "imgui/imgui_impl_sdlrenderer2.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "imgui/imgui_stdlib.cpp",
+    "arguments": [
+      "g++",
+      "imgui/imgui_stdlib.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "imgui/imgui_tables.cpp",
+    "arguments": [
+      "g++",
+      "imgui/imgui_tables.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "imgui/imgui_widgets.cpp",
+    "arguments": [
+      "g++",
+      "imgui/imgui_widgets.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  }
 ]

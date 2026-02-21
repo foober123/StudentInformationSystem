@@ -1,12 +1,20 @@
 PROJECTNAME = Simple_Student_Information_System
 OUTPUT_DIR = build
 
-INCLUDE_DIRS = -ISDL2
+SRC = $(wildcard src/*.cpp) $(wildcard src/windows/*.cpp) $(wildcard src/vault/*.cpp) $(wildcard src/appData/*.cpp) $(wildcard imgui/*.cpp)
+INCLUDE_DIRS = -Iinclude/SDL2 -Iinclude/imgui
 LIB_DIRS = -Llib
 
 LIBS = -lSDL2main -lSDL2
 
-SRC = $(wildcard src/*.cpp) $(wildcard src/windows/*.cpp) $(wildcard src/vault/*.cpp) $(wildcard src/appData/*.cpp) $(wildcard imgui/*.cpp)
-
 default:
 	g++ $(SRC) -o $(OUTPUT_DIR)/$(PROJECTNAME) $(INCLUDE_DIRS) $(LIB_DIRS) $(LIBS)
+
+windows:
+	mkdir -p $(OUTPUT_DIR)
+	x86_64-w64-mingw32-g++ $(SRC) \
+	-o $(OUTPUT_DIR)/$(PROJECTNAME).exe \
+	-Iinclude/SDL2 -Iinclude/imgui \
+	-Llib \
+	-lSDL2main -lSDL2 -mwindows
+

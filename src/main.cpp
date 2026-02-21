@@ -1,10 +1,11 @@
-#include "../imgui/imgui_impl_sdl2.h"
-#include "../imgui/imgui_impl_sdlrenderer2.h"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_events.h>
-#include <SDL2/SDL_render.h>
-#include <SDL2/SDL_stdinc.h>
-#include <SDL2/SDL_video.h>
+#include <imgui_impl_sdl2.h>
+#include <imgui_impl_sdlrenderer2.h>
+
+#include <SDL.h>
+#include <SDL_events.h>
+#include <SDL_render.h>
+#include <SDL_stdinc.h>
+#include <SDL_video.h>
 
 #include "settings.h"
 #include "windows/gui.h"

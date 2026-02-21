@@ -6,7 +6,7 @@
 #include "guiState.h"
 #include "windows/gui.h"
 #include "appData/appData.h"
-#include "../imgui/imgui.h"
+#include <imgui.h>
 
 void GuiState::refreshDisplayOrder(const std::unordered_map<uint32_t, Student>& studentRecord){
     displayOrder.clear();
