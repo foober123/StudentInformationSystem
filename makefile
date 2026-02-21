@@ -6,7 +6,7 @@ INCLUDE_DIRS = -Iinclude/SDL2 -Iinclude/imgui
 LIB_DIRS = -Llib
 
 LIBS = -lSDL2
-LIBS_WINDOWS = -lSDL2main -lSDL2
+LIBS_WINDOWS = -lmingw32 -lSDL2main -lSDL2
 
 default:
 	g++ $(SRC) -o $(OUTPUT_DIR)/$(PROJECTNAME) $(INCLUDE_DIRS) $(LIBS)
