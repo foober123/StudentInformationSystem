@@ -33,8 +33,11 @@ void drawDeleteCollegeBox(GuiState & guiState, AppData & appData){
     if (ImGui::Button("Confirm", buttonSize))
     {
         guiState.currentError = appData.deleteCollege(guiState.selectedCollege);
+        if(guiState.currentError == ERRORSTATE::NO_ERROR){
+        guiState.refreshDisplayOrder(appData.getCollegeRegistry());
         guiState.currentInputBox = NULL;
         guiState.selectedCollege = 0;
+        }
     }
 
 

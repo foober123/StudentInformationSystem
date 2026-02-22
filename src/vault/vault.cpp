@@ -62,7 +62,7 @@ char Vault::SerializeGender(Gender gender){
 
         internalID = static_cast<uint32_t>(std::stoi(fields[0]));
         c.collegeName = trim(fields[1]);
-        c.collegeAbreviation = trim(fields[2]);
+        c.collegeAbbreviation = trim(fields[2]);
 
         colleges.insert({internalID, c});
     }
@@ -201,7 +201,7 @@ bool Vault::savePrograms(const std::unordered_map<uint32_t,Program>& programRegi
 };
 
 bool Vault::saveColleges(const std::unordered_map<uint32_t,College>& collegeRegistry){
-    std::ofstream file(m_programFilePath);
+    std::ofstream file(m_collegeFilePath);
     if (!file.is_open())
         return false;
 
@@ -215,7 +215,7 @@ bool Vault::saveColleges(const std::unordered_map<uint32_t,College>& collegeRegi
             file
                 << internalID << ","
                 << escapeCSV(college.collegeName) << ","
-                << escapeCSV(college.collegeAbreviation)
+                << escapeCSV(college.collegeAbbreviation)
                 << "\n";
         }
     }

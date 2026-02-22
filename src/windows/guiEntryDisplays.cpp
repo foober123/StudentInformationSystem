@@ -38,7 +38,7 @@ void drawCollegeEntryDisplay(const GuiState& guiState, AppData& appData){
     ImGui::Begin("Entry Display");
     if(appData.checkCollegeIDValidity(guiState.selectedCollege)){
         ImGui::SetWindowFontScale(1.5f);
-        ImGui::Text("College Code: %s", c.collegeAbreviation.c_str());
+        ImGui::Text("College Code: %s", c.collegeAbbreviation.c_str());
         ImGui::Text("College Name: %s", c.collegeName.c_str());
         ImGui::SetWindowFontScale(1.0f);
     }

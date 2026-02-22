@@ -11,7 +11,7 @@ void AppData::setCollegeRegistry(std::unordered_map<uint32_t, College> collegeRe
     for (const auto& [id, college] : m_collegeRegistry)
     {
         // Build secondary index
-        m_collegeCodeToID[college.collegeAbreviation] = id;
+        m_collegeCodeToID[college.collegeAbbreviation] = id;
 
         if (id > maxID)
             maxID = id;

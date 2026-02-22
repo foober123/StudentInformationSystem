@@ -1,8 +1,8 @@
-CollegeID,CollegeName,CollegeAbrev
-1,College Of Computer Studies, CCS
-2,College Of Education, CED
-3,College Of Sciences & Math, CSM
-4,College Of Engineering & Technology, COET
-5,College Of Arts & Social Sciences, CASS
-6,College Of Business & Ac, CBBA 
-7,College Of Health Sciences, CHS
+Internal_ID, CollegeID,ProgramName,ProgramCode
+7,College Of Health Sciences,CHS
+6,College Of Business And,CEBA
+5,College Of Arts & Social Sciences,CASS
+4,College Of Engineering & Technology,COET
+3,College Of Sciences & Math,CSM
+2,College Of Education,CED
+1,College Of Computer Studies,CCS

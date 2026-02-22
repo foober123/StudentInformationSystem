@@ -92,7 +92,7 @@ void drawStudentDataTable(GuiState& guiState, AppData& appdata){
             const College& college = appdata.getCollege(program.collegeID);
 
             ImGui::TableNextColumn();
-            ImGui::Text("%s", college.collegeAbreviation.c_str());
+            ImGui::Text("%s", college.collegeAbbreviation.c_str());
 
             ImGui::TableNextColumn();
             ImGui::Text("%d", student.year);
@@ -173,7 +173,7 @@ void drawProgramDataTable(GuiState &guiState, AppData &appData){
             ImGui::PopID();
 
             ImGui::TableSetColumnIndex(1);
-            ImGui::Text("%s", appData.getCollege(program.collegeID).collegeAbreviation.c_str());
+            ImGui::Text("%s", appData.getCollege(program.collegeID).collegeAbbreviation.c_str());
 
             ImGui::TableSetColumnIndex(2);
             ImGui::Text("%s", program.programName.c_str());
@@ -187,28 +187,67 @@ void drawProgramDataTable(GuiState &guiState, AppData &appData){
 
 void drawCollegeDataTable(GuiState &guiState, AppData &appData){
     ImGui::Begin("data");
-    if (ImGui::BeginTable("CollegeTable", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg))
+    ImVec2 tableSize = ImVec2(0.0f, ImGui::GetContentRegionAvail().y);
+    if (ImGui::BeginTable("CollegeTable", 2,
+                ImGuiTableFlags_Borders |
+                ImGuiTableFlags_RowBg |
+                ImGuiTableFlags_ScrollY |
+                ImGuiTableFlags_Sortable |
+                ImGuiTableFlags_Resizable, tableSize))
     {
         ImGui::TableSetupColumn("College Code");
         ImGui::TableSetupColumn("Name");
         ImGui::TableHeadersRow();
 
-
-        for (const auto& [id, college] : appData.getCollegeRegistry())
+        if (ImGuiTableSortSpecs* sortSpecs = ImGui::TableGetSortSpecs())
         {
+            if (sortSpecs->SpecsDirty)
+            {
+                guiState.sortColleges(appData, sortSpecs);
+
+                sortSpecs->SpecsDirty = false;
+            }
+        }
+
+        for(size_t id : guiState.collegeDisplayOrder){
             bool isSelected = (guiState.selectedCollege == id);
+            const auto& college = appData.getCollege(id);
 
             ImGui::TableNextRow();
 
             ImGui::TableSetColumnIndex(0);
-
+            ImGui::PushID(id);
             if (ImGui::Selectable(
-                        college.collegeAbreviation.c_str(),
+                        college.collegeAbbreviation.c_str(),
                         isSelected,
                         ImGuiSelectableFlags_SpanAllColumns))
             {
                 guiState.selectedCollege = id;
             }
+
+            if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
+            {
+                guiState.selectedCollege = id;
+            }
+
+            if (ImGui::BeginPopupContextItem())   // attaches to the Selectable
+            {
+                if (ImGui::MenuItem("Edit Entry"))
+                {
+                    (guiState.*guiState.currentStrategy->draftSettingStrategy)(id, appData);
+                    guiState.currentInputBox = guiState.currentStrategy->editEntryStrategy;
+                }
+
+                if (ImGui::MenuItem("Delete Entry"))
+                {
+                    guiState.currentInputBox = guiState.currentStrategy->deleteEntryStrategy;
+                }
+
+                ImGui::EndPopup();
+            }
+
+            ImGui::PopID();
+
 
             ImGui::TableSetColumnIndex(1);
             ImGui::Text("%s", college.collegeName.c_str());
@@ -218,5 +257,4 @@ void drawCollegeDataTable(GuiState &guiState, AppData &appData){
         ImGui::EndTable();
     }
     ImGui::End();
-
 }

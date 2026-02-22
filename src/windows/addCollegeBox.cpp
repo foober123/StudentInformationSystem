@@ -66,12 +66,14 @@ void drawAddCollegeBox(GuiState &guiState, AppData &appData){
         if (ImGui::Button("Confirm", buttonSize))
         {
             guiState.currentError = appData.addCollegeEntry(guiState.collegeDraft);
-            if(guiState.currentError == ERRORSTATE::NO_ERROR) guiState.resetCollegeDraft();
+            if(guiState.currentError == ERRORSTATE::NO_ERROR){
+                guiState.resetCollegeDraft();
+                guiState.refreshDisplayOrder(appData.getCollegeRegistry());
+            }
         }
 
 
         ImGui::End();
-
 
     }
 

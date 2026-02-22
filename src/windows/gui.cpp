@@ -184,7 +184,7 @@ void drawCollegeRegistry(AppData& appData){
                 ImGui::Text("%s", college.collegeName.c_str());
 
                 ImGui::TableSetColumnIndex(2);
-                ImGui::Text("%s", college.collegeAbreviation.c_str());
+                ImGui::Text("%s", college.collegeAbbreviation.c_str());
             }
 
             ImGui::EndTable();

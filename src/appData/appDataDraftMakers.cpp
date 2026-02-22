@@ -20,7 +20,7 @@ StudentDraft AppData::makeStudentDraft(uint32_t id){
 CollegeDraft AppData::makeCollegeDraft(uint32_t id){
     CollegeDraft c;
     const auto& college = m_collegeRegistry.at(id);
-    c.collegeCode = college.collegeAbreviation;
+    c.collegeCode = college.collegeAbbreviation;
     c.collegeName = college.collegeName;
 
     return c;
@@ -31,7 +31,7 @@ ProgramDraft AppData::makeProgramDraft(uint32_t id){
     const auto& program = m_programRegistry.at(id);
     p.programAbbreviation = program.programAbbreviation;
     p.programName = program.programName;
-    p.collegeCode = m_collegeRegistry.at(program.collegeID).collegeAbreviation;
+    p.collegeCode = m_collegeRegistry.at(program.collegeID).collegeAbbreviation;
 
     return p;
 }

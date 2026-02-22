@@ -31,6 +31,15 @@ void GuiState::refreshDisplayOrder(const std::unordered_map<uint32_t, Program>& 
     }
 }
 
+void GuiState::refreshDisplayOrder(const std::unordered_map<uint32_t, College>& collegeRegistry){
+    collegeDisplayOrder.clear();
+
+    for (const auto& [id, college] : collegeRegistry){
+        collegeDisplayOrder.push_back(id);
+    }
+
+};
+
 void GuiState::preloadPendingCollege(uint32_t id, AppData& appData){
     collegeDraft = appData.makeCollegeDraft(id);
 }
@@ -204,6 +213,54 @@ void GuiState::sortPrograms(AppData& appData, ImGuiTableSortSpecs* sortSpecs){
             return ascending
                 ? (s1.programAbbreviation < s2.programAbbreviation)
                 : (s2.programAbbreviation < s1.programAbbreviation);
+
+
+            }
+            });
+
+}
+
+void GuiState::sortColleges(AppData& appData, ImGuiTableSortSpecs* sortSpecs){
+    if (sortSpecs->SpecsCount == 0)
+        return;
+
+    const ImGuiTableColumnSortSpecs* spec = &sortSpecs->Specs[0];
+    bool ascending = (spec->SortDirection == ImGuiSortDirection_Ascending);
+
+    auto& colleges = appData.getCollegeRegistry();
+
+    std::sort(collegeDisplayOrder.begin(), collegeDisplayOrder.end(),
+            [&](uint32_t a, uint32_t b)
+            {
+            const College& s1 = colleges.at(a);
+            const College& s2 = colleges.at(b);
+
+
+            bool result = false;
+
+            switch (spec->ColumnIndex)
+            {
+            case 0: result = s1.collegeAbbreviation < s2.collegeAbbreviation; break;
+            case 1: result = s1.collegeName < s2.collegeName; break;
+            default: result = s1.collegeAbbreviation < s2.collegeAbbreviation; break;
+            }
+
+            switch (spec->ColumnIndex)
+            {
+            case 0:
+            return ascending
+                ? (s1.collegeAbbreviation < s2.collegeAbbreviation)
+                : (s2.collegeAbbreviation < s1.collegeAbbreviation);
+
+            case 2:
+            return ascending
+                ? (s1.collegeName < s2.collegeName)
+                : (s2.collegeName < s1.collegeName);
+            
+            default:
+            return ascending
+                ? (s1.collegeAbbreviation < s2.collegeAbbreviation)
+                : (s2.collegeAbbreviation < s1.collegeAbbreviation);
 
 
             }

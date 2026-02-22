@@ -44,6 +44,7 @@ std::string collegeCode;
 struct GuiState{
 std::vector<size_t> displayOrder; 
 std::vector<uint32_t> programDisplayOrder;
+std::vector<uint32_t> collegeDisplayOrder;
 std::string searchBuffer;
 
 uint32_t selectedStudent;
@@ -77,8 +78,11 @@ uint32_t getSelectedCollege() const;
 
 void refreshDisplayOrder(const std::unordered_map<uint32_t, Student>&);
 void refreshDisplayOrder(const std::unordered_map<uint32_t, Program>&);
+void refreshDisplayOrder(const std::unordered_map<uint32_t, College>&);
+
 void sortStudents(AppData&, ImGuiTableSortSpecs* sortSpecs);
 void sortPrograms(AppData&, ImGuiTableSortSpecs* sortSpecs);
+void sortColleges(AppData&, ImGuiTableSortSpecs* sortSpecs);
 
 void preloadPendingStudent(uint32_t, AppData&);
 void preloadPendingProgram(uint32_t, AppData&);

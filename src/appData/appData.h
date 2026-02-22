@@ -15,7 +15,7 @@ Other
 
 struct College{
 std::string collegeName;
-std::string collegeAbreviation; 
+std::string collegeAbbreviation; 
 };
 
 struct Program{

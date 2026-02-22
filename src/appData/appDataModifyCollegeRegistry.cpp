@@ -11,7 +11,7 @@ ERRORSTATE AppData::addCollegeEntry(CollegeDraft draft){
     if(!validateCollegeNameFormat(draft.collegeName)) return ERRORSTATE::INVALID_PROGRAM_NAME;
 
     College college;
-    college.collegeAbreviation = draft.collegeCode;
+    college.collegeAbbreviation = draft.collegeCode;
     college.collegeName = draft.collegeName;
 
     m_collegeRegistry.insert({m_nextCollegeID, college});
@@ -27,10 +27,10 @@ ERRORSTATE AppData::editCollegeEntry(CollegeDraft draft, uint32_t key){
 
     auto& college = m_collegeRegistry.at(key);
 
-    m_collegeCodeToID.erase(college.collegeAbreviation);
+    m_collegeCodeToID.erase(college.collegeAbbreviation);
 
     college.collegeName = draft.collegeName;
-    college.collegeAbreviation = draft.collegeCode;
+    college.collegeAbbreviation = draft.collegeCode;
 
     m_collegeCodeToID[draft.collegeCode] = key;
 
@@ -46,7 +46,7 @@ ERRORSTATE AppData::deleteCollege(uint32_t key){
     }
 
 
-    m_collegeCodeToID.erase(it->second.collegeAbreviation);
+    m_collegeCodeToID.erase(it->second.collegeAbbreviation);
     m_collegeRegistry.erase(key);
 
     return ERRORSTATE::NO_ERROR;
@@ -66,7 +66,7 @@ bool AppData::validateCollegeNameFormat(std::string name){
 
 bool AppData::validateRepeatingCollegeCode(std::string code){
     for(const auto& [id, college]: m_collegeRegistry){
-        if(code == college.collegeAbreviation) return false;
+        if(code == college.collegeAbbreviation) return false;
 
     }
 
@@ -76,7 +76,7 @@ bool AppData::validateRepeatingCollegeCode(std::string code){
 bool AppData::validateRepeatingCollegeCode(std::string code, uint32_t key){
     for(const auto& [id, college]: m_collegeRegistry){
         if(key == id) continue;
-        if(code == college.collegeAbreviation) return false;
+        if(code == college.collegeAbbreviation) return false;
 
     }
 
