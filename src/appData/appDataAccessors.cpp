@@ -31,7 +31,7 @@ const std::unordered_map<uint32_t, Student>& AppData::getStudentRecord(){
     return m_studentRecord;
 };
 
-const std::unordered_map<std::string, uint32_t> AppData::getcollegeCodeToID(){
+const std::unordered_map<std::string, uint32_t>& AppData::getcollegeCodeToID(){
     return m_collegeCodeToID;
 }
 
@@ -39,7 +39,7 @@ const std::unordered_map<uint32_t, College>& AppData::getCollegeRegistry(){
     return m_collegeRegistry;
 }
 
-std::unordered_map<uint32_t, Program>& AppData::getProgramRegistry(){
+const std::unordered_map<uint32_t, Program>& AppData::getProgramRegistry(){
     return m_programRegistry;    
 }; 
 

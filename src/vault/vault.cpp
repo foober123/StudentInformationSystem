@@ -93,7 +93,7 @@ std::unordered_map<uint32_t,Student> Vault::LoadStudents(){
         auto fields = parseCSVLine(line);
 
         if (fields.size() < 7)
-            continue; // or handle error properly
+            continue; 
 
         uint32_t internalID = static_cast<uint32_t>(std::stoi(fields[0]));
 

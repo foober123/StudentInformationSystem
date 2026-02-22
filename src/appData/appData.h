@@ -68,9 +68,9 @@ class AppData{
     bool checkProgramIDValidity(uint32_t);
     bool checkCollegeIDValidity(uint32_t);
 
-    const std::unordered_map<std::string, uint32_t> getcollegeCodeToID();
+    const std::unordered_map<std::string, uint32_t>& getcollegeCodeToID();
     const std::unordered_map<uint32_t, College>& getCollegeRegistry();
-    std::unordered_map<uint32_t, Program>& getProgramRegistry();
+    const std::unordered_map<uint32_t, Program>& getProgramRegistry();
 
     const std::unordered_map<std::string, uint32_t>& getProgramCodeToID();
     const std::unordered_map<uint32_t, Student>& getStudentRecord();

@@ -50,7 +50,6 @@ uint32_t selectedStudent;
 uint32_t selectedProgram;
 uint32_t selectedCollege;
 
-
 StudentDraft studentDraft;
 ProgramDraft programDraft;
 CollegeDraft collegeDraft;

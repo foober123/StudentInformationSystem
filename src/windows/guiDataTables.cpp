@@ -44,12 +44,39 @@ void drawStudentDataTable(GuiState& guiState, AppData& appdata){
             bool isSelected = (guiState.selectedStudent == studentID);
 
             ImGui::TableNextColumn();
+
+            ImGui::PushID(studentID);
             if (ImGui::Selectable(student.ID.c_str(),
                         isSelected,
                         ImGuiSelectableFlags_SpanAllColumns))
             {
                 guiState.selectedStudent = studentID;
             }
+
+
+            if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
+            {
+                guiState.selectedStudent = studentID;
+            }
+
+            if (ImGui::BeginPopupContextItem())   // attaches to the Selectable
+            {
+                if (ImGui::MenuItem("Edit Entry"))
+                {
+                    (guiState.*guiState.currentStrategy->draftSettingStrategy)(studentID, appdata);
+                    guiState.currentInputBox = guiState.currentStrategy->editEntryStrategy;
+                }
+
+                if (ImGui::MenuItem("Delete Entry"))
+                {
+                    guiState.currentInputBox = guiState.currentStrategy->deleteEntryStrategy;
+                }
+
+                ImGui::EndPopup();
+            }
+
+            ImGui::PopID();
+
 
             ImGui::TableNextColumn();
             ImGui::Text("%s", student.firstName.c_str());
@@ -112,7 +139,7 @@ void drawProgramDataTable(GuiState &guiState, AppData &appData){
             ImGui::TableNextRow();
 
             ImGui::TableSetColumnIndex(0);
-
+            ImGui::PushID(id);
             if (ImGui::Selectable(
                         program.programAbbreviation.c_str(),
                         isSelected,
@@ -120,6 +147,30 @@ void drawProgramDataTable(GuiState &guiState, AppData &appData){
             {
                 guiState.selectedProgram = id;
             }
+
+
+            if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
+            {
+                guiState.selectedProgram = id;
+            }
+
+            if (ImGui::BeginPopupContextItem())   // attaches to the Selectable
+            {
+                if (ImGui::MenuItem("Edit Entry"))
+                {
+                    (guiState.*guiState.currentStrategy->draftSettingStrategy)(id, appData);
+                    guiState.currentInputBox = guiState.currentStrategy->editEntryStrategy;
+                }
+
+                if (ImGui::MenuItem("Delete Entry"))
+                {
+                    guiState.currentInputBox = guiState.currentStrategy->deleteEntryStrategy;
+                }
+
+                ImGui::EndPopup();
+            }
+
+            ImGui::PopID();
 
             ImGui::TableSetColumnIndex(1);
             ImGui::Text("%s", appData.getCollege(program.collegeID).collegeAbreviation.c_str());
