@@ -80,6 +80,10 @@ void refreshDisplayOrder(const std::unordered_map<uint32_t, Student>&);
 void refreshDisplayOrder(const std::unordered_map<uint32_t, Program>&);
 void refreshDisplayOrder(const std::unordered_map<uint32_t, College>&);
 
+void rebuildStudentDisplayOrder(AppData&);
+void rebuildProgramDisplayOrder(AppData&);
+void rebuildCollegeDisplayOrder(AppData&);
+
 void sortStudents(AppData&, ImGuiTableSortSpecs* sortSpecs);
 void sortPrograms(AppData&, ImGuiTableSortSpecs* sortSpecs);
 void sortColleges(AppData&, ImGuiTableSortSpecs* sortSpecs);

@@ -267,3 +267,76 @@ void GuiState::sortColleges(AppData& appData, ImGuiTableSortSpecs* sortSpecs){
             });
 
 }
+
+void GuiState::rebuildStudentDisplayOrder(AppData& appData){
+    displayOrder.clear();
+
+    std::string query = searchBuffer;
+    std::transform(query.begin(), query.end(), query.begin(), ::tolower);
+
+    for (const auto& [internalID, student] : appData.getStudentRecord())
+    {
+        std::string searchable =
+            student.ID + " " +
+            student.firstName + " " +
+            student.lastName + " " +
+            appData.getProgram(student.programID).programAbbreviation + " " +
+            std::to_string(student.year) + " " +
+            serializeGender(student.gender);
+
+        std::transform(searchable.begin(), searchable.end(),
+                       searchable.begin(), ::tolower);
+
+        if (query.empty() || searchable.find(query) != std::string::npos)
+        {
+            displayOrder.push_back(internalID);
+        }
+    }
+
+}
+void GuiState::rebuildProgramDisplayOrder(AppData& appData){
+    programDisplayOrder.clear();
+
+    std::string query = searchBuffer;
+    std::transform(query.begin(), query.end(), query.begin(), ::tolower);
+
+    for (const auto& [internalID, program] : appData.getProgramRegistry())
+    {
+        std::string searchable =
+            program.programAbbreviation + " " +
+            appData.getCollege(program.collegeID).collegeAbbreviation + " " +
+            program.programName;
+
+        std::transform(searchable.begin(), searchable.end(),
+                       searchable.begin(), ::tolower);
+
+        if (query.empty() || searchable.find(query) != std::string::npos)
+        {
+            programDisplayOrder.push_back(internalID);
+        }
+    }
+
+}
+
+void GuiState::rebuildCollegeDisplayOrder(AppData& appData){
+    collegeDisplayOrder.clear();
+
+    std::string query = searchBuffer;
+    std::transform(query.begin(), query.end(), query.begin(), ::tolower);
+
+    for (const auto& [internalID, college] : appData.getCollegeRegistry())
+    {
+        std::string searchable =
+            college.collegeAbbreviation + " " +
+            college.collegeName;
+
+        std::transform(searchable.begin(), searchable.end(),
+                       searchable.begin(), ::tolower);
+
+        if (query.empty() || searchable.find(query) != std::string::npos)
+        {
+            collegeDisplayOrder.push_back(internalID);
+        }
+    }
+
+}

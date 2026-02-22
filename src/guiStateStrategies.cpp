@@ -12,7 +12,8 @@ const GuiStrategy studentStrategy = {
     drawStudentEntryDisplay, 
     &AppData::checkStudentIDValidity, 
     &GuiState::getSelectedStudent,
-    &GuiState::preloadPendingStudent
+    &GuiState::preloadPendingStudent,
+    &GuiState::rebuildStudentDisplayOrder
 };
 
 const GuiStrategy programStrategy = {
@@ -23,7 +24,8 @@ const GuiStrategy programStrategy = {
     drawProgramEntryDisplay, 
     &AppData::checkProgramIDValidity, 
     &GuiState::getSelectedProgram,
-    &GuiState::preloadPendingProgram
+    &GuiState::preloadPendingProgram,
+    &GuiState::rebuildProgramDisplayOrder
 };
 
 const GuiStrategy collegeStrategy = {
@@ -34,6 +36,7 @@ const GuiStrategy collegeStrategy = {
     drawCollegeEntryDisplay, 
     &AppData::checkCollegeIDValidity, 
     &GuiState::getSelectedCollege,
-    &GuiState::preloadPendingCollege
+    &GuiState::preloadPendingCollege,
+    &GuiState::rebuildCollegeDisplayOrder
 
 };
