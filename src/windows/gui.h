@@ -24,7 +24,7 @@ static const char* genderItems[] =
 std::string serializeGender(Gender );
 void drawMenuBar(GuiState& , AppData& , Vault& );
 void drawEntryDisplay(const GuiState& , AppData& );
-void drawTaskBar(GuiState& );
+void drawTaskBar(GuiState&, AppData&);
 void drawCollegeRegistry(AppData& );
 void drawProgramRegistry(AppData& );
 void drawErrorBox(GuiState& );

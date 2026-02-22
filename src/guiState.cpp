@@ -6,7 +6,13 @@
 #include "guiState.h"
 #include "windows/gui.h"
 #include "appData/appData.h"
+#include "guiStateStrategies.h"
 #include <imgui.h>
+
+uint32_t GuiState::getSelectedStudent() const{return selectedStudent;};
+uint32_t GuiState::getSelectedProgram() const{return selectedProgram;};
+uint32_t GuiState::getSelectedCollege() const{return selectedCollege;};
+
 
 void GuiState::refreshDisplayOrder(const std::unordered_map<uint32_t, Student>& studentRecord){
     displayOrder.clear();
@@ -25,28 +31,31 @@ void GuiState::refreshDisplayOrder(const std::unordered_map<uint32_t, Program>& 
     }
 }
 
-void GuiState::preloadPending(StudentDraft student){
-
-studentDraft.ID = student.ID;
-studentDraft.firstName = student.firstName;
-studentDraft.lastName = student.lastName;
-studentDraft.gender = static_cast<int>(student.gender);
-studentDraft.programCode = student.programCode;
-studentDraft.year = student.year;
-
+void GuiState::preloadPendingCollege(uint32_t id, AppData& appData){
+    collegeDraft = appData.makeCollegeDraft(id);
 }
+
+void GuiState::preloadPendingStudent(uint32_t id, AppData& appData){
+    studentDraft = appData.makeStudentDraft(id);
+}
+
+void GuiState::preloadPendingProgram(uint32_t id, AppData& appData){
+    programDraft = appData.makeProgramDraft(id);
+}
+
 
 void GuiState::init(){
 selectedStudent = 0;
 selectedCollege = 0;
 selectedProgram = 0;
 
+
 searchBuffer = "";
 displayOrder = {}; 
-currentError = ERRORSTATE::NO_ERROR;
 
+currentError = ERRORSTATE::NO_ERROR;
 currentInputBox = NULL;
-currentStrategy = studentStrategy;
+currentStrategy = &studentStrategy;
 
 showCollegeRegistry = false;
 showProgramRegistry = false;

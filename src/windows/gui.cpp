@@ -2,9 +2,9 @@
 #include "gui.h"
 #include <imgui.h>
 #include <imgui_stdlib.h>
-#include "../appData/appData.h"
 #include "../vault/vault.h"
-
+#include "../appData/appData.h"
+#include "../guiStateStrategies.h"
 
 void drawMenuBar(GuiState& guiState, AppData& appData, Vault& vault){
     if (ImGui::BeginMainMenuBar())
@@ -32,7 +32,7 @@ void drawMenuBar(GuiState& guiState, AppData& appData, Vault& vault){
 
             if(ImGui::MenuItem("Edit Entry")){
                 if(appData.checkStudentIDValidity(guiState.selectedStudent)){
-                guiState.preloadPending(appData.makeStudentDraft(guiState.selectedStudent));
+                guiState.preloadPendingStudent(guiState.selectedStudent, appData);
                 guiState.currentInputBox = drawEditStudentBox;
                 }
                 else{
@@ -40,7 +40,14 @@ void drawMenuBar(GuiState& guiState, AppData& appData, Vault& vault){
                 }
             }
 
-            if(ImGui::MenuItem("Delete Entry")){guiState.currentInputBox = drawDeleteStudentBox;}
+            if(ImGui::MenuItem("Delete Entry")){
+                if(appData.checkStudentIDValidity(guiState.selectedStudent)){
+                    guiState.currentInputBox = drawDeleteStudentBox;
+                }
+                else{
+                    guiState.currentError = ERRORSTATE::INVALID_INDEX;
+                }
+            }
 
             ImGui::Text("Program");
             ImGui::Separator();
@@ -72,41 +79,62 @@ std::string serializeGender(Gender gender){
     return "N/A";
 }
 
-void drawTaskBar(GuiState& guiState){
+void drawTaskBar(GuiState& guiState, AppData& appData){
     ImGui::Begin("taskbar", NULL, ImGuiWindowFlags_NoTitleBar);
 
     if(ImGui::Button("S")){
-        guiState.currentStrategy = studentStrategy;
+        guiState.currentStrategy = &studentStrategy;
     }
 
     ImGui::SameLine();
 
     if(ImGui::Button("P")){
-        guiState.currentStrategy = programStrategy;
+        guiState.currentStrategy = &programStrategy;
     }
 
     ImGui::SameLine();
 
     if(ImGui::Button("C")){
-        guiState.currentStrategy = collegeStrategy;
+        guiState.currentStrategy = &collegeStrategy;
     }
 
     ImGui::SameLine();
 
     if(ImGui::Button("Add")){
-        guiState.currentInputBox = guiState.currentStrategy.addEntryStrategy;
+        guiState.currentInputBox = guiState.currentStrategy->addEntryStrategy;
     }
 
     ImGui::SameLine();
 
     if(ImGui::Button("Edit")){
-        guiState.currentInputBox = guiState.currentStrategy.editEntryStrategy;
+        uint32_t id = (guiState.*guiState.currentStrategy->IDStrategy)();
+
+        if((appData.*guiState.currentStrategy->validator)(id)){
+            (guiState.*guiState.currentStrategy->draftSettingStrategy)(id, appData);
+            guiState.currentInputBox = guiState.currentStrategy->editEntryStrategy;
+
+        }
+        else{
+            guiState.currentError = ERRORSTATE::INVALID_INDEX;
+        }
+
+
     }
 
     ImGui::SameLine();
 
     if(ImGui::Button("Delete")){
-        guiState.currentInputBox = guiState.currentStrategy.deleteEntryStrategy;
+
+        uint32_t id = (guiState.*guiState.currentStrategy->IDStrategy)();
+
+        if((appData.*guiState.currentStrategy->validator)(id)){
+            guiState.currentInputBox = guiState.currentStrategy->deleteEntryStrategy;
+
+        }
+        else{
+            guiState.currentError = ERRORSTATE::INVALID_INDEX;
+        }
+
     }
 
     ImGui::SameLine();

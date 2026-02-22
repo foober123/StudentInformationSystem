@@ -25,3 +25,13 @@ CollegeDraft AppData::makeCollegeDraft(uint32_t id){
 
     return c;
 }
+
+ProgramDraft AppData::makeProgramDraft(uint32_t id){
+    ProgramDraft p;
+    const auto& program = m_programRegistry.at(id);
+    p.programAbbreviation = program.programAbbreviation;
+    p.programName = program.programName;
+    p.collegeCode = m_collegeRegistry.at(program.collegeID).collegeAbreviation;
+
+    return p;
+}

@@ -42,6 +42,7 @@ class AppData{
     
     StudentDraft makeStudentDraft(uint32_t);
     CollegeDraft makeCollegeDraft(uint32_t);
+    ProgramDraft makeProgramDraft(uint32_t);
 
     void setCollegeRegistry(std::unordered_map<uint32_t, College>);
     void setStudentRecord(std::unordered_map<uint32_t, Student>);

@@ -6,35 +6,18 @@
 #include <vector>
 #include <assert.h>
 #include "windows/gui.h"
+#include "guiStateStrategy.h"
 
-class AppData;
 struct GuiState;
 struct ImGuiTableSortSpecs;
 
 enum class Gender;
-
 struct Student;
 struct Program; 
 struct College;
 
 enum class ERRORSTATE;
 
-typedef void (*InputBoxStrategy)(GuiState&, AppData&);
-typedef void (*DataTableStrategy)(GuiState&, AppData&);
-typedef void (*EntryDisplayStrategy)(const GuiState&, AppData&);
-
-struct GuiStrategy{
-InputBoxStrategy addEntryStrategy;
-InputBoxStrategy editEntryStrategy;
-InputBoxStrategy deleteEntryStrategy;
-DataTableStrategy dataTableStrategy;
-EntryDisplayStrategy entryDisplayStrategy;
-
-};
-
-const GuiStrategy studentStrategy = {drawAddStudentBox, drawEditStudentBox, drawDeleteStudentBox, drawStudentDataTable, drawStudentEntryDisplay};
-const GuiStrategy programStrategy = {drawAddProgramBox, drawEditProgramBox, drawDeleteProgramBox, drawProgramDataTable, drawProgramEntryDisplay};
-const GuiStrategy collegeStrategy = {drawAddCollegeBox, drawEditCollegeBox, drawDeleteCollegeBox, drawCollegeDataTable, drawCollegeEntryDisplay};
 
 struct StudentDraft{
 std::string ID; 
@@ -62,9 +45,11 @@ struct GuiState{
 std::vector<size_t> displayOrder; 
 std::vector<uint32_t> programDisplayOrder;
 std::string searchBuffer;
+
 uint32_t selectedStudent;
 uint32_t selectedProgram;
 uint32_t selectedCollege;
+
 
 StudentDraft studentDraft;
 ProgramDraft programDraft;
@@ -72,7 +57,7 @@ CollegeDraft collegeDraft;
 
 //Current Input Box
 InputBoxStrategy currentInputBox;
-GuiStrategy currentStrategy;
+const GuiStrategy* currentStrategy;
 
 ERRORSTATE currentError;
 
@@ -86,13 +71,19 @@ void resetStudentDraft();
 void resetProgramDraft();
 void resetCollegeDraft();
 
+uint32_t getSelectedStudent() const;
+uint32_t getSelectedProgram() const;
+uint32_t getSelectedCollege() const;
+
+
 void refreshDisplayOrder(const std::unordered_map<uint32_t, Student>&);
 void refreshDisplayOrder(const std::unordered_map<uint32_t, Program>&);
 void sortStudents(AppData&, ImGuiTableSortSpecs* sortSpecs);
 void sortPrograms(AppData&, ImGuiTableSortSpecs* sortSpecs);
 
-
-void preloadPending(StudentDraft);
+void preloadPendingStudent(uint32_t, AppData&);
+void preloadPendingProgram(uint32_t, AppData&);
+void preloadPendingCollege(uint32_t, AppData&);
 };
 
 enum class ERRORSTATE{
