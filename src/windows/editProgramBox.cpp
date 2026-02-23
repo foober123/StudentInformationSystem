@@ -80,10 +80,10 @@ void drawEditProgramBox(GuiState &guiState, AppData &appData){
         }
 
 
-        ImGui::End();
 
 
     }
 
+    ImGui::End();
 }
 

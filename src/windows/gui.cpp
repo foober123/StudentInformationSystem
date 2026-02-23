@@ -54,14 +54,39 @@ void drawMenuBar(GuiState& guiState, AppData& appData, Vault& vault){
             ImGui::Text("Program");
             ImGui::Separator();
             if(ImGui::MenuItem("Add Program")){guiState.currentInputBox = drawAddProgramBox;} 
-            if(ImGui::MenuItem("Edit Program")){guiState.currentInputBox = drawEditProgramBox;} 
-            if(ImGui::MenuItem("Delete Program")){guiState.currentInputBox = drawDeleteProgramBox;}  
+            if(ImGui::MenuItem("Edit Program")){
+                if(appData.checkProgramIDValidity(guiState.selectedProgram)){
+                guiState.preloadPendingProgram(guiState.selectedProgram, appData);
+                guiState.currentInputBox = drawEditProgramBox;
+                }
+                else guiState.currentError = ERRORSTATE::INVALID_INDEX;
+
+            } 
+            if(ImGui::MenuItem("Delete Program")){
+                if(appData.checkProgramIDValidity(guiState.selectedProgram)){
+                guiState.preloadPendingCollege(guiState.selectedProgram, appData);
+                guiState.currentInputBox = drawDeleteProgramBox;
+                }
+                else guiState.currentError = ERRORSTATE::INVALID_INDEX;
+
+            }  
 
             ImGui::Text("College");
             ImGui::Separator();
             if(ImGui::MenuItem("Add College")){guiState.currentInputBox = drawAddCollegeBox;} 
-            if(ImGui::MenuItem("Edit College")){guiState.currentInputBox = drawEditCollegeBox;} 
-            if(ImGui::MenuItem("Delete College")){guiState.currentInputBox = drawDeleteCollegeBox;} 
+            if(ImGui::MenuItem("Edit College")){
+                if(appData.checkCollegeIDValidity(guiState.selectedCollege)){
+                    guiState.preloadPendingCollege(guiState.selectedCollege, appData);
+                    guiState.currentInputBox = drawEditCollegeBox;
+                } 
+                else guiState.currentError = ERRORSTATE::INVALID_INDEX;
+            } 
+            if(ImGui::MenuItem("Delete College")){
+                if(appData.checkCollegeIDValidity(guiState.selectedCollege)){
+                    guiState.currentInputBox = drawDeleteCollegeBox;
+                }
+                else guiState.currentError = ERRORSTATE::INVALID_INDEX;
+            } 
 
             ImGui::EndMenu();
         }
@@ -84,72 +109,81 @@ std::string serializeGender(Gender gender){
 void drawTaskBar(GuiState& guiState, AppData& appData){
     ImGui::Begin("taskbar", NULL, ImGuiWindowFlags_NoTitleBar);
 
-    if(ImGui::Button("S")){
-        guiState.currentStrategy = &studentStrategy;
-    }
 
-    ImGui::SameLine();
-
-    if(ImGui::Button("P")){
-        guiState.currentStrategy = &programStrategy;
-    }
-
-    ImGui::SameLine();
-
-    if(ImGui::Button("C")){
-        guiState.currentStrategy = &collegeStrategy;
-    }
-
-    ImGui::SameLine();
-
-    if(ImGui::Button("Add")){
-        guiState.currentInputBox = guiState.currentStrategy->addEntryStrategy;
-    }
-
-    ImGui::SameLine();
-
-    if(ImGui::Button("Edit")){
-        uint32_t id = (guiState.*guiState.currentStrategy->IDStrategy)();
-
-        if((appData.*guiState.currentStrategy->validator)(id)){
-            (guiState.*guiState.currentStrategy->draftSettingStrategy)(id, appData);
-            guiState.currentInputBox = guiState.currentStrategy->editEntryStrategy;
-
-        }
-        else{
-            guiState.currentError = ERRORSTATE::INVALID_INDEX;
+    if (ImGui::BeginTable("TaskBarLayout", 2, ImGuiTableFlags_SizingStretchProp)){
+        ImGui::TableSetupColumn("Left", ImGuiTableColumnFlags_WidthStretch);
+        ImGui::TableSetupColumn("Right", ImGuiTableColumnFlags_WidthFixed, 420.0f);
+        ImGui::TableNextColumn();
+        if(ImGui::Button("S")){
+            guiState.currentStrategy = &studentStrategy;
         }
 
+        ImGui::SameLine();
 
-    }
-
-    ImGui::SameLine();
-
-    if(ImGui::Button("Delete")){
-
-        uint32_t id = (guiState.*guiState.currentStrategy->IDStrategy)();
-
-        if((appData.*guiState.currentStrategy->validator)(id)){
-            guiState.currentInputBox = guiState.currentStrategy->deleteEntryStrategy;
-
-        }
-        else{
-            guiState.currentError = ERRORSTATE::INVALID_INDEX;
+        if(ImGui::Button("P")){
+            guiState.currentStrategy = &programStrategy;
         }
 
+        ImGui::SameLine();
+
+        if(ImGui::Button("C")){
+            guiState.currentStrategy = &collegeStrategy;
+        }
+
+        ImGui::SameLine();
+
+        if(ImGui::Button("Add")){
+            guiState.currentInputBox = guiState.currentStrategy->addEntryStrategy;
+        }
+
+        ImGui::SameLine();
+
+        if(ImGui::Button("Edit")){
+            uint32_t id = (guiState.*guiState.currentStrategy->IDStrategy)();
+
+            if((appData.*guiState.currentStrategy->validator)(id)){
+                (guiState.*guiState.currentStrategy->draftSettingStrategy)(id, appData);
+                guiState.currentInputBox = guiState.currentStrategy->editEntryStrategy;
+
+            }
+            else{
+                guiState.currentError = ERRORSTATE::INVALID_INDEX;
+            }
+
+
+        }
+
+        ImGui::SameLine();
+
+        if(ImGui::Button("Delete")){
+
+            uint32_t id = (guiState.*guiState.currentStrategy->IDStrategy)();
+
+            if((appData.*guiState.currentStrategy->validator)(id)){
+                guiState.currentInputBox = guiState.currentStrategy->deleteEntryStrategy;
+
+            }
+            else{
+                guiState.currentError = ERRORSTATE::INVALID_INDEX;
+            }
+
+        }
+
+        ImGui::TableNextColumn();
+        ImGui::PushItemWidth(250);
+        if(ImGui::InputText("##Search", &guiState.searchBuffer)){(guiState.*guiState.currentStrategy->searchStrategy)(appData);};
+        ImGui::PopItemWidth();
+
+        ImGui::SameLine();
+
+        ImGui::PushItemWidth(150);
+        guiState.currentStrategy->searchFieldStrategy(guiState);
+        ImGui::PopItemWidth();
+
+        ImGui::EndTable();
     }
-
-    ImGui::SameLine();
-
-    if(ImGui::InputText("Search", &guiState.searchBuffer)){(guiState.*guiState.currentStrategy->searchStrategy)(appData);};
-
-    ImGui::SameLine();
-
-    guiState.currentStrategy->searchFieldStrategy(guiState);
 
     ImGui::End();
-
-    
 }
 
 void drawEntryDisplay(const GuiState& guiState, AppData& appData){
@@ -255,7 +289,6 @@ void drawErrorBox(GuiState &guiState){
     if (ImGui::Button("Close", buttonSize))
     {
         guiState.currentError = ERRORSTATE::NO_ERROR;
-        ImGui::CloseCurrentPopup();
     }
 
     pos = ImVec2(
@@ -324,12 +357,32 @@ void drawCollegeToID(AppData &appData){
 }
 
 void drawGuiStateInfo(GuiState &guiState){
+    uint32_t currID = (guiState.*guiState.currentStrategy->IDStrategy)();
     ImGui::Begin("Gui State Information");
         ImGui::Text("Selected Student Internal ID: %d", guiState.selectedStudent);
         ImGui::Text("Selected Program Internal ID: %d", guiState.selectedProgram);
         ImGui::Text("Selected College Internal ID: %d", guiState.selectedCollege);
+        ImGui::Text("Current Selected Index: %d", currID);
         ImGui::Separator();
         ImGui::Text("Student Display Order Size: %d", static_cast<int>(guiState.displayOrder.size()));
+
+
+    ImGui::End();
+}
+
+void drawAppDataStatus(AppData &appData){
+    ImGui::Begin("test");
+        ImGui::Text("Status");
+        ImGui::Separator();
+        if(ImGui::BeginChild("Students")){
+        ImGui::Text("Status");
+        ImGui::Text("Status");
+        ImGui::Text("Status");
+        ImGui::Text("Status");
+
+
+        ImGui::EndChild();
+        };
 
 
     ImGui::End();

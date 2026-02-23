@@ -7,6 +7,7 @@
 #include <SDL_stdinc.h>
 #include <SDL_video.h>
 
+#include "imgui.h"
 #include "settings.h"
 #include "windows/gui.h"
 #include "guiState.h"
@@ -105,8 +106,7 @@ int main(int argc, char* argv[]){
         if(guistate.showDebugWindow) drawGuiStateInfo(guistate);
         if(guistate.currentError != ERRORSTATE::NO_ERROR) drawErrorBox(guistate);
         if(guistate.currentInputBox != NULL) guistate.currentInputBox(guistate, appData);          
-        ImGui::Begin("test");
-        ImGui::End();
+        drawAppDataStatus(appData);
 
 
         ImGui::Render();

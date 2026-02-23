@@ -19,7 +19,7 @@ void drawStudentSearchControls(GuiState& guiState)
 
     int current = static_cast<int>(guiState.studentSearchField);
 
-    if (ImGui::Combo("Search By", &current, labels, IM_ARRAYSIZE(labels)))
+    if (ImGui::Combo("##SearchBy", &current, labels, IM_ARRAYSIZE(labels)))
     {
         guiState.studentSearchField =
             static_cast<StudentSearchField>(current);
@@ -37,7 +37,7 @@ void drawProgramSearchControls(GuiState& guiState)
 
     int current = static_cast<int>(guiState.programSearchField);
 
-    if (ImGui::Combo("Search By", &current, labels, IM_ARRAYSIZE(labels)))
+    if (ImGui::Combo("##SearchBy", &current, labels, IM_ARRAYSIZE(labels)))
     {
         guiState.programSearchField =
             static_cast<ProgramSearchField>(current);
@@ -56,7 +56,7 @@ void drawCollegeSearchControls(GuiState& guiState)
 
     int current = static_cast<int>(guiState.collegeSearchField);
 
-    if (ImGui::Combo("Search By", &current, labels, IM_ARRAYSIZE(labels)))
+    if (ImGui::Combo("##SearchBy", &current, labels, IM_ARRAYSIZE(labels)))
     {
         guiState.collegeSearchField =
             static_cast<CollegeSearchField>(current);

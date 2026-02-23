@@ -4,8 +4,7 @@
 
 StudentDraft AppData::makeStudentDraft(uint32_t id){
     StudentDraft s;
-    auto it = m_collegeRegistry.find(id);
-    if (it == m_collegeRegistry.end()) return s;
+    if(!checkStudentIDValidity(id)) return s;
 
     const auto& student = m_studentRecord.at(id);
     s.ID = student.ID;
@@ -19,6 +18,8 @@ StudentDraft AppData::makeStudentDraft(uint32_t id){
 
 CollegeDraft AppData::makeCollegeDraft(uint32_t id){
     CollegeDraft c;
+    if(!checkCollegeIDValidity(id)) return c;
+
     const auto& college = m_collegeRegistry.at(id);
     c.collegeCode = college.collegeAbbreviation;
     c.collegeName = college.collegeName;
@@ -28,6 +29,8 @@ CollegeDraft AppData::makeCollegeDraft(uint32_t id){
 
 ProgramDraft AppData::makeProgramDraft(uint32_t id){
     ProgramDraft p;
+    if(!checkProgramIDValidity(id)) return p;
+
     const auto& program = m_programRegistry.at(id);
     p.programAbbreviation = program.programAbbreviation;
     p.programName = program.programName;
