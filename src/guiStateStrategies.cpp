@@ -13,7 +13,8 @@ const GuiStrategy studentStrategy = {
     &AppData::checkStudentIDValidity, 
     &GuiState::getSelectedStudent,
     &GuiState::preloadPendingStudent,
-    &GuiState::rebuildStudentDisplayOrder
+    &GuiState::rebuildStudentDisplayOrder,
+    drawStudentSearchControls       
 };
 
 const GuiStrategy programStrategy = {
@@ -25,7 +26,8 @@ const GuiStrategy programStrategy = {
     &AppData::checkProgramIDValidity, 
     &GuiState::getSelectedProgram,
     &GuiState::preloadPendingProgram,
-    &GuiState::rebuildProgramDisplayOrder
+    &GuiState::rebuildProgramDisplayOrder,
+    drawProgramSearchControls
 };
 
 const GuiStrategy collegeStrategy = {
@@ -37,6 +39,6 @@ const GuiStrategy collegeStrategy = {
     &AppData::checkCollegeIDValidity, 
     &GuiState::getSelectedCollege,
     &GuiState::preloadPendingCollege,
-    &GuiState::rebuildCollegeDisplayOrder
-
+    &GuiState::rebuildCollegeDisplayOrder,
+    drawCollegeSearchControls
 };

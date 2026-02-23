@@ -50,6 +50,11 @@ void drawAddCollegeBox(GuiState&, AppData&);
 void drawEditCollegeBox(GuiState&, AppData&);
 void drawDeleteCollegeBox(GuiState&, AppData&);
 
+void drawStudentSearchControls(GuiState&);
+void drawProgramSearchControls(GuiState&);
+void drawCollegeSearchControls(GuiState&);
+
+
 //DEBUGGING FUNCTIONS
 void drawProgramToID(AppData&);
 void drawCollegeToID(AppData&);

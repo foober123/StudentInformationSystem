@@ -142,7 +142,14 @@ void drawTaskBar(GuiState& guiState, AppData& appData){
     ImGui::SameLine();
 
     if(ImGui::InputText("Search", &guiState.searchBuffer)){(guiState.*guiState.currentStrategy->searchStrategy)(appData);};
+
+    ImGui::SameLine();
+
+    guiState.currentStrategy->searchFieldStrategy(guiState);
+
     ImGui::End();
+
+    
 }
 
 void drawEntryDisplay(const GuiState& guiState, AppData& appData){

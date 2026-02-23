@@ -18,6 +18,9 @@ struct College;
 
 enum class ERRORSTATE;
 
+enum class StudentSearchField;
+enum class ProgramSearchField;
+enum class CollegeSearchField;
 
 struct StudentDraft{
 std::string ID; 
@@ -41,6 +44,8 @@ std::string collegeCode;
 
 };
 
+
+
 struct GuiState{
 std::vector<size_t> displayOrder; 
 std::vector<uint32_t> programDisplayOrder;
@@ -54,6 +59,10 @@ uint32_t selectedCollege;
 StudentDraft studentDraft;
 ProgramDraft programDraft;
 CollegeDraft collegeDraft;
+
+StudentSearchField studentSearchField;
+ProgramSearchField programSearchField;
+CollegeSearchField collegeSearchField;
 
 //Current Input Box
 InputBoxStrategy currentInputBox;
@@ -111,6 +120,33 @@ COLLEGE_CODE_IN_USE,
 
 COUNT
 };
+
+enum class StudentSearchField{
+All,
+StudentID,
+FirstName,
+LastName,
+ProgramCode,
+CollegeCode,
+Year,
+Gender
+};
+
+enum class ProgramSearchField{
+All,
+ProgramCode,
+CollegeCode,
+ProgramName
+
+};
+
+enum class CollegeSearchField{
+All,
+CollegeCode,
+CollegeName
+
+};
+
 
 static const std::array<std::string,
     static_cast<size_t>(ERRORSTATE::COUNT)> errorMessages = {
