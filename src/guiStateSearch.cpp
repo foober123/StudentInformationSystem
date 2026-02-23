@@ -63,7 +63,7 @@ void GuiState::rebuildStudentDisplayOrder(AppData& appData){
                 }
             case StudentSearchField::ProgramCode:
                 {
-                    std::string field = appData.getProgram(internalID).programAbbreviation;
+                    std::string field = appData.getProgram(student.programID).programAbbreviation;
                     std::transform(field.begin(), field.end(),
                             field.begin(), ::tolower);
 
@@ -72,7 +72,7 @@ void GuiState::rebuildStudentDisplayOrder(AppData& appData){
                 }
             case StudentSearchField::CollegeCode:
                 {
-                    std::string field = appData.getCollege(appData.getProgram(internalID).collegeID).collegeAbbreviation;
+                    std::string field = appData.getCollege(appData.getProgram(student.programID).collegeID).collegeAbbreviation;
 
                     std::transform(field.begin(), field.end(),
                             field.begin(), ::tolower);
