@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include <assert.h>
-#include "windows/gui.h"
+#include "../windows/gui.h"
 #include "guiStateStrategy.h"
 
 struct GuiState;

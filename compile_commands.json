@@ -1,18 +1,5 @@
 [
   {
-    "file": "src/guiState.cpp",
-    "arguments": [
-      "g++",
-      "src/guiState.cpp",
-      "-o",
-      "build/Simple_Student_Information_System",
-      "-Iinclude/SDL2",
-      "-Iinclude/imgui"
-    ],
-    "directory": "/home/Carson/repos/StudentInformationSystem",
-    "output": "build/Simple_Student_Information_System"
-  },
-  {
     "file": "src/main.cpp",
     "arguments": [
       "g++",
@@ -160,6 +147,32 @@
     "arguments": [
       "g++",
       "src/windows/guiDataTables.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/windows/guiDrawSearchControls.cpp",
+    "arguments": [
+      "g++",
+      "src/windows/guiDrawSearchControls.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/windows/guiEntryDisplays.cpp",
+    "arguments": [
+      "g++",
+      "src/windows/guiEntryDisplays.cpp",
       "-o",
       "build/Simple_Student_Information_System",
       "-Iinclude/SDL2",
@@ -355,6 +368,45 @@
     "arguments": [
       "g++",
       "imgui/imgui_widgets.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/guiState/guiState.cpp",
+    "arguments": [
+      "g++",
+      "src/guiState/guiState.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/guiState/guiStateSearch.cpp",
+    "arguments": [
+      "g++",
+      "src/guiState/guiStateSearch.cpp",
+      "-o",
+      "build/Simple_Student_Information_System",
+      "-Iinclude/SDL2",
+      "-Iinclude/imgui"
+    ],
+    "directory": "/home/Carson/repos/StudentInformationSystem",
+    "output": "build/Simple_Student_Information_System"
+  },
+  {
+    "file": "src/guiState/guiStateStrategies.cpp",
+    "arguments": [
+      "g++",
+      "src/guiState/guiStateStrategies.cpp",
       "-o",
       "build/Simple_Student_Information_System",
       "-Iinclude/SDL2",

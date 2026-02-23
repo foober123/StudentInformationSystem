@@ -1,8 +1,8 @@
-#include "appData/appData.h"
+#include "../appData/appData.h"
 #include "guiState.h"
 #include "guiStateStrategy.h"
 #include "guiStateStrategies.h"
-#include "windows/gui.h"
+#include "../windows/gui.h"
 
 const GuiStrategy studentStrategy = {
     drawAddStudentBox, 

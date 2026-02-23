@@ -1,4 +1,4 @@
-#include "../guiState.h"
+#include "../guiState/guiState.h"
 #include "gui.h"
 #include <imgui.h>
 #include <imgui_stdlib.h>
@@ -22,7 +22,7 @@ void drawAddStudentBox(GuiState &guiState, AppData &appData){
 
         ImGui::TableSetColumnIndex(1);
         ImGui::InputText("##ID",
-                &guiState.studentDraft.ID);
+                &guiState.studentDraft.ID, ImGuiInputTextFlags_CharsDecimal);
 
         // First Name
         ImGui::TableNextRow();

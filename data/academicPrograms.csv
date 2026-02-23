@@ -1,5 +1,48 @@
 Internal_ID, CollegeID,ProgramName,ProgramCode
-4,1,Bachelor Of Science in Information Technology (Database),BSIT-Db
-3,1,Bachelor of Science in Information Systems,BSIS
-2,1,Bachelor of Science in Computer Application,BSCA
-1,1,Bachelor of Science In Computer Science,BSCS
+9,BSCpE,Bachelor of Science in Computer Engineering,4
+38,BSEd-Math,Bachelor of Secondary Education (Mathematics),2
+8,BSChE,Bachelor of Science in Chemical Engineering,4
+37,BSEd-Phys,Bachelor of Secondary Education (Physics),2
+36,BSEd-Chem,Bachelor of Secondary Education (Chemistry),2
+7,BSCerE,Bachelor of Science in Ceramics Engineering,4
+35,BSEd-Bio,Bachelor of Secondary Education (Biology),2
+6,BSCE,Bachelor of Science in Civil Engineering,4
+31,BSBA-BE,BSBA (Business Economics),6
+2,BSIT,Bachelor of Science in Information Technology,1
+32,BSBA-Econ,BSBA (Economics),6
+3,BSIS,Bachelor of Science in Information Systems,1
+29,BA-POLSCI,Bachelor of Arts in Political Science,5
+44,MSCS,Master of Science in Computer Science,8
+15,BSIAM,Bachelor of Science in Industrial Automation and Mechatronics,4
+14,BS-EMET,Bachelor of Science in Environmental Engineering Technology,4
+24,BSStat,Bachelor of Science in Statistics,3
+23,BSPhys,Bachelor of Science in Physics,3
+26,BA-ENG,Bachelor of Arts in English,5
+25,BSPsych,Bachelor of Science in Psychology,5
+28,BA-HIS,Bachelor of Arts in History,5
+47,Ph.D.-Math,Doctor of Philosophy in Mathematics,8
+18,BSBio-Zoo,Bachelor of Science in Biology (Zoology),3
+34,BSHRM,Bachelor of Science in Hotel and Restaurant Management,6
+5,BSECT-CS,BS in Electronics and Computer Technology (Communications System),1
+46,MSEng,Master of Engineering,8
+17,BSBio-Bot,Bachelor of Science in Biology (Botany),3
+33,BSBA-EM,BSBA (Entrepreneurial Marketing),6
+4,BSECT-ES,BS in Electronics and Computer Technology (Embedded Systems),1
+45,MSIT,Master of Science in Information Technology,8
+16,BSETM,Bachelor of Science in Engineering Technology Management,4
+27,BA-FIL,Bachelor of Arts in Filipino,5
+30,BSA,Bachelor of Science in Accountancy,6
+1,BSCS,Bachelor of Science in Computer Science,1
+43,BSN,Bachelor of Science in Nursing,7
+10,BSECE,Bachelor of Science in Electronics and Communications Engineering,4
+39,BSEd-MAPEH,Bachelor of Secondary Education (MAPEH),2
+40,BSEd-TLE,Bachelor of Secondary Education (TLE),2
+11,BSEE,Bachelor of Science in Electrical Engineering,4
+42,BSTTE,Bachelor of Science in Technology Teacher Education,2
+13,BSMetE,Bachelor of Science METALLURGICAL ENGINEERING,4
+41,BEEd-Eng,Bachelor of Elementary Education (English),2
+12,BSME,Bachelor of Science in Mechanical Engineering,4
+19,BSBio-Mar,Bachelor of Science in Biology (Marine),3
+20,BSBio-Gen,Bachelor of Science in Biology (General),3
+21,BSChem,Bachelor of Science in Chemistry,3
+22,BSMath,Bachelor of Science in Mathematics,3

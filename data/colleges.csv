@@ -1,8 +1,9 @@
-Internal_ID, CollegeID,ProgramName,ProgramCode
-7,College Of Health Sciences,CHS
-6,College Of Business And,CEBA
-5,College Of Arts & Social Sciences,CASS
-4,College Of Engineering & Technology,COET
-3,College Of Sciences & Math,CSM
-2,College Of Education,CED
-1,College Of Computer Studies,CCS
+Internal_ID, CollegeCode,CollegeName
+8,SGS,School Of Graduate Studies
+7,CHS,College Of Health Sciences
+6,CEBA,"College Of Economics, Business and Accountancy"
+5,CASS,College Of Arts and Social Sciences
+4,COET,College Of Engineering and Technology
+3,CSM,College Of Sciences and Math
+2,CED,College Of Education
+1,CCS,College Of Computer Studies

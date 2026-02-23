@@ -4,8 +4,8 @@
 #include <assert.h>
 #include <algorithm>
 #include "guiState.h"
-#include "windows/gui.h"
-#include "appData/appData.h"
+#include "../windows/gui.h"
+#include "../appData/appData.h"
 #include "guiStateStrategies.h"
 #include <imgui.h>
 

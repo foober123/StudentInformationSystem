@@ -1,6 +1,6 @@
 #include "guiState.h"
-#include "appData/appData.h"
-#include "windows/gui.h"
+#include "../appData/appData.h"
+#include "../windows/gui.h"
 #include <string>
 #include <algorithm>
 

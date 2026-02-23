@@ -1,7 +1,7 @@
 PROJECTNAME = Simple_Student_Information_System
 OUTPUT_DIR = build
 
-SRC = $(wildcard src/*.cpp) $(wildcard src/windows/*.cpp) $(wildcard src/vault/*.cpp) $(wildcard src/appData/*.cpp) $(wildcard imgui/*.cpp)
+SRC = $(wildcard src/*.cpp) $(wildcard src/windows/*.cpp) $(wildcard src/vault/*.cpp) $(wildcard src/appData/*.cpp) $(wildcard imgui/*.cpp) $(wildcard src/guiState/*.cpp)
 INCLUDE_DIRS = -Iinclude/SDL2 -Iinclude/imgui
 LIB_DIRS = -Llib
 

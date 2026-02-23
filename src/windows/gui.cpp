@@ -1,10 +1,10 @@
-#include "../guiState.h"
+#include "../guiState/guiState.h"
 #include "gui.h"
 #include <imgui.h>
 #include <imgui_stdlib.h>
 #include "../vault/vault.h"
 #include "../appData/appData.h"
-#include "../guiStateStrategies.h"
+#include "../guiState/guiStateStrategies.h"
 
 void drawMenuBar(GuiState& guiState, AppData& appData, Vault& vault){
     if (ImGui::BeginMainMenuBar())
@@ -370,20 +370,47 @@ void drawGuiStateInfo(GuiState &guiState){
     ImGui::End();
 }
 
-void drawAppDataStatus(AppData &appData){
-    ImGui::Begin("test");
-        ImGui::Text("Status");
-        ImGui::Separator();
-        if(ImGui::BeginChild("Students")){
-        ImGui::Text("Status");
-        ImGui::Text("Status");
-        ImGui::Text("Status");
-        ImGui::Text("Status");
+void drawAppDataStatus(AppData& appData)
+{
 
+    ImGui::Begin("StatusPanel");
 
-        ImGui::EndChild();
-        };
+    ImGui::Text("System Status");
+    ImGui::Separator();
+    ImGui::Text("Total Colleges %d", static_cast<int>(appData.getCollegeRegistry().size()));
+    ImGui::Text("Total Programs %d", static_cast<int>(appData.getProgramRegistry().size()));
+    ImGui::Text("Total Students %d", static_cast<int>(appData.getStudentRecord().size()));
 
+    std::unordered_map<uint32_t, int> programsPerCollege;
+    std::unordered_map<uint32_t, int> studentsPerCollege;
+
+    // Count programs
+    for (const auto& [id, program] : appData.getProgramRegistry())
+    {
+        programsPerCollege[program.collegeID]++;
+    }
+
+    // Count students (via program → college)
+    for (const auto& [id, student] : appData.getStudentRecord())
+    {
+        const auto& program = appData.getProgram(student.programID);
+        studentsPerCollege[program.collegeID]++;
+    }
+
+    ImGui::Separator();
+    ImGui::Text("Colleges");
+    ImGui::Separator();
+
+    for (const auto& [collegeID, college] : appData.getCollegeRegistry())
+    {
+        int pCount = programsPerCollege[collegeID];
+        int sCount = studentsPerCollege[collegeID];
+
+        ImGui::Spacing();
+        ImGui::Text("%s", college.collegeAbbreviation.c_str());
+        ImGui::BulletText("Programs: %d", pCount);
+        ImGui::BulletText("Students: %d", sCount);
+    }
 
     ImGui::End();
 }

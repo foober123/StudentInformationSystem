@@ -1,8 +1,9 @@
-#include "../guiState.h"
+#include "../guiState/guiState.h"
 #include "gui.h"
 #include <imgui.h>
 #include <imgui_stdlib.h>
 #include "../appData/appData.h"
+#include <imgui_internal.h>
 
 void drawAddCollegeBox(GuiState &guiState, AppData &appData){
     ImGui::Begin("Modify Entry");
@@ -22,12 +23,12 @@ void drawAddCollegeBox(GuiState &guiState, AppData &appData){
 
         ImGui::TableSetColumnIndex(1);
         ImGui::InputText("##CollegeCode",
-                &guiState.collegeDraft.collegeCode);
+                &guiState.collegeDraft.collegeCode, ImGuiInputTextFlags_CharsUppercase);
 
         ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(0);
         ImGui::AlignTextToFramePadding();
-        ImGui::Text("College Name");
+        ImGui::Text("College Name:");
 
         ImGui::TableSetColumnIndex(1);
         ImGui::InputText("##ProgramName",

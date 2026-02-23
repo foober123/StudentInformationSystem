@@ -1,8 +1,9 @@
-#include "../guiState.h"
+#include "../guiState/guiState.h"
 #include "gui.h"
 #include <imgui.h>
 #include <imgui_stdlib.h>
 #include "../appData/appData.h"
+#include "../imguiSpecialCallbacks/callbacks.h"
 
 void drawAddProgramBox(GuiState &guiState, AppData &appData){
     ImGui::Begin("Modify Entry");
@@ -22,12 +23,12 @@ void drawAddProgramBox(GuiState &guiState, AppData &appData){
 
         ImGui::TableSetColumnIndex(1);
         ImGui::InputText("##ProgramCode",
-                &guiState.programDraft.programAbbreviation);
+                &guiState.programDraft.programAbbreviation,ImGuiInputTextFlags_CallbackCharFilter, LettersDashAndPeriodCallback);
 
         ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(0);
         ImGui::AlignTextToFramePadding();
-        ImGui::Text("Program Name");
+        ImGui::Text("Program Name:");
 
         ImGui::TableSetColumnIndex(1);
         ImGui::InputText("##ProgramName",
@@ -40,7 +41,7 @@ void drawAddProgramBox(GuiState &guiState, AppData &appData){
 
         ImGui::TableSetColumnIndex(1);
         ImGui::InputText("##CollegeCode",
-                &guiState.programDraft.collegeCode);
+                &guiState.programDraft.collegeCode, ImGuiInputTextFlags_CharsUppercase);
 
 
         ImGui::EndTable();

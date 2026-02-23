@@ -61,8 +61,8 @@ char Vault::SerializeGender(Gender gender){
             continue;
 
         internalID = static_cast<uint32_t>(std::stoi(fields[0]));
-        c.collegeName = trim(fields[1]);
-        c.collegeAbbreviation = trim(fields[2]);
+        c.collegeAbbreviation = trim(fields[1]);
+        c.collegeName = trim(fields[2]);
 
         colleges.insert({internalID, c});
     }
@@ -138,9 +138,9 @@ std::unordered_map<uint32_t, Program> Vault::LoadCourses(){
         uint32_t internalID = static_cast<uint32_t>(std::stoi(fields[0]));
 
         Program c{};
-        c.collegeID = static_cast<uint32_t>(std::stoi(fields[1]));
+        c.programAbbreviation = trim(fields[1]);
         c.programName = trim(fields[2]);
-        c.programAbbreviation = trim(fields[3]);
+        c.collegeID = static_cast<uint32_t>(std::stoi(fields[3]));
         
         programs.insert({internalID, c});
     }
@@ -155,7 +155,7 @@ bool Vault::saveStudents(const std::unordered_map<uint32_t,Student>& studentReco
         return false;
 
     // Write header
-    file << "Internal_ID, ID,FirstName,LastName,CourseID,Year,Gender\n";
+    file << "InternalID,StudentID,FirstName,LastName,CourseID,Year,Gender\n";
 
     for (const auto& pair : studentRecord)
     {
@@ -183,7 +183,7 @@ bool Vault::savePrograms(const std::unordered_map<uint32_t,Program>& programRegi
         return false;
 
     // Write header
-    file << "Internal_ID, CollegeID,ProgramName,ProgramCode\n";
+    file << "InternalID,ProgramCode,ProgramName,CollegeID\n";
 
     for (const auto& [internalID, program] : programRegistry)
     {
@@ -191,9 +191,9 @@ bool Vault::savePrograms(const std::unordered_map<uint32_t,Program>& programRegi
         {
             file
                 << internalID << ","
-                << program.collegeID << ","
-                << escapeCSV(program.programName) << ","
-                << escapeCSV(program.programAbbreviation)
+                << escapeCSV(program.programAbbreviation) << ","
+                << escapeCSV(program.programName) << "," 
+                << program.collegeID
                 << "\n";
         }
     }
@@ -206,7 +206,7 @@ bool Vault::saveColleges(const std::unordered_map<uint32_t,College>& collegeRegi
         return false;
 
     // Write header
-    file << "Internal_ID, CollegeID,ProgramName,ProgramCode\n";
+    file << "InternalID,CollegeCode,CollegeName\n";
 
     for (const auto& [internalID, college] : collegeRegistry)
     {
@@ -214,8 +214,8 @@ bool Vault::saveColleges(const std::unordered_map<uint32_t,College>& collegeRegi
         {
             file
                 << internalID << ","
-                << escapeCSV(college.collegeName) << ","
-                << escapeCSV(college.collegeAbbreviation)
+                << escapeCSV(college.collegeAbbreviation) << ","
+                << escapeCSV(college.collegeName)
                 << "\n";
         }
     }

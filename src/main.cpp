@@ -10,7 +10,7 @@
 #include "imgui.h"
 #include "settings.h"
 #include "windows/gui.h"
-#include "guiState.h"
+#include "guiState/guiState.h"
 #include "vault/vault.h"
 #include "appData/appData.h"
 

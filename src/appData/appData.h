@@ -85,10 +85,11 @@ class AppData{
     std::unordered_map<std::string, uint32_t> m_programCodeToID;
     std::unordered_map<uint32_t, Program> m_programRegistry;
 
+    std::unordered_map<uint32_t, Student> m_studentRecord; 
+
     uint32_t m_nextProgramID = 1;
     uint32_t m_nextCollegeID = 1;
     uint32_t m_nextStudentInternalID = 1;
-    std::unordered_map<uint32_t, Student> m_studentRecord; 
 
 
 
