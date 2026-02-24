@@ -23,6 +23,17 @@ void AppData::setCollegeRegistry(std::unordered_map<uint32_t, College> collegeRe
 
 void AppData::setStudentRecord(std::unordered_map<uint32_t, Student> studentRecord){
     m_studentRecord = studentRecord;
+    uint32_t maxID = 0;
+
+    for(const auto [id, student] : m_studentRecord){
+        m_studentIDToInternalID[student.ID] = id;  
+
+        if (id > maxID)
+            maxID = id;
+
+    }
+    
+    m_nextStudentInternalID = maxID + 1;
 };
 
 void AppData::setProgramRegistry(std::unordered_map<uint32_t, Program> programRegistry){
@@ -33,7 +44,6 @@ void AppData::setProgramRegistry(std::unordered_map<uint32_t, Program> programRe
 
     for (const auto& [id, program] : m_programRegistry)
     {
-        // Build secondary index
         m_programCodeToID[program.programAbbreviation] = id;
 
         if (id > maxID)

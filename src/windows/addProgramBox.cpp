@@ -64,6 +64,7 @@ void drawAddProgramBox(GuiState &guiState, AppData &appData){
         if (ImGui::Button("Cancel", buttonSize))
         {
             guiState.currentInputBox = NULL;
+            guiState.resetProgramDraft();
         }
 
         pos = ImVec2(
@@ -77,6 +78,7 @@ void drawAddProgramBox(GuiState &guiState, AppData &appData){
         {
             guiState.currentError = appData.addProgramEntry(guiState.programDraft);
             if(guiState.currentError == ERRORSTATE::NO_ERROR){
+            guiState.currentInputBox = NULL;
             guiState.isDirty = true;
             guiState.resetProgramDraft();
             guiState.refreshDisplayOrder(appData.getProgramRegistry());

@@ -70,9 +70,12 @@ class AppData{
 
     const std::unordered_map<std::string, uint32_t>& getcollegeCodeToID();
     const std::unordered_map<uint32_t, College>& getCollegeRegistry();
-    const std::unordered_map<uint32_t, Program>& getProgramRegistry();
 
     const std::unordered_map<std::string, uint32_t>& getProgramCodeToID();
+    const std::unordered_map<uint32_t, Program>& getProgramRegistry();
+
+
+    const std::unordered_map<std::string, uint32_t>& getStudentIDToInternal();
     const std::unordered_map<uint32_t, Student>& getStudentRecord();
     
     Program getProgram(uint32_t key);
@@ -86,6 +89,7 @@ class AppData{
     std::unordered_map<uint32_t, Program> m_programRegistry;
 
     std::unordered_map<uint32_t, Student> m_studentRecord; 
+    std::unordered_map<std::string, uint32_t> m_studentIDToInternalID;
 
     uint32_t m_nextProgramID = 1;
     uint32_t m_nextCollegeID = 1;

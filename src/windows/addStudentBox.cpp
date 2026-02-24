@@ -62,9 +62,25 @@ void drawAddStudentBox(GuiState &guiState, AppData &appData){
         ImGui::Text("Year:");
 
         ImGui::TableSetColumnIndex(1);
-        ImGui::InputInt("##Year", &guiState.studentDraft.year, 1, 6);
 
-        // Gender
+        int currentIndex = guiState.studentDraft.year - 1;
+
+        if (ImGui::BeginCombo("##Year", std::to_string(guiState.studentDraft.year).c_str()))
+        {
+            for (int i = 1; i <= 5; i++)
+            {
+                bool isSelected = (guiState.studentDraft.year == i);
+                if (ImGui::Selectable(std::to_string(i).c_str(), isSelected))
+                {
+                    guiState.studentDraft.year = i;
+                }
+
+                if (isSelected)
+                    ImGui::SetItemDefaultFocus();
+            }
+            ImGui::EndCombo();
+        }
+        
         ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(0);
         ImGui::AlignTextToFramePadding();

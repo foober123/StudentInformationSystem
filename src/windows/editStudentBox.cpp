@@ -63,8 +63,24 @@ void drawEditStudentBox(GuiState &guiState, AppData &appData){
         ImGui::Text("Year:");
 
         ImGui::TableSetColumnIndex(1);
-        ImGui::InputInt("##Year", &guiState.studentDraft.year, 1, 6);
+        int currentIndex = guiState.studentDraft.year - 1;
 
+        if (ImGui::BeginCombo("##Year", std::to_string(guiState.studentDraft.year).c_str()))
+        {
+            for (int i = 1; i <= 5; i++)
+            {
+                bool isSelected = (guiState.studentDraft.year == i);
+                if (ImGui::Selectable(std::to_string(i).c_str(), isSelected))
+                {
+                    guiState.studentDraft.year = i;
+                }
+
+                if (isSelected)
+                    ImGui::SetItemDefaultFocus();
+            }
+            ImGui::EndCombo();
+        }
+ 
         // Gender
         ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(0);
@@ -96,6 +112,7 @@ void drawEditStudentBox(GuiState &guiState, AppData &appData){
         if (ImGui::Button("Cancel", buttonSize))
         {
             guiState.currentInputBox = NULL;
+            guiState.resetStudentDraft();
         }
 
         pos = ImVec2(
@@ -109,6 +126,7 @@ void drawEditStudentBox(GuiState &guiState, AppData &appData){
         {
             guiState.currentError = appData.editStudentEntry(guiState.studentDraft, guiState.selectedStudent);
             if(guiState.currentError == ERRORSTATE::NO_ERROR){
+            guiState.currentInputBox = NULL;
             guiState.resetStudentDraft();
             guiState.isDirty = true;
             }

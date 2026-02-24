@@ -151,7 +151,7 @@ void GuiState::rebuildProgramDisplayOrder(AppData& appData){
                 }
             case ProgramSearchField::CollegeCode:
                 { 
-                    std::string field = appData.getCollege(internalID).collegeAbbreviation;
+                    std::string field = appData.getCollege(program.collegeID).collegeAbbreviation;
 
                     std::transform(field.begin(), field.end(),
                             field.begin(), ::tolower);

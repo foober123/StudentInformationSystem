@@ -98,7 +98,7 @@ int main(int argc, char* argv[]){
         ImGui::DockSpaceOverViewport();
         //PUT GUI STUFF BELOW HERE
         drawMenuBar(guistate, appData, vault); 
-        drawTaskBar(guistate, appData);
+        drawTaskBar(guistate, appData, vault);
         guistate.currentStrategy->entryDisplayStrategy(guistate, appData);
         guistate.currentStrategy->dataTableStrategy(guistate, appData);
         if(ImGui::IsKeyPressed(ImGuiKey_F3)) guistate.showDebugWindow = !guistate.showDebugWindow;

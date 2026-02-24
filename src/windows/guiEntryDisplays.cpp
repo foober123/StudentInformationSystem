@@ -13,6 +13,8 @@ void drawStudentEntryDisplay(const GuiState& guiState, AppData& appData){
         ImGui::Text("Name: %s %s", student.firstName.c_str(), student.lastName.c_str());
         ImGui::Text("Program: %s", appData.getProgram(appData.getStudent(guiState.selectedStudent).programID).programName.c_str());
         ImGui::Text("College: %s", appData.getCollege(appData.getProgram(appData.getStudent(guiState.selectedStudent).programID).collegeID).collegeName.c_str());
+        ImGui::Text("Year: %d", appData.getStudent(guiState.selectedStudent).year);
+        ImGui::Text("Gender: %s",(serializeGender(appData.getStudent(guiState.selectedStudent).gender).c_str()));
         ImGui::SetWindowFontScale(1.0f);
     }
     ImGui::End();

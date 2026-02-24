@@ -56,6 +56,7 @@ void drawAddCollegeBox(GuiState &guiState, AppData &appData){
         if (ImGui::Button("Cancel", buttonSize))
         {
             guiState.currentInputBox = NULL;
+            guiState.resetStudentDraft();
         }
 
         pos = ImVec2(

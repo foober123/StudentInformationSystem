@@ -107,7 +107,7 @@ std::string serializeGender(Gender gender){
     return "N/A";
 }
 
-void drawTaskBar(GuiState& guiState, AppData& appData){
+void drawTaskBar(GuiState& guiState, AppData& appData, Vault& vault){
     ImGui::Begin("taskbar", NULL, ImGuiWindowFlags_NoTitleBar);
 
 
@@ -115,6 +115,22 @@ void drawTaskBar(GuiState& guiState, AppData& appData){
         ImGui::TableSetupColumn("Left", ImGuiTableColumnFlags_WidthStretch);
         ImGui::TableSetupColumn("Right", ImGuiTableColumnFlags_WidthFixed, 420.0f);
         ImGui::TableNextColumn();
+
+        ImGui::BeginDisabled(!guiState.isDirty);
+
+        if (ImGui::Button("Save"))
+        {
+            vault.saveStudents(appData.getStudentRecord());
+            vault.savePrograms(appData.getProgramRegistry());
+            vault.saveColleges(appData.getCollegeRegistry());
+
+            guiState.isDirty = false;
+        }
+
+        ImGui::EndDisabled();
+
+        ImGui::SameLine();
+
         if(ImGui::Button("S")){
             guiState.currentStrategy = &studentStrategy;
         }

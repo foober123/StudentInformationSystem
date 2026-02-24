@@ -21,7 +21,8 @@ ERRORSTATE AppData::addStudentEntry(StudentDraft studentdraft){
     student.gender = static_cast<Gender>(studentdraft.gender);
     student.year = studentdraft.year;
 
-    
+ 
+    m_studentIDToInternalID.insert({student.ID,m_nextStudentInternalID});   
     m_studentRecord.insert({m_nextStudentInternalID, student});
     m_nextStudentInternalID++;
 
@@ -29,6 +30,7 @@ ERRORSTATE AppData::addStudentEntry(StudentDraft studentdraft){
 
 }
 
+//Student IDs cannot be edited once added. No Need to do syncing with m_studentIDToInternalID
 ERRORSTATE AppData::editStudentEntry(StudentDraft studentdraft, uint32_t key){
     if(!checkStudentIDValidity(key)) return ERRORSTATE::INVALID_INDEX;
     if(!validateStudentID(studentdraft.ID)) return ERRORSTATE::INVALID_STUDENT_ID;
@@ -59,7 +61,9 @@ void AppData::deleteStudentEntry(uint32_t key){
     auto it = m_studentRecord.find(key);
     if (it == m_studentRecord.end())
         return;
-    m_studentRecord.erase(key);
+
+    m_studentIDToInternalID.erase(it->second.ID);
+    m_studentRecord.erase(it);
 }
 
 bool AppData::validateStudentID(std::string draftID){
