@@ -54,6 +54,8 @@ void GuiState::preloadPendingProgram(uint32_t id, AppData& appData){
 
 
 void GuiState::init(){
+isDirty = false;
+
 selectedStudent = 0;
 selectedCollege = 0;
 selectedProgram = 0;

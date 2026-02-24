@@ -69,6 +69,7 @@ void drawAddCollegeBox(GuiState &guiState, AppData &appData){
         {
             guiState.currentError = appData.addCollegeEntry(guiState.collegeDraft);
             if(guiState.currentError == ERRORSTATE::NO_ERROR){
+                guiState.isDirty = true;
                 guiState.resetCollegeDraft();
                 guiState.refreshDisplayOrder(appData.getCollegeRegistry());
             }

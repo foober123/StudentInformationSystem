@@ -67,7 +67,10 @@ void drawEditCollegeBox(GuiState &guiState, AppData &appData){
         if (ImGui::Button("Confirm", buttonSize))
         {
             guiState.currentError = appData.editCollegeEntry(guiState.collegeDraft, guiState.selectedCollege);
-            if(guiState.currentError == ERRORSTATE::NO_ERROR) guiState.resetCollegeDraft();
+            if(guiState.currentError == ERRORSTATE::NO_ERROR){ 
+                guiState.resetCollegeDraft();
+                guiState.isDirty = true;
+            }
         }
 
 

@@ -36,8 +36,11 @@ void drawDeleteCollegeBox(GuiState & guiState, AppData & appData){
         guiState.currentError = appData.deleteCollege(guiState.selectedCollege);
         if(guiState.currentError == ERRORSTATE::NO_ERROR){
         guiState.refreshDisplayOrder(appData.getCollegeRegistry());
+        if(guiState.currentError == ERRORSTATE::NO_ERROR){
+        guiState.isDirty = true;
         guiState.currentInputBox = NULL;
         guiState.selectedCollege = 0;
+        }
         }
     }
 

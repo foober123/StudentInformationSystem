@@ -34,9 +34,12 @@ void drawDeleteProgramBox(GuiState & guiState, AppData & appData){
     if (ImGui::Button("Confirm", buttonSize))
     {
         guiState.currentError = appData.deleteProgramEntry(guiState.selectedProgram);
-        guiState.currentInputBox = NULL;
-        guiState.selectedProgram = 0;
-        guiState.refreshDisplayOrder(appData.getProgramRegistry());
+        if(guiState.currentError == ERRORSTATE::NO_ERROR){
+            guiState.currentInputBox = NULL;
+            guiState.selectedProgram = 0;
+            guiState.refreshDisplayOrder(appData.getProgramRegistry());
+            guiState.isDirty = true;
+        }
     }
 
 

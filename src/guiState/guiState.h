@@ -47,6 +47,9 @@ std::string collegeCode;
 
 
 struct GuiState{
+
+bool isDirty; 
+
 std::vector<size_t> displayOrder; 
 std::vector<uint32_t> programDisplayOrder;
 std::vector<uint32_t> collegeDisplayOrder;

@@ -37,6 +37,7 @@ void drawDeleteStudentBox(GuiState & guiState, AppData & appData){
         guiState.currentInputBox = NULL;
         guiState.refreshDisplayOrder(appData.getStudentRecord());
         guiState.selectedStudent = 0;
+        guiState.isDirty = true;
     }
 
 

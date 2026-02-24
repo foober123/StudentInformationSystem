@@ -15,6 +15,7 @@ void drawMenuBar(GuiState& guiState, AppData& appData, Vault& vault){
                 vault.saveStudents(appData.getStudentRecord());
                 vault.savePrograms(appData.getProgramRegistry());
                 vault.saveColleges(appData.getCollegeRegistry());
+                guiState.isDirty = false;
             }
             ImGui::Checkbox("Show College Registry", &guiState.showCollegeRegistry);
             ImGui::Checkbox("Show Program Registry", &guiState.showProgramRegistry);

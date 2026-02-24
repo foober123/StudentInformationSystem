@@ -29,9 +29,16 @@ int main(int argc, char* argv[]){
     appData.initStudentIDCounter();
 
 
+    GuiState guistate;
+    guistate.init();
+    guistate.refreshDisplayOrder(appData.getStudentRecord());
+    guistate.refreshDisplayOrder(appData.getProgramRegistry());
+    guistate.refreshDisplayOrder(appData.getCollegeRegistry());
+    bool running = true;
+
 
     SDL_Window* window_ptr = SDL_CreateWindow(
-            "Shrimple Student Information System", 
+            "Shrimple Student Information System",
             SDL_WINDOWPOS_CENTERED, 
             SDL_WINDOWPOS_CENTERED, 
             1280, 
@@ -74,12 +81,6 @@ int main(int argc, char* argv[]){
     ImGui_ImplSDLRenderer2_Init(renderer_ptr);
 
 
-    GuiState guistate;
-    guistate.init();
-    guistate.refreshDisplayOrder(appData.getStudentRecord());
-    guistate.refreshDisplayOrder(appData.getProgramRegistry());
-    guistate.refreshDisplayOrder(appData.getCollegeRegistry());
-    bool running = true;
 
     while(running){
         SDL_Event e;
@@ -110,6 +111,12 @@ int main(int argc, char* argv[]){
 
 
         ImGui::Render();
+
+            std::string title = guistate.isDirty
+                ? "Shrimple Student Information System*"
+                : "Shrimple Student Information System";
+
+            SDL_SetWindowTitle(window_ptr, title.c_str());
 
         SDL_SetRenderDrawColor(renderer_ptr, 171, 205, 239, 255);
         SDL_RenderClear(renderer_ptr);

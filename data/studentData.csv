@@ -1,9 +1,9 @@
-Internal_ID, ID,FirstName,LastName,CourseID,Year,Gender
-10,2022-3123,JC,Denton,1,4,M
-8,2025-9932,Fatboy,Salami,2,1,M
-7,2024-3333,Richard,Cabeza,4,4,O
-3,2023-2316,Phil,Matibag,3,2,O
-2,2021-1488,First,Last,2,4,M
-1,2024-0796,Charlson,Fabrigar,1,2,M
-6,2024-4444,Jack,Collero,3,2,O
+InternalID,StudentID,FirstName,LastName,CourseID,Year,Gender
 9,2024-4445,Steve,Caballero,4,2,O
+6,2024-4444,Jack,Collero,3,2,O
+1,2024-0796,Charlson,Fabrigar,1,2,M
+2,2021-1488,First,Last,2,4,M
+3,2023-2316,Phil,Matibag,3,2,O
+7,2024-3333,Richard,Cabeza,4,4,O
+8,2025-9932,Fatboy,Salami,2,1,M
+10,2022-3123,JC,Denton,1,4,M
