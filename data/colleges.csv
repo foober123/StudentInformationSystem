@@ -1,9 +1,9 @@
 InternalID,CollegeCode,CollegeName
-8,SGS,School Of Graduate Studies
-7,CHS,College Of Health Sciences
-6,CEBA,"College Of Economics, Business and Accountancy"
-5,CASS,College Of Arts and Social Sciences
-4,COET,College Of Engineering and Technology
-3,CSM,College Of Sciences and Math
-2,CED,College Of Education
 1,CCS,College Of Computer Studies
+2,CED,College Of Education
+3,CSM,College Of Sciences and Math
+4,COET,College Of Engineering and Technology
+5,CASS,College Of Arts and Social Sciences
+6,CEBA,"College Of Economics, Business and Accountancy"
+7,CHS,College Of Health Sciences
+8,SGS,School Of Graduate Studies

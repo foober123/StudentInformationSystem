@@ -155,7 +155,7 @@ bool Vault::saveStudents(const std::unordered_map<uint32_t,Student>& studentReco
         return false;
 
     // Write header
-    file << "InternalID,StudentID,FirstName,LastName,CourseID,Year,Gender\n";
+    file << "InternalID,StudentID,FirstName,LastName,ProgramID,Year,Gender\n";
 
     for (const auto& pair : studentRecord)
     {
