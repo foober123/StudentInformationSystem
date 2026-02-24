@@ -23,7 +23,7 @@ ERRORSTATE AppData::addCollegeEntry(CollegeDraft draft){
 ERRORSTATE AppData::editCollegeEntry(CollegeDraft draft, uint32_t key){
     if(!checkCollegeIDValidity(key)) return ERRORSTATE::INVALID_INDEX;
     if(!validateRepeatingCollegeCode(draft.collegeCode, key)) return ERRORSTATE::COLLEGE_CODE_IN_USE;
-    //if(!validateCollegeNameFormat(draft.collegeName)) return ERRORSTATE::INVALID_PROGRAM_NAME;
+    if(!validateCollegeNameFormat(draft.collegeName)) return ERRORSTATE::INVALID_PROGRAM_NAME;
 
     auto& college = m_collegeRegistry.at(key);
 
@@ -58,7 +58,7 @@ bool AppData::validateCollegeNameFormat(std::string name){
     if(name.empty()) return false;
 
     for(char& c : name){
-        if(!(std::isalpha(c) || c == '-' || std::isspace(c))) return false;
+        if(!(std::isalpha(c) || c == '-' || std::isspace(c) || c == ',' || c == '&')) return false;
     }
 
     return true;

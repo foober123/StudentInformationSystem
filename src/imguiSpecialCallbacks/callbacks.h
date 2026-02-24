@@ -1,13 +1,13 @@
 #include <imgui.h>
 #include <cctype>
 
-static int LettersDashAndPeriodCallback(ImGuiInputTextCallbackData* data)
+static int LetterAndDashCallback(ImGuiInputTextCallbackData* data)
 {
     if (data->EventFlag == ImGuiInputTextFlags_CallbackCharFilter)
     {
         ImWchar c = data->EventChar;
 
-        if (isalpha(c) || c == '-' || c == '.') 
+        if (isalpha(c) || c == '-') 
             return 0;
 
         return 1; 

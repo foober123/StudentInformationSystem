@@ -3,6 +3,7 @@
 #include <imgui.h>
 #include <imgui_stdlib.h>
 #include "../appData/appData.h"
+#include "../imguiSpecialCallbacks/callbacks.h"
 
 void drawEditStudentBox(GuiState &guiState, AppData &appData){
     ImGui::SetNextWindowDockID(0, ImGuiCond_Always);
@@ -51,11 +52,11 @@ void drawEditStudentBox(GuiState &guiState, AppData &appData){
         ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(0);
         ImGui::AlignTextToFramePadding();
-        ImGui::Text("Course:");
+        ImGui::Text("Program Code:");
 
         ImGui::TableSetColumnIndex(1);
-        ImGui::InputText("##Course",
-                &guiState.studentDraft.programCode);
+        ImGui::InputText("##ProgramCode",
+                &guiState.studentDraft.programCode, ImGuiInputTextFlags_CallbackCharFilter, LetterAndDashCallback);
 
         ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(0);

@@ -24,7 +24,7 @@ void drawEditProgramBox(GuiState &guiState, AppData &appData){
 
         ImGui::TableSetColumnIndex(1);
         ImGui::InputText("##ProgramCode",
-                &guiState.programDraft.programAbbreviation, ImGuiInputTextFlags_CallbackCharFilter, LettersDashAndPeriodCallback);
+                &guiState.programDraft.programAbbreviation, ImGuiInputTextFlags_CallbackCharFilter, LetterAndDashCallback);
 
         ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(0);
