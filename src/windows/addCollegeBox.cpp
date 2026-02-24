@@ -6,7 +6,8 @@
 #include <imgui_internal.h>
 
 void drawAddCollegeBox(GuiState &guiState, AppData &appData){
-    ImGui::Begin("Modify Entry");
+    ImGui::SetNextWindowDockID(0, ImGuiCond_Always);
+    ImGui::Begin("Modify Entry", nullptr, ImGuiWindowFlags_NoDocking);
     ImGui::Text("Add College");
     ImGui::Separator();
     if (ImGui::BeginTable("StudentForm", 2,

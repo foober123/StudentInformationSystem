@@ -5,7 +5,9 @@
 #include "../appData/appData.h"
 
 void drawAddStudentBox(GuiState &guiState, AppData &appData){
-    ImGui::Begin("Modify Entry");
+    ImGui::SetNextWindowDockID(0, ImGuiCond_Always);
+    ImGui::Begin("Modify Entry", nullptr, ImGuiWindowFlags_NoDocking);
+ 
     ImGui::Text("Add Student");
     ImGui::Separator();
     if (ImGui::BeginTable("StudentForm", 2,

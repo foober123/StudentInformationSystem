@@ -3,10 +3,10 @@
 #include <imgui.h>
 #include <imgui_stdlib.h>
 #include "../appData/appData.h"
-#include <cstdint>
 
 void drawEditCollegeBox(GuiState &guiState, AppData &appData){
-    ImGui::Begin("Modify Entry");
+    ImGui::SetNextWindowDockID(0, ImGuiCond_Always);
+    ImGui::Begin("Modify Entry", nullptr, ImGuiWindowFlags_NoDocking);
     ImGui::Text("Edit College");
     ImGui::Separator();
     if (ImGui::BeginTable("StudentForm", 2,

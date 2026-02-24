@@ -271,7 +271,9 @@ void drawProgramRegistry(AppData &appData){
 }
 
 void drawErrorBox(GuiState &guiState){
-    ImGui::Begin("Error");
+    ImGui::SetNextWindowDockID(0, ImGuiCond_Always);
+    ImGui::Begin("Error", nullptr, ImGuiWindowFlags_NoDocking);
+ 
     ImGui::Text("%s", toString(guiState.currentError).c_str());
 
     ImVec2 buttonSize = ImVec2(90, 0); 
