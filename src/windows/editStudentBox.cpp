@@ -23,10 +23,10 @@ void drawEditStudentBox(GuiState &guiState, AppData &appData){
         ImGui::Text("ID:");
 
         ImGui::TableSetColumnIndex(1);
-        ImGui::BeginDisabled();
+        //ImGui::BeginDisabled();
         ImGui::InputText("##ID",
-                &guiState.studentDraft.ID, ImGuiInputTextFlags_ReadOnly);
-        ImGui::EndDisabled();
+                &guiState.studentDraft.ID);
+        //ImGui::EndDisabled();
 
         // First Name
         ImGui::TableNextRow();
@@ -55,8 +55,33 @@ void drawEditStudentBox(GuiState &guiState, AppData &appData){
         ImGui::Text("Program Code:");
 
         ImGui::TableSetColumnIndex(1);
+        /*
         ImGui::InputText("##ProgramCode",
                 &guiState.studentDraft.programCode, ImGuiInputTextFlags_CallbackCharFilter, LetterAndDashCallback);
+        */
+                
+        if (ImGui::BeginCombo("##ProgramCode", (guiState.studentDraft.programCode).c_str()))
+        {
+            for (auto program : appData.getProgramRegistry())
+            {
+                auto& programInternalID = program.first;
+                auto& programStruct = program.second;
+
+                bool isSelected = (guiState.studentDraft.programCode == programStruct.programAbbreviation);
+                if (ImGui::Selectable(programStruct.programAbbreviation.c_str(), isSelected))
+                {
+                    guiState.studentDraft.programCode = programStruct.programAbbreviation;
+                }
+
+                if (isSelected)
+                    ImGui::SetItemDefaultFocus();
+            }
+            ImGui::EndCombo();
+        }
+
+
+        
+
 
         ImGui::TableNextRow();
         ImGui::TableSetColumnIndex(0);

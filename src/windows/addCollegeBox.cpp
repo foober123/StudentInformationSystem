@@ -76,9 +76,7 @@ void drawAddCollegeBox(GuiState &guiState, AppData &appData){
             }
         }
 
-
         ImGui::End();
 
     }
-
 }

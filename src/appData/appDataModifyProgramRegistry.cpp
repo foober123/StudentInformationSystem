@@ -40,10 +40,10 @@ ERRORSTATE AppData::editProgramEntry(ProgramDraft draft, uint32_t key){
 };
 
 ERRORSTATE AppData::deleteProgramEntry(uint32_t key){
-    for(const auto& pair : m_studentRecord){
-        const auto& student = pair.second;
+    for(auto& pair : m_studentRecord){
+        auto& student = pair.second;
 
-        if(student.programID == key) return ERRORSTATE::PROGRAM_IN_USE;
+        if(student.programID == key) student.programID = 0;
 
     }
 

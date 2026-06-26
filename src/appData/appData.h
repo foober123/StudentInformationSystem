@@ -35,7 +35,7 @@ Gender gender;
 
 const Student INVALIDSTUDENT = {"Not Found", "Not Found", "Not Found", 65535, 65535, Gender::Other};
 const College INVALIDCOLLEGE = {"Not Found", "Not Found"};
-const Program INVALIDCOURSE = {65535, "Not Found", "Not Found"};
+const Program INVALIDCOURSE = {0, "Not Found", "Not Found"};
 
 class AppData{
     public:

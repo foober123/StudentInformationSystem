@@ -3,18 +3,23 @@
 #include <imgui.h>
 #include "../appData/appData.h"
 
-
-void drawStudentDataTable(GuiState& guiState, AppData& appdata){
+void drawStudentDataTable(GuiState& guiState, AppData& appdata)
+{
     ImGui::Begin("data");
-    ImVec2 tableSize = ImVec2(0.0f, ImGui::GetContentRegionAvail().y);
-    if (ImGui::BeginTable("StudentsTable", 7, 
-                ImGuiTableFlags_Borders |
+
+    ImVec2 tableSize =
+        ImVec2(0.0f, ImGui::GetContentRegionAvail().y);
+
+    if (ImGui::BeginTable(
+            "StudentsTable",
+            7,
+            ImGuiTableFlags_Borders |
                 ImGuiTableFlags_RowBg |
                 ImGuiTableFlags_ScrollY |
                 ImGuiTableFlags_Sortable |
-                ImGuiTableFlags_Resizable, tableSize))
+                ImGuiTableFlags_Resizable,
+            tableSize))
     {
-        // Setup columns
         ImGui::TableSetupColumn("ID");
         ImGui::TableSetupColumn("First Name");
         ImGui::TableSetupColumn("Last Name");
@@ -24,86 +29,124 @@ void drawStudentDataTable(GuiState& guiState, AppData& appdata){
         ImGui::TableSetupColumn("Gender");
         ImGui::TableHeadersRow();
 
-        if (ImGuiTableSortSpecs* sortSpecs = ImGui::TableGetSortSpecs())
+        if (ImGuiTableSortSpecs* sortSpecs =
+                ImGui::TableGetSortSpecs())
         {
             if (sortSpecs->SpecsDirty)
             {
                 guiState.sortStudents(appdata, sortSpecs);
-
                 sortSpecs->SpecsDirty = false;
             }
         }
 
-        for (size_t i = 0; i < guiState.displayOrder.size(); i++)
+        ImGuiListClipper clipper;
+        clipper.Begin(
+            static_cast<int>(guiState.displayOrder.size()));
+
+        while (clipper.Step())
         {
-            uint32_t studentID = guiState.displayOrder[i];
-            const Student& student = appdata.getStudent(studentID);
+            for (int row = clipper.DisplayStart;
+                 row < clipper.DisplayEnd;
+                 ++row)
+            {
+                uint32_t studentID =
+                    guiState.displayOrder[row];
 
-            ImGui::TableNextRow();
+                const Student& student =
+                    appdata.getStudent(studentID);
 
-            bool isSelected = (guiState.selectedStudent == studentID);
+                ImGui::TableNextRow();
 
-            ImGui::TableNextColumn();
+                bool isSelected =
+                    (guiState.selectedStudent == studentID);
 
-            ImGui::PushID(studentID);
-            if (ImGui::Selectable(student.ID.c_str(),
+                ImGui::TableNextColumn();
+
+                ImGui::PushID(studentID);
+
+                if (ImGui::Selectable(
+                        student.ID.c_str(),
                         isSelected,
                         ImGuiSelectableFlags_SpanAllColumns))
-            {
-                guiState.selectedStudent = studentID;
-            }
-
-
-            if (ImGui::IsItemClicked(ImGuiMouseButton_Right))
-            {
-                guiState.selectedStudent = studentID;
-            }
-
-            if (ImGui::BeginPopupContextItem())   // attaches to the Selectable
-            {
-                if (ImGui::MenuItem("Edit Entry"))
                 {
-                    (guiState.*guiState.currentStrategy->draftSettingStrategy)(studentID, appdata);
-                    guiState.currentInputBox = guiState.currentStrategy->editEntryStrategy;
+                    guiState.selectedStudent = studentID;
                 }
 
-                if (ImGui::MenuItem("Delete Entry"))
+                if (ImGui::IsItemClicked(
+                        ImGuiMouseButton_Right))
                 {
-                    guiState.currentInputBox = guiState.currentStrategy->deleteEntryStrategy;
+                    guiState.selectedStudent = studentID;
                 }
 
-                ImGui::EndPopup();
+                if (ImGui::BeginPopupContextItem())
+                {
+                    if (ImGui::MenuItem("Edit Entry"))
+                    {
+                        (guiState.*
+                         guiState.currentStrategy
+                             ->draftSettingStrategy)(
+                            studentID,
+                            appdata);
+
+                        guiState.currentInputBox =
+                            guiState.currentStrategy
+                                ->editEntryStrategy;
+                    }
+
+                    if (ImGui::MenuItem("Delete Entry"))
+                    {
+                        guiState.currentInputBox =
+                            guiState.currentStrategy
+                                ->deleteEntryStrategy;
+                    }
+
+                    ImGui::EndPopup();
+                }
+
+                ImGui::PopID();
+
+                ImGui::TableNextColumn();
+                ImGui::Text("%s",
+                            student.firstName.c_str());
+
+                ImGui::TableNextColumn();
+                ImGui::Text("%s",
+                            student.lastName.c_str());
+
+                const Program& program =
+                    appdata.getProgram(
+                        student.programID);
+
+                ImGui::TableNextColumn();
+                ImGui::Text("%s",
+                            program
+                                .programAbbreviation
+                                .c_str());
+
+                const College& college =
+                    appdata.getCollege(
+                        program.collegeID);
+
+                ImGui::TableNextColumn();
+                ImGui::Text("%s",
+                            college
+                                .collegeAbbreviation
+                                .c_str());
+
+                ImGui::TableNextColumn();
+                ImGui::Text("%d", student.year);
+
+                ImGui::TableNextColumn();
+                ImGui::Text("%s",
+                            serializeGender(
+                                student.gender)
+                                .c_str());
             }
-
-            ImGui::PopID();
-
-
-            ImGui::TableNextColumn();
-            ImGui::Text("%s", student.firstName.c_str());
-
-            ImGui::TableNextColumn();
-            ImGui::Text("%s", student.lastName.c_str());
-
-            const Program& program = appdata.getProgram(student.programID);
-
-            ImGui::TableNextColumn();
-            ImGui::Text("%s", program.programAbbreviation.c_str());
-
-            const College& college = appdata.getCollege(program.collegeID);
-
-            ImGui::TableNextColumn();
-            ImGui::Text("%s", college.collegeAbbreviation.c_str());
-
-            ImGui::TableNextColumn();
-            ImGui::Text("%d", student.year);
-
-            ImGui::TableNextColumn();
-            ImGui::Text("%s", serializeGender(student.gender).c_str());
         }
-
 
         ImGui::EndTable();
     }
+
     ImGui::End();
 }
 

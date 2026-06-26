@@ -23,6 +23,7 @@ void GuiState::rebuildStudentDisplayOrder(AppData& appData){
                         student.firstName + " " +
                         student.lastName + " " +
                         appData.getProgram(student.programID).programAbbreviation + " " +
+                        appData.getCollege(appData.getProgram(student.programID).collegeID).collegeAbbreviation +
                         std::to_string(student.year) + " " +
                         serializeGender(student.gender);
 

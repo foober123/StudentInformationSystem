@@ -22,16 +22,6 @@ void GuiState::sortStudents(AppData& appData, ImGuiTableSortSpecs* sortSpecs){
 
             bool result = false;
 
-            switch (spec->ColumnIndex)
-            {
-            case 0: result = s1.ID < s2.ID; break;
-            case 1: result = s1.firstName < s2.firstName; break;
-            case 2: result = s1.lastName < s2.lastName; break;
-            case 3: result = s1.programID < s2.programID; break;
-            case 4: result = appData.getProgram(s1.programID).collegeID < appData.getProgram(s2.programID).collegeID;
-            case 5: result = s1.year < s2.year; break;
-            default: result = s1.ID < s2.ID; break;
-            }
 
             switch (spec->ColumnIndex)
             {
@@ -52,14 +42,16 @@ void GuiState::sortStudents(AppData& appData, ImGuiTableSortSpecs* sortSpecs){
             
             case 3:
             return ascending
-                ? (s1.programID < s2.programID)
-                : (s2.programID < s1.programID);
+                ? (appData.getProgram(s1.programID).programAbbreviation < appData.getProgram(s2.programID).programAbbreviation)
+                : (appData.getProgram(s2.programID).programAbbreviation < appData.getProgram(s1.programID).programAbbreviation);
 
-            case 4:
+            case 4:{
+                auto c1 = appData.getCollege(appData.getProgram(s1.programID).collegeID);
+                auto c2 = appData.getCollege(appData.getProgram(s2.programID).collegeID);
             return ascending
-               ? (appData.getProgram(s1.programID).collegeID < appData.getProgram(s2.programID).collegeID)
-               : (appData.getProgram(s2.programID).collegeID < appData.getProgram(s1.programID).collegeID);
-
+               ? (c1.collegeAbbreviation < c2.collegeAbbreviation)
+                : (c2.collegeAbbreviation < c1.collegeAbbreviation);
+            }
             case 5:
             return ascending
                 ? (s1.year < s2.year)
@@ -111,10 +103,14 @@ void GuiState::sortPrograms(AppData& appData, ImGuiTableSortSpecs* sortSpecs){
                 ? (s1.programAbbreviation < s2.programAbbreviation)
                 : (s2.programAbbreviation < s1.programAbbreviation);
 
-            case 1:
+            case 1:{
+            auto c1  = appData.getCollege(s1.collegeID);
+            auto c2 = appData.getCollege(s2.collegeID);
             return ascending
-                ? (s1.collegeID < s2.collegeID)
-                : (s2.collegeID < s1.collegeID);
+                ? (c1.collegeAbbreviation < c2.collegeAbbreviation)
+                : (c2.collegeAbbreviation < c1.collegeAbbreviation);
+
+            }
             case 2:
             return ascending
                 ? (s1.programName < s2.programName)

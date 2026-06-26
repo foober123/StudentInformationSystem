@@ -5,7 +5,6 @@
 #include <unordered_map>
 
 
-
 ERRORSTATE AppData::addCollegeEntry(CollegeDraft draft){
     if(!validateRepeatingCollegeCode(draft.collegeCode)) return ERRORSTATE::COLLEGE_CODE_IN_USE;
     if(!validateCollegeNameFormat(draft.collegeName)) return ERRORSTATE::INVALID_PROGRAM_NAME;
@@ -41,17 +40,14 @@ ERRORSTATE AppData::deleteCollege(uint32_t key){
     auto it = m_collegeRegistry.find(key);
     if (it == m_collegeRegistry.end()) return ERRORSTATE::INVALID_INDEX;
 
-    for(const auto& [id,program] : m_programRegistry){
-        if(program.collegeID == key) return ERRORSTATE::COLLEGE_IN_USE;
+    for(auto& [id,program] : m_programRegistry){
+        if(program.collegeID == key) program.collegeID = 0;
     }
-
 
     m_collegeCodeToID.erase(it->second.collegeAbbreviation);
     m_collegeRegistry.erase(key);
 
     return ERRORSTATE::NO_ERROR;
-
-
 }
 
 bool AppData::validateCollegeNameFormat(std::string name){

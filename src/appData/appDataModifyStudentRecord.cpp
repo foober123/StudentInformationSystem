@@ -30,7 +30,7 @@ ERRORSTATE AppData::addStudentEntry(StudentDraft studentdraft){
 
 }
 
-//Student IDs cannot be edited once added. No Need to do syncing with m_studentIDToInternalID
+//Student IDs cannot be edited in ui added altho it can be done. 
 ERRORSTATE AppData::editStudentEntry(StudentDraft studentdraft, uint32_t key){
     if(!checkStudentIDValidity(key)) return ERRORSTATE::INVALID_INDEX;
     if(!validateStudentID(studentdraft.ID)) return ERRORSTATE::INVALID_STUDENT_ID;
@@ -41,17 +41,24 @@ ERRORSTATE AppData::editStudentEntry(StudentDraft studentdraft, uint32_t key){
     if(m_programCodeToID.find(studentdraft.programCode) == m_programCodeToID.end()) return ERRORSTATE::INVALID_COURSE; 
     if(studentdraft.year < 1) return ERRORSTATE::INVALID_YEAR;
 
-    Student student;
+    Student& student = m_studentRecord.at(key);
+
+    if (student.ID != studentdraft.ID)
+    {
+        m_studentIDToInternalID.erase(student.ID);
+        m_studentIDToInternalID[studentdraft.ID] = key;
+    }
 
     student.ID = studentdraft.ID;
     student.firstName = studentdraft.firstName;
     student.lastName = studentdraft.lastName;
-    student.programID = m_programCodeToID.at(studentdraft.programCode);
-    student.gender = static_cast<Gender>(studentdraft.gender);
+    student.programID =
+        m_programCodeToID.at(studentdraft.programCode);
+    student.gender =
+        static_cast<Gender>(studentdraft.gender);
     student.year = studentdraft.year;
 
-    m_studentRecord.at(key) = student;
-    return ERRORSTATE::NO_ERROR; 
+    return ERRORSTATE::NO_ERROR;
 
 }
 
@@ -98,13 +105,12 @@ bool AppData::validateStudentName(std::string name){
 }
 
 bool AppData::validateRepeatingStudentID(std::string id){
-    for(auto &pair: m_studentRecord){
-        const auto& student = pair.second;
-
-        if(pair.second.ID == id) return false;
+    for(auto &pair: m_studentRecord){ 
+        const auto& student = pair.second; 
+        if(pair.second.ID == id) return false; 
     }
 
-    return true;    
+    return true; 
 }
 
 bool AppData::validateRepeatingStudentID(std::string id, uint32_t key){
@@ -119,3 +125,5 @@ bool AppData::validateRepeatingStudentID(std::string id, uint32_t key){
 
     return true;    
 }
+
+

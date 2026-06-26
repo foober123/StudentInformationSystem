@@ -10,7 +10,7 @@ StudentDraft AppData::makeStudentDraft(uint32_t id){
     s.ID = student.ID;
     s.firstName = student.firstName;
     s.lastName = student.lastName;
-    s.programCode = m_programRegistry.at(student.programID).programAbbreviation;
+    s.programCode = (student.programID != 0) ? m_programRegistry.at(student.programID).programAbbreviation : "";
     s.gender = static_cast<int>(student.gender);
     s.year = student.year;
     return s;
@@ -34,7 +34,7 @@ ProgramDraft AppData::makeProgramDraft(uint32_t id){
     const auto& program = m_programRegistry.at(id);
     p.programAbbreviation = program.programAbbreviation;
     p.programName = program.programName;
-    p.collegeCode = m_collegeRegistry.at(program.collegeID).collegeAbbreviation;
+    p.collegeCode = (program.collegeID != 0) ? m_collegeRegistry.at(program.collegeID).collegeAbbreviation : "";
 
     return p;
 }

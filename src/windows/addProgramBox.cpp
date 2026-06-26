@@ -41,8 +41,30 @@ void drawAddProgramBox(GuiState &guiState, AppData &appData){
         ImGui::Text("College Code:");
 
         ImGui::TableSetColumnIndex(1);
+        /*
         ImGui::InputText("##CollegeCode",
                 &guiState.programDraft.collegeCode, ImGuiInputTextFlags_CharsUppercase);
+        */
+        if (ImGui::BeginCombo("##College Code", (guiState.programDraft.collegeCode).c_str()))
+        {
+            for (auto college : appData.getCollegeRegistry())
+            {
+                auto& collegeInternalID = college.first;
+                auto& collegeStruct = college.second;
+
+                bool isSelected = (guiState.programDraft.collegeCode == collegeStruct.collegeAbbreviation);
+                if (ImGui::Selectable(collegeStruct.collegeAbbreviation.c_str(), isSelected))
+                {
+                    guiState.programDraft.collegeCode = collegeStruct.collegeAbbreviation;
+                }
+
+                if (isSelected)
+                    ImGui::SetItemDefaultFocus();
+            }
+            ImGui::EndCombo();
+        }
+
+
 
 
         ImGui::EndTable();
