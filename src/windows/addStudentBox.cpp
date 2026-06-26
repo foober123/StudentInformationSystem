@@ -59,6 +59,7 @@ void drawAddStudentBox(GuiState &guiState, AppData &appData){
                 &guiState.studentDraft.programCode, ImGuiInputTextFlags_CallbackCharFilter, LetterAndDashCallback);
         */
 
+        /*
         if (ImGui::BeginCombo("##ProgramCode", (guiState.studentDraft.programCode).c_str()))
         {
             for (auto program : appData.getProgramRegistry())
@@ -77,7 +78,45 @@ void drawAddStudentBox(GuiState &guiState, AppData &appData){
             }
             ImGui::EndCombo();
         }
+        */
+      static std::string searchText;
 
+        if (ImGui::BeginCombo("##Program Code", guiState.studentDraft.programCode.c_str()))
+        {
+            ImGui::SetNextItemWidth(-FLT_MIN);
+            ImGui::InputTextWithHint(
+                "##SearchProgram",
+                "Search...",
+                &searchText
+            );
+
+            ImGui::Separator();
+
+            for (const auto& [programInternalID, programStruct] : appData.getProgramRegistry())
+            {
+                const std::string& abbreviation = programStruct.programAbbreviation;
+
+                // Filter
+                if (!searchText.empty())
+                {
+                    if (abbreviation.find(searchText) == std::string::npos)
+                        continue;
+                }
+
+                bool isSelected = (guiState.studentDraft.programCode == abbreviation);
+
+                if (ImGui::Selectable(abbreviation.c_str(), isSelected))
+                {
+                    guiState.studentDraft.programCode = abbreviation;
+                    searchText.clear(); // Optional: clear after selecting
+                }
+
+                if (isSelected)
+                    ImGui::SetItemDefaultFocus();
+            }
+
+            ImGui::EndCombo();
+        }
 
         
 

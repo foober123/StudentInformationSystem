@@ -46,26 +46,44 @@ void drawEditProgramBox(GuiState &guiState, AppData &appData){
                 &guiState.programDraft.collegeCode, ImGuiInputTextFlags_CharsUppercase);
         */
 
+        static std::string searchText;
 
-        if (ImGui::BeginCombo("##College Code", (guiState.programDraft.collegeCode).c_str()))
+        if (ImGui::BeginCombo("##College Code", guiState.programDraft.collegeCode.c_str()))
         {
-            for (auto college : appData.getCollegeRegistry())
-            {
-                auto& collegeInternalID = college.first;
-                auto& collegeStruct = college.second;
+            ImGui::SetNextItemWidth(-FLT_MIN);
+            ImGui::InputTextWithHint(
+                "##SearchCollege",
+                "Search...",
+                &searchText
+            );
 
-                bool isSelected = (guiState.programDraft.collegeCode == collegeStruct.collegeAbbreviation);
-                if (ImGui::Selectable(collegeStruct.collegeAbbreviation.c_str(), isSelected))
+            ImGui::Separator();
+
+            for (const auto& [collegeInternalID, collegeStruct] : appData.getCollegeRegistry())
+            {
+                const std::string& abbreviation = collegeStruct.collegeAbbreviation;
+
+                // Filter
+                if (!searchText.empty())
                 {
-                    guiState.programDraft.collegeCode = collegeStruct.collegeAbbreviation;
+                    if (abbreviation.find(searchText) == std::string::npos)
+                        continue;
+                }
+
+                bool isSelected = (guiState.programDraft.collegeCode == abbreviation);
+
+                if (ImGui::Selectable(abbreviation.c_str(), isSelected))
+                {
+                    guiState.programDraft.collegeCode = abbreviation;
+                    searchText.clear(); // Optional: clear after selecting
                 }
 
                 if (isSelected)
                     ImGui::SetItemDefaultFocus();
             }
+
             ImGui::EndCombo();
         }
-
 
 
         ImGui::EndTable();

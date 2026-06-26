@@ -131,19 +131,19 @@ void drawTaskBar(GuiState& guiState, AppData& appData, Vault& vault){
 
         ImGui::SameLine();
 
-        if(ImGui::Button("S")){
+        if(ImGui::Button("Student")){
             guiState.currentStrategy = &studentStrategy;
         }
 
         ImGui::SameLine();
 
-        if(ImGui::Button("P")){
+        if(ImGui::Button("Program")){
             guiState.currentStrategy = &programStrategy;
         }
 
         ImGui::SameLine();
 
-        if(ImGui::Button("C")){
+        if(ImGui::Button("College")){
             guiState.currentStrategy = &collegeStrategy;
         }
 
